@@ -14,6 +14,8 @@ import com.twosmalpixels.travel_notes.ui.auth.AuthUseCase
 import com.twosmalpixels.travel_notes.ui.auth.IAuthUseCase
 import com.twosmalpixels.travel_notes.ui.choose_travel_skin.ChooseSkinUseCase
 import com.twosmalpixels.travel_notes.ui.choose_travel_skin.IChooseSkinUseCase
+import com.twosmalpixels.travel_notes.ui.currency.CurrencyUseCase
+import com.twosmalpixels.travel_notes.ui.currency.ICurrencyUseCase
 import com.twosmalpixels.travel_notes.ui.new_travel.INewTravelsRepositoriy
 import com.twosmalpixels.travel_notes.ui.new_travel.INewTravelsUseCase
 import com.twosmalpixels.travel_notes.ui.new_travel.NewTravelsRepositoiy
@@ -38,6 +40,7 @@ val appModule = module {
     single { ChooseSkinUseCase() as IChooseSkinUseCase }
     single { FairbaseStorageBase(get()) as IFairbaseStorageBase }
     single { ExpenceAllAllUseCase() as IExpenceAllUseCase }
+    single { CurrencyUseCase() as ICurrencyUseCase }
 
 
 

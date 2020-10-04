@@ -46,7 +46,6 @@ class MainActivity : AppCompatActivity() {
         setStartFragment(getStartFragment())
         setSupportActionBar(toolbar)
         createToolbarObserver()
-
     }
 
     private fun initViewModel(){

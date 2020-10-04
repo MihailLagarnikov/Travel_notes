@@ -6,13 +6,13 @@ import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Intent
 import android.content.pm.PackageManager
-import android.icu.util.Currency
 import android.location.Location
 import android.location.LocationListener
 import android.location.LocationManager
-import android.os.Build
 import android.os.Bundle
 import android.provider.MediaStore
+import android.text.Editable
+import android.text.TextWatcher
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
@@ -36,14 +36,14 @@ import com.twosmalpixels.travel_notes.ui.new_travel.NewTravelsViewModel
 import kotlinx.android.synthetic.main.add_expence_fragment.*
 import retrofit2.Call
 import retrofit2.Response
-import javax.security.auth.callback.Callback
 
-class AddExpenceFragment: BaseFragment(), LocationListener {
+class AddExpenceFragment: BaseFragment(), LocationListener, TextWatcher {
     private lateinit var newTravelsViewModel: NewTravelsViewModel
     private lateinit var addExpenceViewModel: AddExpenceViewModel
     private val PICK_IMAGE = 101
     private val TIME_INTERVAL_LOCATION = 1000 * 60 * 60L
     private val RADIUS_LOCATION = 30F
+    private var selectedExpenceCategory: ExpenceCategory? = null
 
     companion object{
         const val PERMISION_LOCATION = 11
@@ -67,11 +67,13 @@ class AddExpenceFragment: BaseFragment(), LocationListener {
         expence_list.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
         expence_list.adapter = AllExpenceAdapter(ExpenceCategory.values(), {
             // выделенная категория
+            selectedExpenceCategory = it
         })
         initDateCard()
         initFotoCard()
         initLocationCard()
         initLocationLogic()
+        edit_text_add_expence.addTextChangedListener(this)
 
     }
 
@@ -182,5 +184,16 @@ class AddExpenceFragment: BaseFragment(), LocationListener {
     }
 
     override fun onProviderDisabled(p0: String?) {
+    }
+
+    override fun afterTextChanged(p0: Editable?) {
+    }
+
+    override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+        val isAmountEmpty =edit_text_add_expence.text?.isEmpty() ?: true
+        button_exprnce_save.isEnabled = !isAmountEmpty && selectedExpenceCategory != null
+    }
+
+    override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
     }
 }

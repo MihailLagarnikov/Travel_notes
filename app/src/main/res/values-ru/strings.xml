@@ -37,6 +37,10 @@
     <string name="add_foto">Добавить фото</string>
     <string name="main_currency">Основная валюта</string>
     <string name="additional_currency">Дополнительная валюта</string>
+    <string name="additional_currency_hint">Выберите валюты, в которых планируете записывать расходы плюс к основной </string>
+    <string name="rastes_currency_hint">Мы не можем точно сказать по какому курсу вы обмениваете валюту. Пожалуйста, укажите курс вручную.</string>
+    <string name="currency_expence">Валюта расходов</string>
+    <string name="choose_anoter_cur">Выбрать другую валюту</string>
 
     <string name="def_curensy">RUB</string>
 
@@ -52,5 +56,17 @@
     <string name="safety">Страховка</string>
     <string name="visa">Виза</string>
     <string name="others">Прочие расходы</string>
+
+    //currency
+    <string name="rub">Российский рубль</string>
+    <string name="usd">Доллар США</string>
+    <string name="eur">Евро</string>
+    <string name="tryy">Турецкая лира</string>
+    <string name="cny">Китайский юань</string>
+    <string name="thb">Тайский бат</string>
+    <string name="krw">Южнокорейская вона</string>
+    <string name="jpy">Японская иена</string>
+    <string name="inr">Индийская рупия</string>
+
 
 </resources>

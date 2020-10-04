@@ -36,6 +36,10 @@
     <string name="add_foto">Add a photo</string>
     <string name="main_currency">Main currency</string>
     <string name="additional_currency">Additional currency</string>
+    <string name="additional_currency_hint">Select the currencies in which you plan to record expenses plus to the main one</string>
+    <string name="rastes_currency_hint">We cannot say for sure at what rate you exchange currency. Please enter the course manually.</string>
+    <string name="currency_expence">Cost currency</string>
+    <string name="choose_anoter_cur">Choose another currency</string>
 
 
     <string name="def_curensy">EUR</string>
@@ -53,4 +57,15 @@
     <string name="safety">Insurance</string>
     <string name="visa">Visa</string>
     <string name="others">Other expenses</string>
+
+    //currency
+    <string name="rub">Russian ruble</string>
+    <string name="usd">U.S. dollar</string>
+    <string name="eur">Euro</string>
+    <string name="tryy">Turkish lira</string>
+    <string name="cny">Chinese yuan</string>
+    <string name="thb">Thai baht</string>
+    <string name="krw">South Korean won</string>
+    <string name="jpy">Japanese yen</string>
+    <string name="inr">Indian rupee</string>
 </resources>

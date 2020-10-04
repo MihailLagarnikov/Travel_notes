@@ -107,6 +107,19 @@ class NewTravelFragment : BaseFragment(), TextWatcher {
                 when_travel_edit_text.setText(createStringFromRangeDates(it))
             }
         })
+
+        newTravelsViewModel.currencyText.observe(this, Observer {
+            if (it != null){
+                currency_travel_edit_text.setText(it)
+                validate()
+            }
+        })
+
+        currency_travel_edit_text.setOnFocusChangeListener { view, b ->
+            if (b) {//переход на фрагмент выбора валюты
+                findNavController().navigate(R.id.action_newTravelFragment_to_currencyFragment)
+            }
+        }
     }
 
 
@@ -118,17 +131,20 @@ class NewTravelFragment : BaseFragment(), TextWatcher {
     }
 
     override fun afterTextChanged(p0: Editable?) {
-        val isWheeEmpty = where_travel_edit_text.text?.isEmpty() ?: true
-        val isWhenEmpty = when_travel_edit_text.text?.isEmpty() ?: true
-        val isWhoEmpty = who_travel_edit_text.text?.isEmpty() ?: true
-        button_new_travel_save.isEnabled = !isWheeEmpty && !isWhenEmpty && !isWhoEmpty
+        validate()
     }
 
     override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
-
     }
 
     override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+    }
 
+    private fun validate(){
+        val isWheeEmpty = where_travel_edit_text.text?.isEmpty() ?: true
+        val isWhenEmpty = when_travel_edit_text.text?.isEmpty() ?: true
+        val isWhoEmpty = who_travel_edit_text.text?.isEmpty() ?: true
+        val isCurrencyEmpty = currency_travel_edit_text.text?.isEmpty() ?: true
+        button_new_travel_save.isEnabled = !isWheeEmpty && !isWhenEmpty && !isWhoEmpty && !isCurrencyEmpty
     }
 }

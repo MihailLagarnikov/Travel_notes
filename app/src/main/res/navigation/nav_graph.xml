@@ -36,6 +36,9 @@
         <action
             android:id="@+id/action_newTravelFragment_to_calenarikDialog"
             app:destination="@id/calenarikDialog" />
+        <action
+            android:id="@+id/action_newTravelFragment_to_currencyFragment"
+            app:destination="@id/currencyFragment" />
     </fragment>
     <fragment
         android:id="@+id/newPersonFragment"
@@ -67,4 +70,8 @@
         android:id="@+id/addExpenceFragment"
         android:name="com.twosmalpixels.travel_notes.ui.add_expence.AddExpenceFragment"
         android:label="AddExpenceFragment" />
+    <fragment
+        android:id="@+id/currencyFragment"
+        android:name="com.twosmalpixels.travel_notes.ui.currency.CurrencyFragment"
+        android:label="CurrencyFragment" />
 </navigation>

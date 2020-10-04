@@ -7,7 +7,6 @@ import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.storage.FirebaseStorage
 import com.twosmalpixels.travel_notes.core.repositoriy.WriteCloudListener
 import com.twosmalpixels.travel_notes.pojo.TravelsItem
-import com.twosmalpixels.travel_notes.ui.auth.IAuthUseCase
 import org.koin.java.standalone.KoinJavaComponent
 import java.util.*
 import kotlin.collections.ArrayList
@@ -18,6 +17,10 @@ class NewTravelsViewModel: ViewModel(), WriteCloudListener {
     val changeStatus = MutableLiveData<Boolean>()
     val chooseDates = MutableLiveData<ArrayList<Date>>()
     val chooseDate = MutableLiveData<Date>()
+    val currencyText = MutableLiveData<String>()
+    var mainCurrencyCode: String? = null
+    var additionalCurrencyCode: String? = null
+    var rates: Int = 0
 
     fun saveNewTravelData(db: FirebaseFirestore, travelsItem: TravelsItem){
         iNewTravelsUseCase.saneNewTravelData(db, travelsItem, this)

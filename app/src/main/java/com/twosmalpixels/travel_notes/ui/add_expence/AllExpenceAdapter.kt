@@ -9,8 +9,9 @@ import com.twosmalpixels.travel_notes.ui.expense_all.ExpenceCategory
 import com.twosmalpixels.travel_notes.ui.expense_all.ExpenceData
 import kotlinx.android.synthetic.main.expence_item.view.*
 
-class AllExpenceAdapter(val listCategoriys: Array<ExpenceCategory>, val listener: (ExpenceCategory) -> Unit): RecyclerView.Adapter<AllExpenceAdapter.ViewHolder>() {
+class AllExpenceAdapter(val listCategoriys: Array<ExpenceCategory>, val listener: (ExpenceCategory?) -> Unit): RecyclerView.Adapter<AllExpenceAdapter.ViewHolder>() {
     private var selectedItem = 100
+    private var laseSelectedCategory: ExpenceCategory? = null
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         return ViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.expence_item, parent, false))
@@ -23,9 +24,15 @@ class AllExpenceAdapter(val listCategoriys: Array<ExpenceCategory>, val listener
             logo_expence.setImageResource(listCategoriys.get(position).logoBlack)
             text_expenxe_item.setText(listCategoriys.get(position).text)
             setOnClickListener {
+                val selectedCategory = if (listCategoriys.get(position) == laseSelectedCategory){
+                    null
+                }else{
+                    listCategoriys.get(position)
+                }
+                laseSelectedCategory = selectedCategory
                 selectedItem = position
                 holder.selectedItemColor(position == selectedItem)
-                listener.invoke(listCategoriys.get(position))
+                listener.invoke(selectedCategory)
                 notifyDataSetChanged()
             }
             holder.selectedItemColor(position == selectedItem)
