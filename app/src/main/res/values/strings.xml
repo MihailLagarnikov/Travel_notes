@@ -1,0 +1,56 @@
+<resources>
+    <string name="app_name">Travel notes</string>
+    <string name="auth_google">Login with \nGoogle Account</string>
+    <string name="you_travels">Your travels</string>
+    <string name="add_new_travel">Plan \na new trip</string>
+    <string name="new_travel">New journey</string>
+    <string name="choose_skin">Choose skin</string>
+    <string name="choose_skin_b">Cover selection</string>
+    <string name="choose_skin_galereia">Choose from gallery</string>
+    <string name="where_travel">Where do you want to go?</string>
+    <string name="when_travel">When do you want to go?</string>
+    <string name="who_travel">Who will go?</string>
+    <string name="save">Save</string>
+    <string name="error_write">Write error, please try again later</string>
+    <string name="adults">Adults</string>
+    <string name="adults_sub">Age from 16 years</string>
+    <string name="adults_one">adult</string>
+    <string name="adults_many">adults</string>
+    <string name="children">Children</string>
+    <string name="children_sub">Age 2-16</string>
+    <string name="children_one">child</string>
+    <string name="children_many">children</string>
+    <string name="babies">Babies</string>
+    <string name="babies_sub">Age up to 2 years</string>
+    <string name="babies_one">baby</string>
+    <string name="babies_many">babies</string>
+    <string name="summ_expense">Amount of expenses</string>
+    <string name="summ_one_expense">Expense amount</string>
+    <string name="history_expense">Expense history</string>
+    <string name="add_expense">Add expense</string>
+    <string name="add_first_expense">Add your first expense column</string>
+    <string name="curenxy_settings">Go to currency settings</string>
+    <string name="comment">Comment</string>
+    <string name="date">Date</string>
+    <string name="add_location">Add a label on the map</string>
+    <string name="add_foto">Add a photo</string>
+    <string name="main_currency">Main currency</string>
+    <string name="additional_currency">Additional currency</string>
+
+
+    <string name="def_curensy">EUR</string>
+
+
+    //categories
+    <string name="transport">Transport</string>
+    <string name="booking">Rental of property</string>
+    <string name="cafe_and_restorans">Cafes and restaurants</string>
+    <string name="supermarket">Supermarket</string>
+    <string name="tour">Excursions</string>
+    <string name="entertainment">Entertainment</string>
+    <string name="gifts">Gifts</string>
+    <string name="shopping">Shopping</string>
+    <string name="safety">Insurance</string>
+    <string name="visa">Visa</string>
+    <string name="others">Other expenses</string>
+</resources>

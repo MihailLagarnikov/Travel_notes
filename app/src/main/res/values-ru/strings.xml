@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Записки путешественника</string>
+    <string name="auth_google">Войти с помощью \nаккаунта Google</string>
+    <string name="you_travels">Ваши путешествия</string>
+    <string name="add_new_travel">Запланировать  \nновое путешествие</string>
+    <string name="new_travel">Новое путешествие</string>
+    <string name="choose_skin">Выбрать обложку</string>
+    <string name="choose_skin_b">Выброр обложки</string>
+    <string name="choose_skin_galereia">Выбрать из галереи</string>
+    <string name="where_travel">Куда хотите поехать?</string>
+    <string name="when_travel">Когда хотите поехать?</string>
+    <string name="who_travel">Кто поедет?</string>
+    <string name="save">Сохранить</string>
+    <string name="error_write">Ошибка записи, повторите попытку позже</string>
+    <string name="adults">Взрослые</string>
+    <string name="adults_sub">Возраст от 16 лет</string>
+    <string name="adults_one">взрослый</string>
+    <string name="adults_many">взрослых</string>
+    <string name="children">Дети</string>
+    <string name="children_sub">Возраст от 2 до 16 лет </string>
+    <string name="children_one">ребенок</string>
+    <string name="children_many">ребенка</string>
+    <string name="babies">Младенцы</string>
+    <string name="babies_sub">Возраст до 2 лет</string>
+    <string name="babies_one">младенец</string>
+    <string name="babies_many">младенца</string>
+    <string name="summ_expense">Сумма расходов</string>
+    <string name="summ_one_expense">Сумма расхода</string>
+    <string name="history_expense">История расходов</string>
+    <string name="add_expense">Добавление расхода</string>
+    <string name="add_first_expense">Добавьте вашу первую графу расхода</string>
+    <string name="curenxy_settings">Перейти в настройку валюты</string>
+    <string name="comment">Комментарий</string>
+    <string name="date">Дата</string>
+    <string name="add_location">Добавить метку на карте</string>
+    <string name="add_foto">Добавить фото</string>
+    <string name="main_currency">Основная валюта</string>
+    <string name="additional_currency">Дополнительная валюта</string>
+
+    <string name="def_curensy">RUB</string>
+
+    //categories
+    <string name="transport">Транспорт</string>
+    <string name="booking">Аренда жилья</string>
+    <string name="cafe_and_restorans">Кафе и рестораны</string>
+    <string name="supermarket">Супермаркет</string>
+    <string name="tour">Экскурсии</string>
+    <string name="entertainment">Развлечения</string>
+    <string name="gifts">Подарки</string>
+    <string name="shopping">Шоппинг</string>
+    <string name="safety">Страховка</string>
+    <string name="visa">Виза</string>
+    <string name="others">Прочие расходы</string>
+
+</resources>

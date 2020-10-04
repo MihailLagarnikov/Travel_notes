@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="PersonView">
+        <attr name="personType">
+            <enum name="adult" value="1" />
+            <enum name="children" value="2" />
+            <enum name="babies" value="3" />
+        </attr>
+    </declare-styleable>
+</resources>

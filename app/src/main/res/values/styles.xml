@@ -1,0 +1,86 @@
+<resources>
+
+    <!-- Base application theme. -->
+    <style name="AppTheme" parent="Theme.Design.Light.NoActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/menu_item_tint</item>
+    </style>
+
+    <style name="SwitchCustom" parent="Theme.Design.Light.NoActionBar">
+        <!-- активное состояние (30% прозрачности для фона) -->
+        <item name="colorControlActivated">@color/menu_item_tint</item>
+
+        <!-- неактивное состояние ползунка -->
+        <item name="colorSwitchThumbNormal">@android:color/white</item>
+
+        <!-- цвет дорожки для неактивного состояния (30% прозрачности) -->
+        <item name="android:colorForeground">@color/grey_divider</item>
+    </style>
+
+    <style name="MyCheckBox" parent="Theme.AppCompat.Light">
+        <item name="android:paddingLeft">10dp</item>
+        <item name="android:fontFamily">@font/roboto_medium</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_width">0dp</item>
+    </style>
+
+    <style name="H1" >
+        <!-- Customize your theme here. -->
+        <item name="android:fontFamily">@font/roboto_medium</item>
+        <item name="android:textSize">20sp</item>
+        <item name="android:textColor">@color/text_black</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_width">0dp</item>
+    </style>
+
+    <style name="H2">
+        <item name="android:fontFamily">@font/roboto</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:textColor">@color/text_black</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_width">0dp</item>
+    </style>
+
+    <style name="H3" parent="H1">
+        <item name="android:textSize">14sp</item>
+    </style>
+
+    <style name="H2_Caps_Lock" parent="H1">
+        <item name="android:textSize">14sp</item>
+        <item name="android:textAllCaps">true</item>
+    </style>
+
+    <style name="Text" parent="H2">
+        <item name="android:textSize">14sp</item>
+    </style>
+
+    <style name="Small_Text" parent="H2">
+        <item name="android:textSize">12sp</item>
+    </style>
+
+    <style name="Numbers_calendar" parent="H1">
+        <item name="android:textSize">12sp</item>
+    </style>
+
+    <style name="Week_calendar" parent="H1">
+        <item name="android:textSize">12sp</item>
+        <item name="android:textAllCaps">true</item>
+    </style>
+
+    <style name="InputLayoutStyle" parent="TextAppearance.AppCompat">
+
+        <item name="android:textSize">12sp</item>
+        <item name="colorControlNormal">@color/text_6B484848</item>
+
+
+    </style>
+
+    <style name="InputLayoutStyleTheme" parent="TextAppearance.AppCompat">
+        <item name="colorControlNormal">@color/text_6B484848</item>
+        <item name="colorAccent">@color/trancparent</item>
+
+    </style>
+</resources>

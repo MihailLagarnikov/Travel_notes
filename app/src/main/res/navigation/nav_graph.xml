@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/authFragment">
+
+    <fragment
+        android:id="@+id/authFragment"
+        android:name="com.twosmalpixels.travel_notes.ui.auth.AuthFragment"
+        android:label="AuthFragment" >
+        <action
+            android:id="@+id/action_authFragment_to_youTravelsFragment"
+            app:destination="@id/youTravelsFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/youTravelsFragment"
+        android:name="com.twosmalpixels.travel_notes.ui.you_travels.YouTravelsFragment"
+        android:label="YouTravelsFragment" >
+        <action
+            android:id="@+id/action_youTravelsFragment_to_newTravelFragment"
+            app:destination="@+id/newTravelFragment" />
+        <action
+            android:id="@+id/action_youTravelsFragment_to_expenceAllFragment"
+            app:destination="@id/expenceAllFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/newTravelFragment"
+        android:name="com.twosmalpixels.travel_notes.ui.new_travel.NewTravelFragment"
+        android:label="NewTravelFragment" >
+        <action
+            android:id="@+id/action_newTravelFragment_to_newPersonFragment"
+            app:destination="@id/newPersonFragment" />
+        <action
+            android:id="@+id/action_newTravelFragment_to_chooseTravelSkinFragment"
+            app:destination="@id/chooseTravelSkinFragment" />
+        <action
+            android:id="@+id/action_newTravelFragment_to_calenarikDialog"
+            app:destination="@id/calenarikDialog" />
+    </fragment>
+    <fragment
+        android:id="@+id/newPersonFragment"
+        android:name="com.twosmalpixels.travel_notes.ui.new_person.NewPersonFragment"
+        android:label="NewPersonFragment" />
+    <fragment
+        android:id="@+id/chooseTravelSkinFragment"
+        android:name="com.twosmalpixels.travel_notes.ui.choose_travel_skin.ChooseTravelSkinFragment"
+        android:label="ChooseTravelSkinFragment" >
+        <action
+            android:id="@+id/action_chooseTravelSkinFragment_to_newTravelFragment"
+            app:destination="@id/newTravelFragment"
+            app:popUpTo="@id/chooseTravelSkinFragment"
+            app:popUpToInclusive="true"/>
+    </fragment>
+    <dialog
+        android:id="@+id/calenarikDialog"
+        android:name="com.twosmalpixels.travel_notes.ui.calendar_dialog.CalenarikDialog"
+        android:label="CalenarikDialog" />
+    <fragment
+        android:id="@+id/expenceAllFragment"
+        android:name="com.twosmalpixels.travel_notes.ui.expense_all.ExpenceAllFragment"
+        android:label="ExpenceAllFragment" >
+        <action
+            android:id="@+id/action_expenceAllFragment_to_addExpenceFragment"
+            app:destination="@id/addExpenceFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/addExpenceFragment"
+        android:name="com.twosmalpixels.travel_notes.ui.add_expence.AddExpenceFragment"
+        android:label="AddExpenceFragment" />
+</navigation>

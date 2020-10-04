@@ -1,0 +1,28 @@
+package com.twosmalpixels.travel_notes.core.repositoriy
+
+import com.google.firebase.firestore.DocumentSnapshot
+import com.google.firebase.firestore.FirebaseFirestore
+import com.twosmalpixels.travel_notes.ui.auth.AuthInterface
+import com.twosmalpixels.travel_notes.ui.auth.IAuthUseCase
+import kotlinx.coroutines.tasks.await
+import java.lang.Exception
+
+class CloudFirestoreBase(val iAuthUseCase: IAuthUseCase): ICloudFirestoreBase {
+
+    override suspend fun getAllDocumentInCollections(db: FirebaseFirestore, collection: String): List<DocumentSnapshot?>{
+        if (iAuthUseCase.getUserId() != null) {
+            return try {
+                val rez =db.collection(USERS_COLLECTION)
+                    .document(iAuthUseCase.getUserId()!!)
+                    .collection(collection)
+                    .get()
+                    .await()
+                rez.documents
+            }catch (e: Exception){
+                arrayListOf<DocumentSnapshot?>()
+            }
+        }else{
+            return arrayListOf<DocumentSnapshot?>()
+        }
+    }
+}

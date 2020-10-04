@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "768740376847",
+    "firebase_url": "https://travel-notes-8f6b5.firebaseio.com",
+    "project_id": "travel-notes-8f6b5",
+    "storage_bucket": "travel-notes-8f6b5.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:768740376847:android:7e4c64547a169c7be3fe7a",
+        "android_client_info": {
+          "package_name": "com.twosmalpixels.myapplication"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "768740376847-6o0qr1k5824d788j4pml1rbe5ottgae7.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.twosmalpixels.myapplication",
+            "certificate_hash": "dca5f262d3c8ceab0dd94c7928f27acbef349959"
+          }
+        },
+        {
+          "client_id": "768740376847-d3d5ms2d5uj4b0q1nqgcacuobrpnmhcg.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDUg6rW1AO777E5mGprw6HYSYTBiFoIlbI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "768740376847-d3d5ms2d5uj4b0q1nqgcacuobrpnmhcg.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
