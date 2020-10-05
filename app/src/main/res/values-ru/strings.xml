@@ -41,6 +41,7 @@
     <string name="rastes_currency_hint">Мы не можем точно сказать по какому курсу вы обмениваете валюту. Пожалуйста, укажите курс вручную.</string>
     <string name="currency_expence">Валюта расходов</string>
     <string name="choose_anoter_cur">Выбрать другую валюту</string>
+    <string name="currency_search_hint">Введите название валюты</string>
 
     <string name="def_curensy">RUB</string>
 

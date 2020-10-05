@@ -73,5 +73,13 @@
     <fragment
         android:id="@+id/currencyFragment"
         android:name="com.twosmalpixels.travel_notes.ui.currency.CurrencyFragment"
-        android:label="CurrencyFragment" />
+        android:label="CurrencyFragment" >
+        <action
+            android:id="@+id/action_currencyFragment_to_allCurrencyDialog"
+            app:destination="@id/allCurrencyDialog" />
+    </fragment>
+    <dialog
+        android:id="@+id/allCurrencyDialog"
+        android:name="com.twosmalpixels.travel_notes.ui.all_currency_dialog.AllCurrencyDialog"
+        android:label="AllCurrencyDialog" />
 </navigation>

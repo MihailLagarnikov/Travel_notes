@@ -17,6 +17,7 @@ import kotlinx.android.synthetic.main.currency_view.view.*
 class CurrencyView: ConstraintLayout, AdapterView.OnItemSelectedListener, TextWatcher {
 
     val isValidate = MutableLiveData<Boolean>()
+    var callAllCurrencyDialog: ((isMainCurrency: Boolean) -> Unit)? = null
 
     constructor(ctx: Context) : super(ctx) {
     }
@@ -41,6 +42,14 @@ class CurrencyView: ConstraintLayout, AdapterView.OnItemSelectedListener, TextWa
         val myAdapter = CurrencySpinerAdapter(context, R.layout.currency_spiner_item,currencyDataList)
         additional_currency_spiner.adapter = myAdapter
         additional_currency_spiner.onItemSelectedListener = this
+    }
+
+    fun setSelection(isMainCurrency: Boolean, selection: Int){
+        if (isMainCurrency){
+            main_currency_spiner.setSelection(selection)
+        }else{
+            additional_currency_spiner.setSelection(selection)
+        }
     }
 
     fun getMainCurrencuCode(): String?{
@@ -75,6 +84,12 @@ class CurrencyView: ConstraintLayout, AdapterView.OnItemSelectedListener, TextWa
             rates_edit_text.requestFocus()
         }
         isValidate.value = isValidate()
+        if (p0?.id == R.id.main_currency_spiner && p2 == (main_currency_spiner?.adapter?.count?.minus(1))){
+            callAllCurrencyDialog?.invoke(true)
+        }
+        if (p0?.id == R.id.additional_currency_spiner && p2 == (additional_currency_spiner?.adapter?.count?.minus(1))){
+            callAllCurrencyDialog?.invoke(false)
+        }
     }
 
     override fun afterTextChanged(p0: Editable?) {

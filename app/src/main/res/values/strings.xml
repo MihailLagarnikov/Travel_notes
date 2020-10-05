@@ -40,6 +40,7 @@
     <string name="rastes_currency_hint">We cannot say for sure at what rate you exchange currency. Please enter the course manually.</string>
     <string name="currency_expence">Cost currency</string>
     <string name="choose_anoter_cur">Choose another currency</string>
+    <string name="currency_search_hint">Enter currency name</string>
 
 
     <string name="def_curensy">EUR</string>

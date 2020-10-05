@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.View
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
+import androidx.navigation.fragment.findNavController
 import com.twosmalpixels.travel_notes.R
 import com.twosmalpixels.travel_notes.pojo.ToolbarParam
 import com.twosmalpixels.travel_notes.ui.new_travel.NewTravelsViewModel
@@ -37,6 +38,10 @@ class CurrencyFragment: BaseFragment() {
         my_currency_view.isValidate.observe(this, Observer {
             button_currency_save.isEnabled = it
         })
+        my_currency_view.callAllCurrencyDialog = {isMainCurrency ->
+            currencyViewModel.isChooseMainCurrency = isMainCurrency
+            findNavController().navigate(R.id.action_currencyFragment_to_allCurrencyDialog)
+        }
         button_currency_save.setOnClickListener {
             newTravelsViewModel.currencyText.value = getCurrencyText()
             newTravelsViewModel.mainCurrencyCode = my_currency_view.getMainCurrencuCode()
@@ -44,7 +49,13 @@ class CurrencyFragment: BaseFragment() {
             newTravelsViewModel.rates = my_currency_view.getRates()
             requireActivity().onBackPressed()
         }
+        currencyViewModel.mainCurrencyListSelection.observe(this, Observer {
+                my_currency_view.setSelection(true, it)
+        })
 
+        currencyViewModel.additionalCurrencyListSelection.observe(this, Observer {
+            my_currency_view.setSelection(false, it)
+        })
     }
 
     private fun getCurrencyText(): String{
