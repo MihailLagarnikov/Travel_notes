@@ -4,7 +4,11 @@ import android.net.Uri
 import android.provider.MediaStore
 import android.view.View
 import android.widget.ImageView
+import android.widget.Spinner
 import android.widget.TextView
+import com.twosmalpixels.travel_notes.views.currency.CurrencyData
+import com.twosmalpixels.travel_notes.views.currency.CurrencySpinerAdapter
+import com.twosmalpixels.travel_notes.views.currency.getEmptyCurrencyData
 
 fun View.setVisibility(visibility: Boolean, isGone: Boolean = true){
     this.visibility = if (visibility){
@@ -36,4 +40,28 @@ fun Map<String, Any>.getFireLong(key: String): Long{
 
 fun ImageView.setUri(uri: Uri){
     this.setImageBitmap(MediaStore.Images.Media.getBitmap(this.context.contentResolver, uri))
+}
+
+fun Spinner.getSelectedCurrencyData(): CurrencyData{
+    if (this.adapter is CurrencySpinerAdapter){
+        return (this.adapter as CurrencySpinerAdapter).getSelectedDate(this.selectedItemPosition)
+    }else{
+        return getEmptyCurrencyData()
+    }
+}
+
+fun Spinner.getCurrencyData(position: Int): CurrencyData{
+    if (this.adapter is CurrencySpinerAdapter){
+        return (this.adapter as CurrencySpinerAdapter).getSelectedDate(position)
+    }else{
+        return getEmptyCurrencyData()
+    }
+}
+
+fun Spinner.equalsCurrency(anotherSpiner: Spinner, position: Int = 500): Boolean{
+    return if (position == 500){
+        this.getSelectedCurrencyData().currencyIso.equals(anotherSpiner.getSelectedCurrencyData().currencyIso)
+    }else{
+        this.getSelectedCurrencyData().currencyIso.equals(anotherSpiner.getCurrencyData(position).currencyIso)
+    }
 }

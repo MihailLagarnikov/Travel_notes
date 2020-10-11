@@ -1,4 +1,4 @@
-package com.twosmalpixels.travel_notes.ui.all_currency_dialog
+package com.twosmalpixels.travel_notes.ui.all_currency
 
 import android.annotation.SuppressLint
 import android.icu.util.Currency
@@ -14,7 +14,7 @@ class AllCurrencyUseCase: IAllCurrencyUseCase {
         val sourseList = Currency.getAvailableCurrencies()
         val rezultList = ArrayList<CurrencyData>()
         for (curr in sourseList){
-            val text = curr.currencyCode + " (" + curr.getDisplayName(Locale.getDefault()) + ")"
+            val text = curr.currencyCode + " (" + curr.getDisplayName(Locale.getDefault()).capitalize() + ")"
             rezultList.add(CurrencyData(hint, text, curr.currencyCode, Locale.getDefault().country))
         }
         return rezultList

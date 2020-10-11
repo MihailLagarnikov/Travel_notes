@@ -40,7 +40,7 @@ class CurrencyFragment: BaseFragment() {
         })
         my_currency_view.callAllCurrencyDialog = {isMainCurrency ->
             currencyViewModel.isChooseMainCurrency = isMainCurrency
-            findNavController().navigate(R.id.action_currencyFragment_to_allCurrencyDialog)
+            findNavController().navigate(R.id.action_currencyFragment_to_allCurrencyFragment)
         }
         button_currency_save.setOnClickListener {
             newTravelsViewModel.currencyText.value = getCurrencyText()

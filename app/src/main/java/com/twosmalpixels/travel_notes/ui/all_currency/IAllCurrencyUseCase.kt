@@ -1,4 +1,4 @@
-package com.twosmalpixels.travel_notes.ui.all_currency_dialog
+package com.twosmalpixels.travel_notes.ui.all_currency
 
 import com.twosmalpixels.travel_notes.views.currency.CurrencyData
 

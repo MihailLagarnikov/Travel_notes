@@ -58,4 +58,8 @@ class CurrencySpinerAdapter(context: Context,
         return view
     }
 
+    fun getSelectedDate(position: Int): CurrencyData{
+        return listData.get(position)
+    }
+
 }

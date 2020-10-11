@@ -11,10 +11,15 @@ import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.text.isDigitsOnly
 import androidx.lifecycle.MutableLiveData
 import com.twosmalpixels.travel_notes.R
+import com.twosmalpixels.travel_notes.core.extension.equalsCurrency
+import com.twosmalpixels.travel_notes.core.extension.getSelectedCurrencyData
 import com.twosmalpixels.travel_notes.core.extension.setVisibility
 import kotlinx.android.synthetic.main.currency_view.view.*
 
 class CurrencyView: ConstraintLayout, AdapterView.OnItemSelectedListener, TextWatcher {
+
+    private val ONE = "1"
+    private val EQUALS = "="
 
     val isValidate = MutableLiveData<Boolean>()
     var callAllCurrencyDialog: ((isMainCurrency: Boolean) -> Unit)? = null
@@ -46,9 +51,11 @@ class CurrencyView: ConstraintLayout, AdapterView.OnItemSelectedListener, TextWa
 
     fun setSelection(isMainCurrency: Boolean, selection: Int){
         if (isMainCurrency){
-            main_currency_spiner.setSelection(selection)
+            main_currency_spiner.setSelection(if (additional_currency_spiner.equalsCurrency(main_currency_spiner, selection))
+                 0 else selection)
         }else{
-            additional_currency_spiner.setSelection(selection)
+            additional_currency_spiner.setSelection(if (main_currency_spiner.equalsCurrency(additional_currency_spiner, selection))
+                0 else selection)
         }
     }
 
@@ -71,7 +78,8 @@ class CurrencyView: ConstraintLayout, AdapterView.OnItemSelectedListener, TextWa
     fun isValidate(): Boolean{
         return (main_currency_spiner.selectedItemPosition != 0 && additional_currency_spiner.selectedItemPosition == 0)
                 || (main_currency_spiner.selectedItemPosition != 0 && additional_currency_spiner.selectedItemPosition != 0
-                && rates_edit_text.text != null && !rates_edit_text.text.isEmpty()  && rates_edit_text.text.toString().isDigitsOnly())
+                && rates_edit_text.text != null && !rates_edit_text.text.isEmpty()  && rates_edit_text.text.toString().isDigitsOnly()
+                && !main_currency_spiner.equalsCurrency(additional_currency_spiner))
     }
 
     override fun onNothingSelected(p0: AdapterView<*>?) {
@@ -79,6 +87,7 @@ class CurrencyView: ConstraintLayout, AdapterView.OnItemSelectedListener, TextWa
 
     override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
         card_rates_currency.setVisibility(main_currency_spiner.selectedItemPosition != 0 && additional_currency_spiner.selectedItemPosition != 0)
+        setRatesText()
         hint_additional_rates.setVisibility(main_currency_spiner.selectedItemPosition != 0 && additional_currency_spiner.selectedItemPosition != 0)
         if (p1 == additional_currency_spiner){
             rates_edit_text.requestFocus()
@@ -90,6 +99,13 @@ class CurrencyView: ConstraintLayout, AdapterView.OnItemSelectedListener, TextWa
         if (p0?.id == R.id.additional_currency_spiner && p2 == (additional_currency_spiner?.adapter?.count?.minus(1))){
             callAllCurrencyDialog?.invoke(false)
         }
+       isValidate.value = isValidate()
+    }
+
+    private fun setRatesText(){
+        val startText = ONE + " " + main_currency_spiner.getSelectedCurrencyData().currencyIso + " " + EQUALS + " "
+        rates_text_start.text = startText
+        rates_text_end.text = additional_currency_spiner.getSelectedCurrencyData().currencyIso
     }
 
     override fun afterTextChanged(p0: Editable?) {

@@ -3,7 +3,7 @@ package com.twosmalpixels.travel_notes.ui.currency
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.twosmalpixels.travel_notes.R
-import com.twosmalpixels.travel_notes.ui.all_currency_dialog.IAllCurrencyUseCase
+import com.twosmalpixels.travel_notes.ui.all_currency.IAllCurrencyUseCase
 import com.twosmalpixels.travel_notes.views.currency.CurrencyData
 import org.koin.java.standalone.KoinJavaComponent
 import java.util.*
