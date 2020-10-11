@@ -18,8 +18,8 @@ class NewTravelsViewModel: ViewModel(), WriteCloudListener {
     val chooseDates = MutableLiveData<ArrayList<Date>>()
     val chooseDate = MutableLiveData<Date>()
     val currencyText = MutableLiveData<String>()
-    var mainCurrencyCode: String? = null
-    var additionalCurrencyCode: String? = null
+    var mainCurrencyCode: String = ""
+    var additionalCurrencyCode: String = ""
     var rates: Int = 0
 
     fun saveNewTravelData(db: FirebaseFirestore, travelsItem: TravelsItem){

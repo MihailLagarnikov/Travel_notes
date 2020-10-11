@@ -44,8 +44,8 @@ class CurrencyFragment: BaseFragment() {
         }
         button_currency_save.setOnClickListener {
             newTravelsViewModel.currencyText.value = getCurrencyText()
-            newTravelsViewModel.mainCurrencyCode = my_currency_view.getMainCurrencuCode()
-            newTravelsViewModel.additionalCurrencyCode = my_currency_view.getAdditionalCurrencuCode()
+            newTravelsViewModel.mainCurrencyCode = my_currency_view.getMainCurrencuCode() ?: ""
+            newTravelsViewModel.additionalCurrencyCode = my_currency_view.getAdditionalCurrencuCode() ?: ""
             newTravelsViewModel.rates = my_currency_view.getRates()
             requireActivity().onBackPressed()
         }

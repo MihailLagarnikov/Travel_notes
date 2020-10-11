@@ -83,7 +83,10 @@ class NewTravelFragment : BaseFragment(), TextWatcher {
                     newTravelsViewModel.chooseDates.value?.get(0)?.time ?: 0L,
                     newTravelsViewModel.chooseDates.value?.get(1)?.time ?: 0L,
                     who_travel_edit_text.text.toString(),
-                    imageName
+                    imageName,
+                    newTravelsViewModel.mainCurrencyCode,
+                    newTravelsViewModel.additionalCurrencyCode,
+                    newTravelsViewModel.rates
                 )
             )
             progressViewModel.showProgress.value = true
@@ -93,6 +96,7 @@ class NewTravelFragment : BaseFragment(), TextWatcher {
             progressViewModel.showProgress.value = false
             if (it) {
                 //данные успешно записанны, переходим
+                findNavController().navigate(R.id.action_newTravelFragment_to_youTravelsFragment)
             } else {
                 //неуспех
                 Snackbar.make(requireView(), R.string.error_write, Snackbar.LENGTH_LONG).show()

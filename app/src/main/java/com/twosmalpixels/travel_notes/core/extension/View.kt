@@ -38,6 +38,11 @@ fun Map<String, Any>.getFireLong(key: String): Long{
     return this.get(key) as Long
 }
 
+fun Map<String, Any>.getFireInt(key: String): Int{
+    if (!this.containsKey(key)) return 0
+    return (this.get(key) as Long).toInt()
+}
+
 fun ImageView.setUri(uri: Uri){
     this.setImageBitmap(MediaStore.Images.Media.getBitmap(this.context.contentResolver, uri))
 }

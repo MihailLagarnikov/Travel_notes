@@ -60,11 +60,11 @@ class CurrencyView: ConstraintLayout, AdapterView.OnItemSelectedListener, TextWa
     }
 
     fun getMainCurrencuCode(): String?{
-        return (main_currency_spiner.selectedItem as CurrencyData).currencyIso
+        return main_currency_spiner.getSelectedCurrencyData().currencyIso
     }
 
     fun getAdditionalCurrencuCode(): String?{
-        return (additional_currency_spiner.selectedItem as CurrencyData).currencyIso
+        return additional_currency_spiner.getSelectedCurrencyData().currencyIso
     }
 
     fun getRates(): Int{

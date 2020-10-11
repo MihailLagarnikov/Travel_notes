@@ -15,7 +15,7 @@ import java.io.ByteArrayOutputStream
 
 class FairbaseStorageBase(val iAuthUseCase: IAuthUseCase): IFairbaseStorageBase {
     private val SLASH = "/"
-    private val ONE_MEGABYTE: Long = 1024 * 1024
+    private val ONE_MEGABYTE: Long = 10024 * 10024
 
     override fun saveBitmap(bitmap: Bitmap, name: String, storage: FirebaseStorage){
         GlobalScope.launch(Dispatchers.IO) {

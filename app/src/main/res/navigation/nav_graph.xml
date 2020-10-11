@@ -39,6 +39,11 @@
         <action
             android:id="@+id/action_newTravelFragment_to_currencyFragment"
             app:destination="@id/currencyFragment" />
+        <action
+            android:id="@+id/action_newTravelFragment_to_youTravelsFragment"
+            app:destination="@id/youTravelsFragment"
+            app:launchSingleTop="false"
+            app:popUpTo="@+id/youTravelsFragment" />
     </fragment>
     <fragment
         android:id="@+id/newPersonFragment"

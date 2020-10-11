@@ -29,14 +29,13 @@ class CalenarikDialog: DialogFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        newTravelsViewModel =
+            ViewModelProviders.of(requireActivity()).get(NewTravelsViewModel::class.java)
         val calendar = Calendar.getInstance()
         val startDate = Date(calendar.time.time)
         val endDate = Date(calendar.time.time + diferentDate)
         calendar_view.init(startDate, endDate, SimpleDateFormat("MMMM, YYYY", Locale.getDefault()))
             .inMode(getRangeMode())
-
-        newTravelsViewModel =
-            ViewModelProviders.of(requireActivity()).get(NewTravelsViewModel::class.java)
 
         button_calendar_save.setOnClickListener {
             if (getRangeMode().equals(CalendarPickerView.SelectionMode.RANGE)) {
