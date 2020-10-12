@@ -74,6 +74,7 @@
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="16dp"
                 android:text="@string/curenxy_settings"
+                android:visibility="gone"
                 app:layout_constraintEnd_toStartOf="@+id/go_to_curency_custom_image"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/card_add_expence" />
@@ -84,6 +85,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="16dp"
                 android:background="@drawable/ic_chevron_right"
+                android:visibility="gone"
                 app:layout_constraintBottom_toBottomOf="@+id/go_to_curency_custom_text"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="@+id/go_to_curency_custom_text" />

@@ -6,6 +6,10 @@ import com.twosmalpixels.travel_notes.core.repositoriy.ICloudFirestoreBase
 import com.twosmalpixels.travel_notes.core.repositoriy.IFairbaseStorageBase
 import com.twosmalpixels.travel_notes.core.repositoriy.SharedPref.ISharedPrefRepositoriy
 import com.twosmalpixels.travel_notes.core.repositoriy.SharedPref.SharedPrefRepositoriy
+import com.twosmalpixels.travel_notes.ui.add_expence.ExpenceRepository
+import com.twosmalpixels.travel_notes.ui.add_expence.ExpenceUseCase
+import com.twosmalpixels.travel_notes.ui.add_expence.IExpenceRepository
+import com.twosmalpixels.travel_notes.ui.add_expence.IExpenceUseCase
 import com.twosmalpixels.travel_notes.ui.all_currency.AllCurrencyUseCase
 import com.twosmalpixels.travel_notes.ui.all_currency.IAllCurrencyUseCase
 import com.twosmalpixels.travel_notes.ui.expense_all.ExpenceAllAllUseCase
@@ -44,6 +48,8 @@ val appModule = module {
     single { ExpenceAllAllUseCase() as IExpenceAllUseCase }
     single { CurrencyUseCase() as ICurrencyUseCase }
     single { AllCurrencyUseCase() as IAllCurrencyUseCase }
+    single { ExpenceRepository(get()) as IExpenceRepository }
+    single { ExpenceUseCase() as IExpenceUseCase }
 
 
 

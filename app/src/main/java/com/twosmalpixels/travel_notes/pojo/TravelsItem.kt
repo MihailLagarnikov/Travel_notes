@@ -17,11 +17,12 @@ data class TravelsItem(
     val imageUrl: String,
     val mainCurrencyIso: String,
     val additionalCurrencyIso: String,
-    val rates: Int
+    val rates: Int,
+    val docName: String
 ) {
 
     companion object {
-        fun createFromMap(map: Map<String, Any>): TravelsItem {
+        fun createFromMap(map: Map<String, Any>, docName: String): TravelsItem {
             return TravelsItem(
                 map.getFireString(TravelsCollection.TITLE.name),
                 map.getFireString(TravelsCollection.DATA_STRING.name),
@@ -31,7 +32,8 @@ data class TravelsItem(
                 map.getFireString(TravelsCollection.IMAGE.name),
                 map.getFireString(TravelsCollection.MAIN_CURRENCY.name),
                 map.getFireString(TravelsCollection.ADDITIONAL_CURRENCY.name),
-                map.getFireInt(TravelsCollection.RATES_CURRENCY.name)
+                map.getFireInt(TravelsCollection.RATES_CURRENCY.name),
+                docName
 
             )
         }
@@ -46,7 +48,10 @@ data class TravelsItem(
             rezult.set(TravelsCollection.PERSON.name, travelsItem.person)
             rezult.set(TravelsCollection.IMAGE.name, travelsItem.imageUrl)
             rezult.set(TravelsCollection.MAIN_CURRENCY.name, travelsItem.mainCurrencyIso)
-            rezult.set(TravelsCollection.ADDITIONAL_CURRENCY.name, travelsItem.additionalCurrencyIso)
+            rezult.set(
+                TravelsCollection.ADDITIONAL_CURRENCY.name,
+                travelsItem.additionalCurrencyIso
+            )
             rezult.set(TravelsCollection.RATES_CURRENCY.name, travelsItem.rates)
             return rezult
         }
@@ -61,7 +66,23 @@ data class TravelsItem(
                 InnerImage.IMG_ADD_NEW_TRAVEL.img,
                 "",
                 "",
-                0
+                0,
+                ""
+            )
+        }
+
+        fun createEmptyItem(): TravelsItem {
+            return TravelsItem(
+                "",
+                "",
+                0L,
+                0L,
+                "",
+                InnerImage.IMG_ADD_NEW_TRAVEL.img,
+                "",
+                "",
+                0,
+                ""
             )
         }
     }

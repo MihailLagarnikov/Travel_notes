@@ -1,6 +1,7 @@
 package com.twosmalpixels.travel_notes.ui.expense_all
 
 import com.twosmalpixels.travel_notes.R
+import com.twosmalpixels.travel_notes.pojo.TravelsItem
 import com.twosmalpixels.travel_notes.views.shedule.SheduleData
 import com.twosmalpixels.travel_notes.views.shedule.SheduleSpinerData
 import kotlin.collections.ArrayList
@@ -26,8 +27,9 @@ class ExpenceAllAllUseCase: IExpenceAllUseCase {
             )
     }
 
-    override fun getDefaultShdulelistSpiner(): ArrayList<SheduleSpinerData> {
-        return arrayListOf(SheduleSpinerData(SUM_NUL, R.string.def_curensy))
+    override fun getDefaultShdulelistSpiner(travelsItem: TravelsItem): ArrayList<SheduleSpinerData> {
+        return arrayListOf(SheduleSpinerData(SUM_NUL, travelsItem.mainCurrencyIso),
+            SheduleSpinerData(SUM_NUL, travelsItem.additionalCurrencyIso))
     }
 
     override fun getDefaultExpenseList(): ArrayList<ExpenceData> {

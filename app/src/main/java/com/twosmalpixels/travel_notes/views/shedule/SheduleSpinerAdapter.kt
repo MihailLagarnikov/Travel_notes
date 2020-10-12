@@ -27,7 +27,7 @@ class SheduleSpinerAdapter(context: Context,
         val amount = view.findViewById<TextView>(R.id.amount_shedule)
         val curency = view.findViewById<TextView>(R.id.curency_shedule)
         amount.text = listData.get(position).amount.toString()
-        curency.setText(listData.get(position).currency)
+        curency.setText(listData.get(position).currencyIso)
         return view
 
     }

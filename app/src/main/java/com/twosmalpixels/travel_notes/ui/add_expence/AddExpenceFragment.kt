@@ -21,6 +21,7 @@ import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.twosmalpixels.travel_notes.R
+import com.twosmalpixels.travel_notes.core.createLongFromString
 import com.twosmalpixels.travel_notes.core.createStringFromLocation
 import com.twosmalpixels.travel_notes.core.extension.setUri
 import com.twosmalpixels.travel_notes.core.extension.setVisibility
@@ -74,6 +75,21 @@ class AddExpenceFragment: BaseFragment(), LocationListener, TextWatcher {
         initLocationCard()
         initLocationLogic()
         edit_text_add_expence.addTextChangedListener(this)
+        button_exprnce_save.setOnClickListener {
+            //сохраняем расход
+            val mainActivity = (requireActivity() as MainActivity)
+            val expenceData = ExpenceData(createLongFromString(edit_text_add_expence.text.toString()),
+                selectedExpenceCategory?.number?.toLong() ?: 0L,
+                comment_edit_text_add_expence.text.toString(),
+                date_edit_text_add_expence.text.toString(),
+
+                )
+            addExpenceViewModel.saveExpenceData(mainActivity.db,
+
+
+                )
+
+        }
 
     }
 

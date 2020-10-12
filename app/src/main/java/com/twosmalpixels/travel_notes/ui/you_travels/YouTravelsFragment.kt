@@ -42,6 +42,7 @@ class YouTravelsFragment: BaseFragment() {
             findNavController().navigate(R.id.action_youTravelsFragment_to_newTravelFragment)
         }else{
             expenseAllViewModel.toolbareName = travelsItem.title
+            expenseAllViewModel.travelsItem = travelsItem
             findNavController().navigate(R.id.action_youTravelsFragment_to_expenceAllFragment)
         }
     }

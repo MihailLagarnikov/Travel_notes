@@ -38,7 +38,7 @@ class YouTravelsRepositoriy(val cloudFirestoreBase: ICloudFirestoreBase): IYouTr
             if (listDoc.size != 0){
                 for (doc in listDoc){
                     if (doc != null && doc.data != null){
-                        rezult.add(TravelsItem.createFromMap(doc.data!!))
+                        rezult.add(TravelsItem.createFromMap(doc.data!!, doc.reference.id))
                     }
                 }
             }
