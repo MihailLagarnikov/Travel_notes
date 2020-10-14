@@ -17,11 +17,11 @@ private val RATES_CURRENCY_ = "rates_currency"
 
 //for expenceDtat
 private val AMOUNT_ = "amount"
+private val CURRENCY_ = "currency"
 private val CATEGORY_ = "category"
 private val COMMENT_ = "comment"
 private val DATA_ = "data"
-private val DATASTART_ = "dataStart"
-private val DATAEND_ = "dataEnd"
+private val DATA_LONG_ = "dataLong"
 private val IMAGEURL_ = "imageUrl"
 private val LAT_ = "lat"
 private val LON_ = "lon"
@@ -40,11 +40,11 @@ enum class TravelsCollection(key: String){
 
 enum class ExpenceDataCollection(key: String){
     AMOUNT(AMOUNT_),
+    CURRENCY(CURRENCY_),
     CATEGORY(CATEGORY_),
     COMMENT(COMMENT_),
     DATA(DATA_),
-    DATASTART(DATASTART_),
-    DATAEND(DATAEND_),
+    DATA_LONG(DATA_LONG_),
     IMAGEURL(IMAGEURL_),
     LAT(LAT_),
     LON(LON_),

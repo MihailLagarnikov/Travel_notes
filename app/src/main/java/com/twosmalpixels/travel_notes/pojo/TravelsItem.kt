@@ -18,7 +18,7 @@ data class TravelsItem(
     val mainCurrencyIso: String,
     val additionalCurrencyIso: String,
     val rates: Int,
-    val docName: String
+    val docName: String = ""
 ) {
 
     companion object {

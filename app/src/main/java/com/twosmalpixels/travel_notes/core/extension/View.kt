@@ -7,7 +7,7 @@ import android.widget.ImageView
 import android.widget.Spinner
 import android.widget.TextView
 import com.twosmalpixels.travel_notes.views.currency.CurrencyData
-import com.twosmalpixels.travel_notes.views.currency.CurrencySpinerAdapter
+import com.twosmalpixels.travel_notes.views.currency.CurrencySpinnerListener
 import com.twosmalpixels.travel_notes.views.currency.getEmptyCurrencyData
 
 fun View.setVisibility(visibility: Boolean, isGone: Boolean = true){
@@ -38,6 +38,11 @@ fun Map<String, Any>.getFireLong(key: String): Long{
     return this.get(key) as Long
 }
 
+fun Map<String, Any>.getFireDouble(key: String): Double{
+    if (!this.containsKey(key)) return 0.0
+    return this.get(key) as Double
+}
+
 fun Map<String, Any>.getFireInt(key: String): Int{
     if (!this.containsKey(key)) return 0
     return (this.get(key) as Long).toInt()
@@ -48,16 +53,16 @@ fun ImageView.setUri(uri: Uri){
 }
 
 fun Spinner.getSelectedCurrencyData(): CurrencyData{
-    if (this.adapter is CurrencySpinerAdapter){
-        return (this.adapter as CurrencySpinerAdapter).getSelectedDate(this.selectedItemPosition)
+    if (this.adapter is CurrencySpinnerListener){
+        return (this.adapter as CurrencySpinnerListener).getSelectedDate(this.selectedItemPosition)
     }else{
         return getEmptyCurrencyData()
     }
 }
 
 fun Spinner.getCurrencyData(position: Int): CurrencyData{
-    if (this.adapter is CurrencySpinerAdapter){
-        return (this.adapter as CurrencySpinerAdapter).getSelectedDate(position)
+    if (this.adapter is CurrencySpinnerListener){
+        return (this.adapter as CurrencySpinnerListener).getSelectedDate(position)
     }else{
         return getEmptyCurrencyData()
     }

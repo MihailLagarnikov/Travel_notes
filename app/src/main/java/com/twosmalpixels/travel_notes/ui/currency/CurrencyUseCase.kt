@@ -1,6 +1,8 @@
 package com.twosmalpixels.travel_notes.ui.currency
 
+import com.twosmalpixels.travel_notes.pojo.TravelsItem
 import com.twosmalpixels.travel_notes.views.currency.CurrencyData
+import kotlin.collections.ArrayList
 
 class CurrencyUseCase: ICurrencyUseCase {
 
@@ -21,5 +23,22 @@ class CurrencyUseCase: ICurrencyUseCase {
         )
         list.sortBy { it.countriCode.equals(countryCode) }
         return list
+    }
+
+    override fun createCurrensyListFromItem(
+        travelsItem: TravelsItem,
+        allCurrencyList: ArrayList<CurrencyData>
+    ): ArrayList<CurrencyData> {
+        var mainCur: CurrencyData? = null
+        var additionalCur: CurrencyData? = null
+        for (cur in allCurrencyList){
+            if (cur.currencyIso.equals(travelsItem.mainCurrencyIso)){
+                mainCur = cur
+            }
+            if (cur.currencyIso.equals(travelsItem.additionalCurrencyIso)){
+                additionalCur = cur
+            }
+        }
+        return arrayListOf(mainCur!!, additionalCur!!)
     }
 }

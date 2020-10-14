@@ -20,7 +20,6 @@ import com.twosmalpixels.travel_notes.ui.calendar_dialog.createStringFromRangeDa
 import com.twosmalpixels.travel_notes.ui.choose_travel_skin.ChooseSkinViewModel
 import com.twosmalpixels.travel_notes.ui.new_person.NewPersonViewModel
 import kotlinx.android.synthetic.main.new_travel_fragment.*
-import org.apache.commons.lang3.RandomStringUtils
 
 class NewTravelFragment : BaseFragment(), TextWatcher {
     private var isDefaultSkin = true
@@ -66,12 +65,12 @@ class NewTravelFragment : BaseFragment(), TextWatcher {
         newTravelsViewModel.isRangeMode = true
         button_new_travel_save.setOnClickListener {
 
-            var imageName = String.format("%s", RandomStringUtils.randomAlphanumeric(8))
+            var imageName = newTravelsViewModel.getRandomFileName()
 
             if (isDefaultSkin){
                 imageName = getInnerName(chooseSkinViewModel.shoosenSkin?.value ?: 0)
             }else{
-                saveBitmap(choose_image_travel_main_img, imageName)
+                newTravelsViewModel.saveBitmap(choose_image_travel_main_img, imageName, (requireActivity() as MainActivity).storage)
             }
 
             val mainActivity = (requireActivity() as MainActivity)
@@ -124,14 +123,6 @@ class NewTravelFragment : BaseFragment(), TextWatcher {
                 findNavController().navigate(R.id.action_newTravelFragment_to_currencyFragment)
             }
         }
-    }
-
-
-    private fun saveBitmap(imageView: ImageView, imgeName: String){
-        imageView.isDrawingCacheEnabled = true
-        imageView.buildDrawingCache()
-        val bitmap = (imageView.drawable as BitmapDrawable).bitmap
-        newTravelsViewModel.saveBitmap(bitmap, imgeName, (requireActivity() as MainActivity).storage)
     }
 
     override fun afterTextChanged(p0: Editable?) {

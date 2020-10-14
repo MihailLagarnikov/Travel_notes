@@ -6,10 +6,12 @@ import com.google.firebase.storage.FirebaseStorage
 import com.twosmalpixels.travel_notes.core.repositoriy.IFairbaseStorageBase
 import com.twosmalpixels.travel_notes.core.repositoriy.WriteCloudListener
 import com.twosmalpixels.travel_notes.pojo.TravelsItem
-import com.twosmalpixels.travel_notes.ui.choose_travel_skin.IChooseSkinUseCase
+import org.apache.commons.lang3.RandomStringUtils
 import org.koin.java.standalone.KoinJavaComponent
 
 class NewTravelsUseCase(val iNewTravelsRepositoriy: INewTravelsRepositoriy): INewTravelsUseCase {
+
+    private val RANDOM_COUNT = 20
     private val iFairbaseStorageBase by KoinJavaComponent.inject(
         IFairbaseStorageBase::class.java
     )
@@ -29,5 +31,9 @@ class NewTravelsUseCase(val iNewTravelsRepositoriy: INewTravelsRepositoriy): INe
 
     override fun saveSkin(bitmap: Bitmap, name: String, storage: FirebaseStorage) {
         iFairbaseStorageBase.saveBitmap(bitmap, name, storage)
+    }
+
+    override fun getRandomFileName(): String {
+        return String.format("%s", RandomStringUtils.randomAlphanumeric(RANDOM_COUNT))
     }
 }

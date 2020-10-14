@@ -16,4 +16,6 @@ interface INewTravelsUseCase {
 
     fun saveSkin(bitmap: Bitmap, name: String, storage: FirebaseStorage)
 
+    fun getRandomFileName(): String
+
 }

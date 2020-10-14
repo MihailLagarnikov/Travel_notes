@@ -10,10 +10,13 @@ import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
 import com.twosmalpixels.travel_notes.R
 
-class CurrencySpinerAdapter(context: Context,
-                            val resource: Int,
-                            val listData: ArrayList<CurrencyData>) :
-    ArrayAdapter<String>(context, resource, Array(listData.size, {""})) {
+class CurrencySpinerAdapter(
+    context: Context,
+    val resource: Int,
+    val listData: ArrayList<CurrencyData>
+) :
+    ArrayAdapter<String>(context, resource, Array(listData.size, { "" })),
+    CurrencySpinnerListener {
 
 
     override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
@@ -31,13 +34,13 @@ class CurrencySpinerAdapter(context: Context,
         typeCurrency.setText(listData.get(position).hint)
         if (listData.get(position).currencyResourceText == 0) {
             curency.setText(listData.get(position).currencyText)
-        }else{
+        } else {
             val text1 = context.getString(listData.get(position).currencyResourceText)
             val text = listData.get(position).currencyIso + " (" + text1 + ")"
             curency.setText(text)
         }
 
-        if (position == 0){
+        if (position == 0) {
             typeCurrency.visibility = View.GONE
             curency.setTextColor(context.resources.getColor(R.color.text_979))
             curency.setText(listData.get(position).hint)
@@ -45,7 +48,7 @@ class CurrencySpinerAdapter(context: Context,
             params.topMargin = params.leftMargin
             curency.layoutParams = params
         }
-        if (position == listData.size - 1){
+        if (position == listData.size - 1) {
             view.findViewById<ImageView>(R.id.curremcy_spiner_divider).visibility = View.VISIBLE
             typeCurrency.visibility = View.GONE
             curency.setTextColor(context.resources.getColor(R.color.text_979))
@@ -58,7 +61,7 @@ class CurrencySpinerAdapter(context: Context,
         return view
     }
 
-    fun getSelectedDate(position: Int): CurrencyData{
+    override fun getSelectedDate(position: Int): CurrencyData {
         return listData.get(position)
     }
 

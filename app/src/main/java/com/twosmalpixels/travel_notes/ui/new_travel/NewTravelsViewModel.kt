@@ -1,6 +1,7 @@
 package com.twosmalpixels.travel_notes.ui.new_travel
 
-import android.graphics.Bitmap
+import android.graphics.drawable.BitmapDrawable
+import android.widget.ImageView
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.google.firebase.firestore.FirebaseFirestore
@@ -26,11 +27,18 @@ class NewTravelsViewModel: ViewModel(), WriteCloudListener {
         iNewTravelsUseCase.saneNewTravelData(db, travelsItem, this)
     }
 
-    fun saveBitmap(bitmap: Bitmap, name: String, storage: FirebaseStorage){
+    fun saveBitmap(imageView: ImageView, name: String, storage: FirebaseStorage){
+        imageView.isDrawingCacheEnabled = true
+        imageView.buildDrawingCache()
+        val bitmap = (imageView.drawable as BitmapDrawable).bitmap
         iNewTravelsUseCase.saveSkin(bitmap, name, storage)
     }
 
     override fun setSuccess(isSuccess: Boolean) {
         changeStatus.value = isSuccess
+    }
+
+    fun getRandomFileName(): String{
+        return iNewTravelsUseCase.getRandomFileName()
     }
 }

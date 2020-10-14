@@ -14,20 +14,20 @@ import android.provider.MediaStore
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.View
+import android.widget.AdapterView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.google.android.material.snackbar.Snackbar
 import com.twosmalpixels.travel_notes.R
 import com.twosmalpixels.travel_notes.core.createLongFromString
 import com.twosmalpixels.travel_notes.core.createStringFromLocation
+import com.twosmalpixels.travel_notes.core.extension.getSelectedCurrencyData
 import com.twosmalpixels.travel_notes.core.extension.setUri
 import com.twosmalpixels.travel_notes.core.extension.setVisibility
-import com.twosmalpixels.travel_notes.core.repositoriy.LocationRepository.GetAdressRepository
-import com.twosmalpixels.travel_notes.core.repositoriy.LocationRepository.LocationApiService
-import com.twosmalpixels.travel_notes.core.repositoriy.LocationRepository.LocationData
 import com.twosmalpixels.travel_notes.pojo.ToolbarParam
 import com.twosmalpixels.travel_notes.ui.MainActivity
 import com.twosmalpixels.travel_notes.ui.calendar_dialog.createStringFromDate
@@ -35,10 +35,9 @@ import com.twosmalpixels.travel_notes.ui.calendar_dialog.getCurentDate
 import com.twosmalpixels.travel_notes.ui.expense_all.ExpenceCategory
 import com.twosmalpixels.travel_notes.ui.new_travel.NewTravelsViewModel
 import kotlinx.android.synthetic.main.add_expence_fragment.*
-import retrofit2.Call
-import retrofit2.Response
 
-class AddExpenceFragment: BaseFragment(), LocationListener, TextWatcher {
+class AddExpenceFragment : BaseFragment(), LocationListener, TextWatcher,
+    AdapterView.OnItemSelectedListener {
     private lateinit var newTravelsViewModel: NewTravelsViewModel
     private lateinit var addExpenceViewModel: AddExpenceViewModel
     private val PICK_IMAGE = 101
@@ -46,7 +45,7 @@ class AddExpenceFragment: BaseFragment(), LocationListener, TextWatcher {
     private val RADIUS_LOCATION = 30F
     private var selectedExpenceCategory: ExpenceCategory? = null
 
-    companion object{
+    companion object {
         const val PERMISION_LOCATION = 11
     }
 
@@ -65,11 +64,13 @@ class AddExpenceFragment: BaseFragment(), LocationListener, TextWatcher {
         addExpenceViewModel =
             ViewModelProviders.of(requireActivity()).get(AddExpenceViewModel::class.java)
         newTravelsViewModel.isRangeMode = false
-        expence_list.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
+        expence_list.layoutManager =
+            LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
         expence_list.adapter = AllExpenceAdapter(ExpenceCategory.values(), {
             // выделенная категория
             selectedExpenceCategory = it
         })
+        initCurrencySoinner()
         initDateCard()
         initFotoCard()
         initLocationCard()
@@ -78,78 +79,118 @@ class AddExpenceFragment: BaseFragment(), LocationListener, TextWatcher {
         button_exprnce_save.setOnClickListener {
             //сохраняем расход
             val mainActivity = (requireActivity() as MainActivity)
-            val expenceData = ExpenceData(createLongFromString(edit_text_add_expence.text.toString()),
+            val expenceData = ExpenceData(
+                createLongFromString(edit_text_add_expence.text.toString()),
+                addExpenceViewModel.currentCurrency?.currencyIso ?: "",
                 selectedExpenceCategory?.number?.toLong() ?: 0L,
                 comment_edit_text_add_expence.text.toString(),
                 date_edit_text_add_expence.text.toString(),
-
-                )
-            addExpenceViewModel.saveExpenceData(mainActivity.db,
-
-
-                )
-
+                newTravelsViewModel.chooseDate.value?.time ?: 0L,
+                getImageName(),
+                addExpenceViewModel.lat,
+                addExpenceViewModel.lon
+            )
+            addExpenceViewModel.saveExpenceData(
+                mainActivity.db,
+                expenceData,
+                expenseAllViewModel.travelsItem.docName
+            )
         }
+
+        addExpenceViewModel.changeStatus.observe(this, Observer {
+            progressViewModel.showProgress.value = false
+            if (it) {
+                //данные успешно записанны, переходим
+                requireActivity().onBackPressed()
+            } else {
+                //неуспех
+                Snackbar.make(requireView(), R.string.error_write, Snackbar.LENGTH_LONG).show()
+            }
+        })
+
 
     }
 
+    private fun getImageName(): String {
+        return if (text_foto_add_expence.visibility == View.VISIBLE) {
+            ExpenceData.NON_IMAGE
+        } else {
+            val name = newTravelsViewModel.getRandomFileName()
+            newTravelsViewModel.saveBitmap(
+                image_add_expence,
+                name,
+                (requireActivity() as MainActivity).storage
+            )
+            name
+        }
+    }
+
     @SuppressLint("MissingPermission")
-    private fun initLocationLogic(){
-        val locationManager = requireActivity().getSystemService(AppCompatActivity.LOCATION_SERVICE) as LocationManager;
+    private fun initLocationLogic() {
+        val locationManager =
+            requireActivity().getSystemService(AppCompatActivity.LOCATION_SERVICE) as LocationManager;
         addExpenceViewModel.isHaveLocationPermision.observe(this, Observer {
             if (it) {
                 locationManager.requestLocationUpdates(
                     LocationManager.GPS_PROVIDER,
-                    TIME_INTERVAL_LOCATION, RADIUS_LOCATION, this)
+                    TIME_INTERVAL_LOCATION, RADIUS_LOCATION, this
+                )
                 setLocation(locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER))
-            }else{
+            } else {
                 //нет разрешения
 
             }
         })
-        if (ActivityCompat.checkSelfPermission(requireActivity() as MainActivity, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED
-            && ActivityCompat.checkSelfPermission(requireActivity() as MainActivity, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(requireActivity() as MainActivity, arrayOf(Manifest.permission.ACCESS_FINE_LOCATION), PERMISION_LOCATION);
+        if (ActivityCompat.checkSelfPermission(
+                requireActivity() as MainActivity,
+                Manifest.permission.ACCESS_FINE_LOCATION
+            ) != PackageManager.PERMISSION_GRANTED
+            && ActivityCompat.checkSelfPermission(
+                requireActivity() as MainActivity,
+                Manifest.permission.ACCESS_COARSE_LOCATION
+            ) != PackageManager.PERMISSION_GRANTED
+        ) {
+            ActivityCompat.requestPermissions(
+                requireActivity() as MainActivity,
+                arrayOf(Manifest.permission.ACCESS_FINE_LOCATION),
+                PERMISION_LOCATION
+            );
             return;
-        }else{
+        } else {
             addExpenceViewModel.isHaveLocationPermision.value = true
         }
 
     }
 
-    private fun createAdressSearch(location: Location){
-        val rep = GetAdressRepository(LocationApiService.RetrofitClient.getClient())
-        rep.searchAdress(location.latitude, location.longitude).enqueue(object : retrofit2.Callback<MutableList<LocationData>> {
-            override fun onFailure(call: Call<MutableList<LocationData>>, t: Throwable) {
-                val tt = 2
-            }
+    private fun initCurrencySoinner() {
+        spiner_add_expence.adapter = AddExpenceCurrencySpinerAdapter(
+            requireContext(),
+            R.layout.currency_spiner_item,
+            expenseAllViewModel.getCurrencyList()
+        )
+        spiner_add_expence.setPromptId(R.string.choose_skin_b)
+        spiner_add_expence.setSelection(0)
+        spiner_add_expence.onItemSelectedListener = this
 
-            override fun onResponse(
-                call: Call<MutableList<LocationData>>,
-                response: Response<MutableList<LocationData>>
-            ) {
-                val tt = 1
-            }
-        })
     }
 
-    private fun initDateCard(){
+    private fun initDateCard() {
         date_edit_text_add_expence.setText(createStringFromDate(getCurentDate()))
         date_edit_text_add_expence.setOnFocusChangeListener { view, b ->
             findNavController().navigate(R.id.action_newTravelFragment_to_calenarikDialog)
         }
         newTravelsViewModel.chooseDate.observe(this, Observer {
-            if (it != null){
+            if (it != null) {
                 date_edit_text_add_expence.setText(createStringFromDate(it.time))
             }
         })
     }
 
-    private fun initFotoCard(){
+    private fun initFotoCard() {
         constraint_foto_add_expence.setOnClickListener { startOpenGalleryIntent() }
     }
 
-    private fun startOpenGalleryIntent(){
+    private fun startOpenGalleryIntent() {
         val intentGalerey = Intent()
         intentGalerey.type = "image/*"
         intentGalerey.action = Intent.ACTION_GET_CONTENT
@@ -174,18 +215,18 @@ class AddExpenceFragment: BaseFragment(), LocationListener, TextWatcher {
         }
     }
 
-    private fun initLocationCard(){
+    private fun initLocationCard() {
         constraint_location_add_expence.setOnClickListener {
-
         }
     }
 
-    private fun setLocation(p0: Location?){
-        if (p0 != null){
+    private fun setLocation(p0: Location?) {
+        if (p0 != null) {
             image_location_add_expence.visibility = View.VISIBLE
             pluse_image__location_add_expence.visibility = View.INVISIBLE
             text_location_add_expence.setText(createStringFromLocation(p0))
-            createAdressSearch(p0)
+            addExpenceViewModel.lat = p0.latitude
+            addExpenceViewModel.lon = p0.longitude
         }
     }
 
@@ -206,10 +247,17 @@ class AddExpenceFragment: BaseFragment(), LocationListener, TextWatcher {
     }
 
     override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
-        val isAmountEmpty =edit_text_add_expence.text?.isEmpty() ?: true
+        val isAmountEmpty = edit_text_add_expence.text?.isEmpty() ?: true
         button_exprnce_save.isEnabled = !isAmountEmpty && selectedExpenceCategory != null
     }
 
     override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+    }
+
+    override fun onNothingSelected(p0: AdapterView<*>?) {
+    }
+
+    override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
+        addExpenceViewModel.currentCurrency = spiner_add_expence.getSelectedCurrencyData()
     }
 }
