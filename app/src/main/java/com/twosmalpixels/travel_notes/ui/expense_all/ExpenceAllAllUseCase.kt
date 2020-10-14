@@ -1,12 +1,15 @@
 package com.twosmalpixels.travel_notes.ui.expense_all
 
+import androidx.lifecycle.MutableLiveData
+import com.google.firebase.firestore.FirebaseFirestore
 import com.twosmalpixels.travel_notes.R
 import com.twosmalpixels.travel_notes.pojo.TravelsItem
+import com.twosmalpixels.travel_notes.ui.add_expence.ExpenceData
 import com.twosmalpixels.travel_notes.views.shedule.SheduleData
 import com.twosmalpixels.travel_notes.views.shedule.SheduleSpinerData
 import kotlin.collections.ArrayList
 
-class ExpenceAllAllUseCase: IExpenceAllUseCase {
+class ExpenceAllAllUseCase(val iExpenceAllRepositoriy: IExpenceAllRepositoriy): IExpenceAllUseCase {
     private val DEF_HEIGHT = 1
     private val SUM_NUL = 0
     private val DEF_LIST_AMOUNT = arrayListOf<Int>(SUM_NUL)
@@ -33,6 +36,10 @@ class ExpenceAllAllUseCase: IExpenceAllUseCase {
     }
 
     override fun getDefaultExpenseList(): ArrayList<ExpenceData> {
-        return arrayListOf(getEmptyData())
+        return arrayListOf(ExpenceData.getEmptyData())
+    }
+
+    override fun getExpenceList(db: FirebaseFirestore, docName: String): MutableLiveData<ArrayList<ExpenceData>> {
+        return iExpenceAllRepositoriy.getExpenceList(db, docName)
     }
 }

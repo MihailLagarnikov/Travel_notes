@@ -22,6 +22,8 @@ import com.twosmalpixels.travel_notes.ui.choose_travel_skin.ChooseSkinUseCase
 import com.twosmalpixels.travel_notes.ui.choose_travel_skin.IChooseSkinUseCase
 import com.twosmalpixels.travel_notes.ui.currency.CurrencyUseCase
 import com.twosmalpixels.travel_notes.ui.currency.ICurrencyUseCase
+import com.twosmalpixels.travel_notes.ui.expense_all.ExpenceAllRepositoriy
+import com.twosmalpixels.travel_notes.ui.expense_all.IExpenceAllRepositoriy
 import com.twosmalpixels.travel_notes.ui.new_travel.INewTravelsRepositoriy
 import com.twosmalpixels.travel_notes.ui.new_travel.INewTravelsUseCase
 import com.twosmalpixels.travel_notes.ui.new_travel.NewTravelsRepositoiy
@@ -45,11 +47,12 @@ val appModule = module {
     single { SharedPrefRepositoriy() as ISharedPrefRepositoriy}
     single { ChooseSkinUseCase() as IChooseSkinUseCase }
     single { FairbaseStorageBase(get()) as IFairbaseStorageBase }
-    single { ExpenceAllAllUseCase() as IExpenceAllUseCase }
+    single { ExpenceAllAllUseCase(get()) as IExpenceAllUseCase }
     single { CurrencyUseCase() as ICurrencyUseCase }
     single { AllCurrencyUseCase() as IAllCurrencyUseCase }
     single { ExpenceRepository(get()) as IExpenceRepository }
     single { ExpenceUseCase() as IExpenceUseCase }
+    single { ExpenceAllRepositoriy(get()) as IExpenceAllRepositoriy }
 
 
 

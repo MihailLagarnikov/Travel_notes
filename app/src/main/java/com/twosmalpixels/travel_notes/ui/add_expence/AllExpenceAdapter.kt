@@ -6,7 +6,6 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.twosmalpixels.travel_notes.R
 import com.twosmalpixels.travel_notes.ui.expense_all.ExpenceCategory
-import com.twosmalpixels.travel_notes.ui.expense_all.ExpenceData
 import kotlinx.android.synthetic.main.expence_item.view.*
 
 class AllExpenceAdapter(val listCategoriys: Array<ExpenceCategory>, val listener: (ExpenceCategory?) -> Unit): RecyclerView.Adapter<AllExpenceAdapter.ViewHolder>() {

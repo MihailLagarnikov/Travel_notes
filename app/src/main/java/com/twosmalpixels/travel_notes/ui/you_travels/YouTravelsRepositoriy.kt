@@ -1,14 +1,11 @@
 package com.twosmalpixels.travel_notes.ui.you_travels
 
-import android.view.View
 import androidx.lifecycle.MutableLiveData
 import com.google.firebase.firestore.FirebaseFirestore
-import com.twosmalpixels.travel_notes.core.repositoriy.CloudFirestoreBase
 import com.twosmalpixels.travel_notes.core.repositoriy.ICloudFirestoreBase
 import com.twosmalpixels.travel_notes.core.repositoriy.TRAVELS_COLLECTION
-import com.twosmalpixels.travel_notes.core.repositoriy.YouTravelSourse
+import com.twosmalpixels.travel_notes.core.repositoriy.DataSourse
 import com.twosmalpixels.travel_notes.pojo.TravelsItem
-import com.twosmalpixels.travel_notes.ui.auth.AuthInterface
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.async
@@ -19,14 +16,14 @@ class YouTravelsRepositoriy(val cloudFirestoreBase: ICloudFirestoreBase): IYouTr
     
     override fun getYouTravelsList(db: FirebaseFirestore): MutableLiveData<ArrayList<TravelsItem>> {
          when (getSourceData()){
-            YouTravelSourse.FAIRBASE -> getFairbaseYouTravelsList(db)
-            YouTravelSourse.SHARE_PREF -> getSharedPrefYuoTravelsList()
+            DataSourse.FAIRBASE -> getFairbaseYouTravelsList(db)
+            DataSourse.SHARE_PREF -> getSharedPrefYuoTravelsList()
         }
         return youTravelDataList
     }
 
-    private fun getSourceData(): YouTravelSourse{
-        return YouTravelSourse.FAIRBASE
+    private fun getSourceData(): DataSourse{
+        return DataSourse.FAIRBASE
     }
 
     private fun getFairbaseYouTravelsList(db: FirebaseFirestore){

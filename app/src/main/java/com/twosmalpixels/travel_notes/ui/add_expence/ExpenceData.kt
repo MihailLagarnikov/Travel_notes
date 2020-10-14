@@ -48,5 +48,17 @@ data class ExpenceData(
             rezult.set(ExpenceDataCollection.LON.name, expData.lon)
             return rezult
         }
+
+        fun getEmptyData(): ExpenceData{
+            return ExpenceData(0,
+                "",
+                0,
+                "",
+                "",
+                0,
+                "",
+                0.0,
+                0.0)
+        }
     }
 }

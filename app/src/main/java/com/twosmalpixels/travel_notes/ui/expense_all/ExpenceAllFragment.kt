@@ -8,6 +8,8 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.twosmalpixels.travel_notes.R
 import com.twosmalpixels.travel_notes.pojo.ToolbarParam
+import com.twosmalpixels.travel_notes.ui.MainActivity
+import com.twosmalpixels.travel_notes.ui.add_expence.ExpenceData
 import kotlinx.android.synthetic.main.expence_all_fragment.*
 
 class ExpenceAllFragment: BaseFragment() {
@@ -38,10 +40,18 @@ class ExpenceAllFragment: BaseFragment() {
             expAdapter.setNewList(it)
         })
 
+        progressViewModel.showProgress.value = true
+        expenseAllViewModel.getExpenceList((requireActivity() as MainActivity).db).observe(this, Observer {
+            if (!it.contains(ExpenceData.getEmptyData())) {
+                it.add(ExpenceData.getEmptyData())
+            }
+            expAdapter.setNewList(it)
+            progressViewModel.showProgress.value = false
+        })
     }
 
     private fun clickExpenceItem(expenceData: ExpenceData){
-        if (expenceData.equals(getEmptyData())){
+        if (expenceData.equals(ExpenceData.getEmptyData())){
             findNavController().navigate(R.id.action_expenceAllFragment_to_addExpenceFragment)
         }
     }

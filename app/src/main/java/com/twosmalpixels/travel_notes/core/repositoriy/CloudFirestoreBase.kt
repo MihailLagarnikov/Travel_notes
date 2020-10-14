@@ -25,4 +25,23 @@ class CloudFirestoreBase(val iAuthUseCase: IAuthUseCase): ICloudFirestoreBase {
             return arrayListOf<DocumentSnapshot?>()
         }
     }
+
+    override suspend fun getAllDocumentInExpenceCollections(db: FirebaseFirestore, doc: String): List<DocumentSnapshot?>{
+        if (iAuthUseCase.getUserId() != null) {
+            return try {
+                val rez =db.collection(USERS_COLLECTION)
+                    .document(iAuthUseCase.getUserId()!!)
+                    .collection(TRAVELS_COLLECTION)
+                    .document(doc)
+                    .collection(EXPENCE_COLLECTION)
+                    .get()
+                    .await()
+                rez.documents
+            }catch (e: Exception){
+                arrayListOf<DocumentSnapshot?>()
+            }
+        }else{
+            return arrayListOf<DocumentSnapshot?>()
+        }
+    }
 }

@@ -6,7 +6,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.twosmalpixels.travel_notes.R
 import com.twosmalpixels.travel_notes.core.extension.setVisibility
-import com.twosmalpixels.travel_notes.ui.calendar_dialog.createStringFromDate
+import com.twosmalpixels.travel_notes.ui.add_expence.ExpenceData
 import kotlinx.android.synthetic.main.expence_all_item.view.*
 import kotlinx.android.synthetic.main.you_travels_item.view.*
 
@@ -42,7 +42,7 @@ class ExpenseAdapter(val listener: (ExpenceData) -> Unit) : RecyclerView.Adapter
     }
 
     override fun getItemViewType(position: Int): Int {
-        return if (listDate.get(position).equals(getEmptyData())) {
+        return if (listDate.get(position).equals(ExpenceData.getEmptyData())) {
             ADD_NEW_ITEM
         } else {
             USUALY_ITEM
@@ -63,11 +63,11 @@ class ExpenseAdapter(val listener: (ExpenceData) -> Unit) : RecyclerView.Adapter
 
         fun bindUsalyData(expenceData: ExpenceData){
             itemView.run {
-                date_expence.text = createStringFromDate(expenceData.date)
-                logo_expence.setImageResource(getDrawableForNumber(expenceData.category))
-                title_expence.setText(getTextForNumber(expenceData.category))
+                date_expence.text = expenceData.data
+                logo_expence.setImageResource(getDrawableForNumber(expenceData.category.toInt()))
+                title_expence.setText(getTextForNumber(expenceData.category.toInt()))
                 amount_expence.text = expenceData.amount.toString()
-                cur_expence.text = expenceData.curency
+                cur_expence.text = expenceData.currencyIso
                 comment_expence.text = expenceData.comment
                 comment_expence.setVisibility(expenceData.comment.isNotEmpty())
                 itemView.setOnClickListener {
