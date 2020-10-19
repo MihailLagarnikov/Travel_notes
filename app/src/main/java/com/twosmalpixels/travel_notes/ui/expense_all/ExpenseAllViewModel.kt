@@ -8,7 +8,7 @@ import com.twosmalpixels.travel_notes.ui.add_expence.ExpenceData
 import com.twosmalpixels.travel_notes.ui.all_currency.IAllCurrencyUseCase
 import com.twosmalpixels.travel_notes.ui.currency.ICurrencyUseCase
 import com.twosmalpixels.travel_notes.views.currency.CurrencyData
-import com.twosmalpixels.travel_notes.views.shedule.SheduleData
+import com.twosmalpixels.travel_notes.views.shedule.CategoryExpenceData
 import com.twosmalpixels.travel_notes.views.shedule.SheduleSpinerData
 import org.koin.java.standalone.KoinJavaComponent
 
@@ -29,13 +29,12 @@ class ExpenseAllViewModel: ViewModel() {
         field = value
     }
 
-    val sheduleDataList = MutableLiveData<ArrayList<SheduleData>>()
+    val categoryExpenceList = MutableLiveData<ArrayList<CategoryExpenceData>>()
     val curencyDataList = MutableLiveData<ArrayList<SheduleSpinerData>>()
     val expenceDataList = MutableLiveData<ArrayList<ExpenceData>>()
     var toolbareName: String = ""
 
     init {
-        sheduleDataList.value = iAddExpenceUseCase.getDefaultShdulelist()
         curencyDataList.value = iAddExpenceUseCase.getDefaultShdulelistSpiner(travelsItem)
         expenceDataList.value = iAddExpenceUseCase.getDefaultExpenseList()
     }
@@ -46,6 +45,13 @@ class ExpenseAllViewModel: ViewModel() {
 
     fun getExpenceList(db: FirebaseFirestore): MutableLiveData<ArrayList<ExpenceData>>{
         return iAddExpenceUseCase.getExpenceList(db, travelsItem.docName)
+    }
+
+    fun setTotalExpenceWithCurrency (allExpenceList: ArrayList<ExpenceData>){
+        curencyDataList.value = iAddExpenceUseCase.getTotalExpenceWithCurrency(allExpenceList, travelsItem)
+    }
+    fun setCategoryExpenceList (allExpenceList: ArrayList<ExpenceData>){
+        categoryExpenceList.value = iAddExpenceUseCase.getCategoryExpenceList(allExpenceList, travelsItem)
     }
 
 }

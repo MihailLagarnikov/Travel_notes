@@ -28,7 +28,7 @@ class ExpenceAllFragment: BaseFragment() {
         val expAdapter = ExpenseAdapter{clickExpenceItem(it)}
         expense_recycler_all_fragment.adapter = expAdapter
 
-        expenseAllViewModel.sheduleDataList.observe(this, Observer {
+        expenseAllViewModel.categoryExpenceList.observe(this, Observer {
             shedule_view.setListSheduleData(it)
         })
 
@@ -45,6 +45,8 @@ class ExpenceAllFragment: BaseFragment() {
             if (!it.contains(ExpenceData.getEmptyData())) {
                 it.add(ExpenceData.getEmptyData())
             }
+            expenseAllViewModel.setTotalExpenceWithCurrency(it)
+            expenseAllViewModel.setCategoryExpenceList(it)
             expAdapter.setNewList(it)
             progressViewModel.showProgress.value = false
         })

@@ -19,7 +19,7 @@ class SheduleView: ConstraintLayout, AdapterView.OnItemSelectedListener {
     private lateinit var sheduleAdapter: SheduleAdapter
     private val listSpinerData = ArrayList<SheduleSpinerData>()
     private var curentAmount = 0
-    private var sheduleData: SheduleData? = null
+    private var categoryExpenceData: CategoryExpenceData? = null
 
     constructor(ctx: Context) : super(ctx) {
     }
@@ -33,12 +33,12 @@ class SheduleView: ConstraintLayout, AdapterView.OnItemSelectedListener {
         expense_recycler.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
         expense_recycler.adapter = sheduleAdapter
 
-        curency_spiner.adapter = SheduleSpinerAdapter(context, R.layout.spiner_shedule_view, arrayOf(""), listSpinerData)
+        curency_spiner.adapter = SheduleSpinerAdapter(context, R.layout.spiner_shedule_view, arrayOf("1", "2"), listSpinerData)
         curency_spiner.setSelection(curentAmount)
         curency_spiner.onItemSelectedListener = this
     }
 
-    fun setListSheduleData(newList: ArrayList<SheduleData>){
+    fun setListSheduleData(newList: ArrayList<CategoryExpenceData>){
         sheduleAdapter.setListData(newList)
     }
 
@@ -47,14 +47,24 @@ class SheduleView: ConstraintLayout, AdapterView.OnItemSelectedListener {
         curency_spiner.isEnabled = newList.size != 1
     }
 
-    fun chooseItem(sheduleData: SheduleData){
-        this.sheduleData = sheduleData
+    fun chooseItem(categoryExpenceData: CategoryExpenceData){
+        this.categoryExpenceData = categoryExpenceData
         expense_name.visibility = View.VISIBLE
         expense_value.visibility = View.VISIBLE
         expense_curency.visibility = View.VISIBLE
-        expense_name.setText(sheduleData.name)
-        expense_value.text = sheduleData.amount.get(curentAmount).toString()
-        expense_curency.setText(sheduleData.curency.get(curentAmount))
+        expense_name.setText(categoryExpenceData.name)
+        expense_value.text =
+            if (curency_spiner.selectedItemPosition == 0){
+            categoryExpenceData.mainCurrAmount.toString()
+        }else{
+            categoryExpenceData.additionalCurrAmount.toString()
+        }
+        expense_curency.text =
+            if (curency_spiner.selectedItemPosition == 0){
+                categoryExpenceData.mainCurrencyIso
+            }else{
+                categoryExpenceData.additionalCurrencyIso
+            }
 
     }
 
@@ -64,8 +74,8 @@ class SheduleView: ConstraintLayout, AdapterView.OnItemSelectedListener {
     override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
         //изменили валюту
         curentAmount = p2
-        if (sheduleData != null){
-            chooseItem(sheduleData!!)
+        if (categoryExpenceData != null){
+            chooseItem(categoryExpenceData!!)
         }
 
     }

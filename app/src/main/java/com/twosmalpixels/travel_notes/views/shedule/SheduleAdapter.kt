@@ -3,15 +3,14 @@ package com.twosmalpixels.travel_notes.views.shedule
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.RecyclerView
 import com.twosmalpixels.travel_notes.R
 import kotlinx.android.synthetic.main.shedule_item.view.*
 
-class SheduleAdapter(val maxHeight: Int,val listener: (SheduleData) -> Unit): RecyclerView.Adapter<SheduleAdapter.ViewHolder>() {
-    private val listData = ArrayList<SheduleData>()
+class SheduleAdapter(val maxHeight: Int,val listener: (CategoryExpenceData) -> Unit): RecyclerView.Adapter<SheduleAdapter.ViewHolder>() {
+    private val listData = ArrayList<CategoryExpenceData>()
 
-    fun setListData(newList: ArrayList<SheduleData>){
+    fun setListData(newList: ArrayList<CategoryExpenceData>){
         listData.clear()
         listData.addAll(newList)
         notifyDataSetChanged()
