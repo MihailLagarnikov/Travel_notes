@@ -2,7 +2,7 @@ package com.twosmalpixels.travel_notes.views.shedule
 
 class CategoryExpenceData(
     val image: Int,
-    val height: Int,
+    var height: Float,
     val name: Int,
     val mainCurrAmount: Int,
     val additionalCurrAmount: Int,

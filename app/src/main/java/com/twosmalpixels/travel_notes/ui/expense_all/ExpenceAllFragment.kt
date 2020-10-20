@@ -29,7 +29,7 @@ class ExpenceAllFragment: BaseFragment() {
         expense_recycler_all_fragment.adapter = expAdapter
 
         expenseAllViewModel.categoryExpenceList.observe(this, Observer {
-            shedule_view.setListSheduleData(it)
+            shedule_view.setListSheduleData(it, expAdapter.itemCount <= 1)
         })
 
         expenseAllViewModel.curencyDataList.observe(this, Observer {
@@ -38,6 +38,7 @@ class ExpenceAllFragment: BaseFragment() {
 
         expenseAllViewModel.expenceDataList.observe(this, Observer {
             expAdapter.setNewList(it)
+            shedule_view.isStartState(it == null || it.size <= 1)
         })
 
         progressViewModel.showProgress.value = true
@@ -52,9 +53,10 @@ class ExpenceAllFragment: BaseFragment() {
         })
     }
 
-    private fun clickExpenceItem(expenceData: ExpenceData){
+    private fun clickExpenceItem(expenceData: ExpenceData): Boolean{
         if (expenceData.equals(ExpenceData.getEmptyData())){
             findNavController().navigate(R.id.action_expenceAllFragment_to_addExpenceFragment)
         }
+        return true
     }
 }

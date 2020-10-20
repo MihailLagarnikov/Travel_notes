@@ -74,7 +74,11 @@
     <fragment
         android:id="@+id/addExpenceFragment"
         android:name="com.twosmalpixels.travel_notes.ui.add_expence.AddExpenceFragment"
-        android:label="AddExpenceFragment" />
+        android:label="AddExpenceFragment" >
+        <action
+            android:id="@+id/action_addExpenceFragment_to_calenarikDialog"
+            app:destination="@id/calenarikDialog" />
+    </fragment>
     <fragment
         android:id="@+id/currencyFragment"
         android:name="com.twosmalpixels.travel_notes.ui.currency.CurrencyFragment"

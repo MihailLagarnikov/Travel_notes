@@ -38,8 +38,12 @@ class SheduleView: ConstraintLayout, AdapterView.OnItemSelectedListener {
         curency_spiner.onItemSelectedListener = this
     }
 
-    fun setListSheduleData(newList: ArrayList<CategoryExpenceData>){
-        sheduleAdapter.setListData(newList)
+    fun setListSheduleData(newList: ArrayList<CategoryExpenceData>, isStartState: Boolean){
+        sheduleAdapter.setListData(newList, isStartState)
+    }
+
+    fun isStartState(isStartState: Boolean){
+        sheduleAdapter.setStartSte(isStartState)
     }
 
     fun setListSpinerData(newList: ArrayList<SheduleSpinerData>){

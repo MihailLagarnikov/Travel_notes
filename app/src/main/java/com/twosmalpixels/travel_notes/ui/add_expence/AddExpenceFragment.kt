@@ -69,6 +69,7 @@ class AddExpenceFragment : BaseFragment(), LocationListener, TextWatcher,
         expence_list.adapter = AllExpenceAdapter(ExpenceCategory.values(), {
             // выделенная категория
             selectedExpenceCategory = it
+            btnValid()
         })
         initCurrencySoinner()
         initDateCard()
@@ -177,7 +178,9 @@ class AddExpenceFragment : BaseFragment(), LocationListener, TextWatcher,
     private fun initDateCard() {
         date_edit_text_add_expence.setText(createStringFromDate(getCurentDate()))
         date_edit_text_add_expence.setOnFocusChangeListener { view, b ->
-            findNavController().navigate(R.id.action_newTravelFragment_to_calenarikDialog)
+            if (b) {
+                findNavController().navigate(R.id.action_addExpenceFragment_to_calenarikDialog)
+            }
         }
         newTravelsViewModel.chooseDate.observe(this, Observer {
             if (it != null) {
@@ -244,11 +247,10 @@ class AddExpenceFragment : BaseFragment(), LocationListener, TextWatcher,
     }
 
     override fun afterTextChanged(p0: Editable?) {
+        btnValid()
     }
 
     override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
-        val isAmountEmpty = edit_text_add_expence.text?.isEmpty() ?: true
-        button_exprnce_save.isEnabled = !isAmountEmpty && selectedExpenceCategory != null
     }
 
     override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
@@ -259,5 +261,10 @@ class AddExpenceFragment : BaseFragment(), LocationListener, TextWatcher,
 
     override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
         addExpenceViewModel.currentCurrency = spiner_add_expence.getSelectedCurrencyData()
+    }
+
+    private fun btnValid(){
+        val isAmountEmpty = edit_text_add_expence.text?.isEmpty() ?: true
+        button_exprnce_save.isEnabled = !isAmountEmpty && selectedExpenceCategory != null
     }
 }

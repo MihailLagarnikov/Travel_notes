@@ -57,6 +57,17 @@ class ExpenceAllAllUseCase(val iExpenceAllRepositoriy: IExpenceAllRepositoriy) :
         allExpenceList: ArrayList<ExpenceData>,
         travelsItem: TravelsItem
     ): ArrayList<CategoryExpenceData> {
+        if (allExpenceList.size > 0) {
+            return getCatExpList(allExpenceList, travelsItem)
+        } else {
+            return getStartDataExpenceList()
+        }
+    }
+
+    private fun getCatExpList(
+        allExpenceList: ArrayList<ExpenceData>,
+        travelsItem: TravelsItem
+    ): ArrayList<CategoryExpenceData> {
         var transportAmount = 0
         var homeAmount = 0
         var cafeAmount = 0
@@ -153,25 +164,26 @@ class ExpenceAllAllUseCase(val iExpenceAllRepositoriy: IExpenceAllRepositoriy) :
             }
         }
 
+
         val rezultList = ArrayList<CategoryExpenceData>()
         if (transportAmount != 0) {
             rezultList.add(
                 CategoryExpenceData(
-                    ExpenceCategory.TRANSPORT.logo,
-                    transportAmount,
+                    ExpenceCategory.TRANSPORT.logoWhite,
+                    0F,
                     ExpenceCategory.TRANSPORT.text,
                     transportAmount,
                     transportAmountAdditional,
                     travelsItem.mainCurrencyIso,
                     travelsItem.additionalCurrencyIso
-                    )
+                )
             )
         }
         if (homeAmount != 0) {
             rezultList.add(
                 CategoryExpenceData(
-                    ExpenceCategory.HOME.logo,
-                    homeAmount,
+                    ExpenceCategory.HOME.logoWhite,
+                    0F,
                     ExpenceCategory.HOME.text,
                     homeAmount,
                     homeAmountAdditional,
@@ -183,8 +195,8 @@ class ExpenceAllAllUseCase(val iExpenceAllRepositoriy: IExpenceAllRepositoriy) :
         if (cafeAmount != 0) {
             rezultList.add(
                 CategoryExpenceData(
-                    ExpenceCategory.CAFE.logo,
-                    cafeAmount,
+                    ExpenceCategory.CAFE.logoWhite,
+                    0F,
                     ExpenceCategory.CAFE.text,
                     cafeAmount,
                     cafeAmountAdditional,
@@ -196,8 +208,8 @@ class ExpenceAllAllUseCase(val iExpenceAllRepositoriy: IExpenceAllRepositoriy) :
         if (supermarketAmount != 0) {
             rezultList.add(
                 CategoryExpenceData(
-                    ExpenceCategory.SUPERMARKET.logo,
-                    supermarketAmount,
+                    ExpenceCategory.SUPERMARKET.logoWhite,
+                    0F,
                     ExpenceCategory.SUPERMARKET.text,
                     supermarketAmount,
                     supermarketAmountAdditional,
@@ -209,8 +221,8 @@ class ExpenceAllAllUseCase(val iExpenceAllRepositoriy: IExpenceAllRepositoriy) :
         if (tourAmount != 0) {
             rezultList.add(
                 CategoryExpenceData(
-                    ExpenceCategory.TOUR.logo,
-                    tourAmount,
+                    ExpenceCategory.TOUR.logoWhite,
+                    0F,
                     ExpenceCategory.TOUR.text,
                     tourAmount,
                     tourAmountAdditional,
@@ -222,8 +234,8 @@ class ExpenceAllAllUseCase(val iExpenceAllRepositoriy: IExpenceAllRepositoriy) :
         if (entertainmentAmount != 0) {
             rezultList.add(
                 CategoryExpenceData(
-                    ExpenceCategory.ENTETAIMENT.logo,
-                    entertainmentAmount,
+                    ExpenceCategory.ENTETAIMENT.logoWhite,
+                    0F,
                     ExpenceCategory.ENTETAIMENT.text,
                     entertainmentAmount,
                     entertainmentAmountAdditional,
@@ -235,8 +247,8 @@ class ExpenceAllAllUseCase(val iExpenceAllRepositoriy: IExpenceAllRepositoriy) :
         if (giftsAmount != 0) {
             rezultList.add(
                 CategoryExpenceData(
-                    ExpenceCategory.GIFT.logo,
-                    giftsAmount,
+                    ExpenceCategory.GIFT.logoWhite,
+                    0F,
                     ExpenceCategory.GIFT.text,
                     giftsAmount,
                     giftsAmountAdditional,
@@ -248,8 +260,8 @@ class ExpenceAllAllUseCase(val iExpenceAllRepositoriy: IExpenceAllRepositoriy) :
         if (shoppingAmount != 0) {
             rezultList.add(
                 CategoryExpenceData(
-                    ExpenceCategory.SHOPING.logo,
-                    shoppingAmount,
+                    ExpenceCategory.SHOPING.logoWhite,
+                    0F,
                     ExpenceCategory.SHOPING.text,
                     shoppingAmount,
                     shoppingAmountAdditional,
@@ -261,8 +273,8 @@ class ExpenceAllAllUseCase(val iExpenceAllRepositoriy: IExpenceAllRepositoriy) :
         if (safetyAmount != 0) {
             rezultList.add(
                 CategoryExpenceData(
-                    ExpenceCategory.INSURANCE.logo,
-                    safetyAmount,
+                    ExpenceCategory.INSURANCE.logoWhite,
+                    0F,
                     ExpenceCategory.INSURANCE.text,
                     safetyAmount,
                     safetyAmountAdditional,
@@ -274,8 +286,8 @@ class ExpenceAllAllUseCase(val iExpenceAllRepositoriy: IExpenceAllRepositoriy) :
         if (visaAmount != 0) {
             rezultList.add(
                 CategoryExpenceData(
-                    ExpenceCategory.VISA.logo,
-                    visaAmount,
+                    ExpenceCategory.VISA.logoWhite,
+                    0F,
                     ExpenceCategory.VISA.text,
                     visaAmount,
                     visaAmountAdditional,
@@ -284,6 +296,98 @@ class ExpenceAllAllUseCase(val iExpenceAllRepositoriy: IExpenceAllRepositoriy) :
                 )
             )
         }
+        rezultList.sortByDescending { it.mainCurrAmount }
+        if (rezultList.get(0).mainCurrAmount != 0) {
+            rezultList.get(0).height = 1F
+            for (category in rezultList) {
+                if (category.height == 0F && category.mainCurrAmount != 0) {
+                    category.height =
+                        (category.mainCurrAmount.toFloat() / rezultList.get(0).mainCurrAmount.toFloat())
+                }
+
+            }
+        }
         return rezultList
+    }
+
+    private fun getStartDataExpenceList(): ArrayList<CategoryExpenceData> {
+        return arrayListOf(
+            CategoryExpenceData(
+                R.drawable.ic_icon_transport,
+                1F, ,
+                DEF_LIST_AMOUNT,
+                DEF_LIST_CURENCY
+            ),
+            SheduleData(
+                R.drawable.ic_icon_home,
+                DEF_HEIGHT,
+                R.string.booking,
+                DEF_LIST_AMOUNT,
+                DEF_LIST_CURENCY
+            ),
+            SheduleData(
+                R.drawable.ic_icon_cafe,
+                DEF_HEIGHT,
+                R.string.cafe_and_restorans,
+                DEF_LIST_AMOUNT,
+                DEF_LIST_CURENCY
+            ),
+            SheduleData(
+                R.drawable.ic_icon_supermarket,
+                DEF_HEIGHT,
+                R.string.supermarket,
+                DEF_LIST_AMOUNT,
+                DEF_LIST_CURENCY
+            ),
+            SheduleData(
+                R.drawable.ic_icon_tour,
+                DEF_HEIGHT,
+                R.string.tour,
+                DEF_LIST_AMOUNT,
+                DEF_LIST_CURENCY
+            ),
+            SheduleData(
+                R.drawable.ic_icon_entertainment,
+                DEF_HEIGHT,
+                R.string.entertainment,
+                DEF_LIST_AMOUNT,
+                DEF_LIST_CURENCY
+            ),
+            SheduleData(
+                R.drawable.ic_icon_gifts,
+                DEF_HEIGHT,
+                R.string.gifts,
+                DEF_LIST_AMOUNT,
+                DEF_LIST_CURENCY
+            ),
+            SheduleData(
+                R.drawable.ic_icon_shopping,
+                DEF_HEIGHT,
+                R.string.shopping,
+                DEF_LIST_AMOUNT,
+                DEF_LIST_CURENCY
+            ),
+            SheduleData(
+                R.drawable.ic_icon_safety,
+                DEF_HEIGHT,
+                R.string.safety,
+                DEF_LIST_AMOUNT,
+                DEF_LIST_CURENCY
+            ),
+            SheduleData(
+                R.drawable.ic_icon_visa,
+                DEF_HEIGHT,
+                R.string.visa,
+                DEF_LIST_AMOUNT,
+                DEF_LIST_CURENCY
+            ),
+            SheduleData(
+                R.drawable.ic_icon_others,
+                DEF_HEIGHT,
+                R.string.others,
+                DEF_LIST_AMOUNT,
+                DEF_LIST_CURENCY
+            )
+        )
     }
 }
