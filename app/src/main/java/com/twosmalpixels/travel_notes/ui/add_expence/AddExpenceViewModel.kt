@@ -29,5 +29,6 @@ class AddExpenceViewModel: ViewModel(), WriteCloudListener {
 
     override fun setSuccess(isSuccess: Boolean) {
         changeStatus.value = isSuccess
+        changeStatus.value = null
     }
 }

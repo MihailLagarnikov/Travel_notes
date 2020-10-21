@@ -78,6 +78,10 @@
         <action
             android:id="@+id/action_addExpenceFragment_to_calenarikDialog"
             app:destination="@id/calenarikDialog" />
+        <action
+            android:id="@+id/action_addExpenceFragment_to_expenceAllFragment"
+            app:destination="@id/expenceAllFragment"
+            app:popUpTo="@+id/expenceAllFragment" />
     </fragment>
     <fragment
         android:id="@+id/currencyFragment"

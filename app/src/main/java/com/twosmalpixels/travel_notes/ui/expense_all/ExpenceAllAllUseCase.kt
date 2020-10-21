@@ -3,6 +3,7 @@ package com.twosmalpixels.travel_notes.ui.expense_all
 import androidx.lifecycle.MutableLiveData
 import com.google.firebase.firestore.FirebaseFirestore
 import com.twosmalpixels.travel_notes.R
+import com.twosmalpixels.travel_notes.core.repositoriy.SharedPref.DEF_EMPTY_STRING
 import com.twosmalpixels.travel_notes.pojo.TravelsItem
 import com.twosmalpixels.travel_notes.ui.add_expence.ExpenceData
 import com.twosmalpixels.travel_notes.views.shedule.CategoryExpenceData
@@ -12,6 +13,8 @@ import kotlin.collections.ArrayList
 class ExpenceAllAllUseCase(val iExpenceAllRepositoriy: IExpenceAllRepositoriy) :
     IExpenceAllUseCase {
     private val SUM_NUL = 0
+    private val MAX_HEIGHT = 1F
+    private val EMPTY_AMOUNT = 0F
 
 
     override fun getDefaultShdulelistSpiner(travelsItem: TravelsItem): ArrayList<SheduleSpinerData> {
@@ -68,41 +71,30 @@ class ExpenceAllAllUseCase(val iExpenceAllRepositoriy: IExpenceAllRepositoriy) :
         allExpenceList: ArrayList<ExpenceData>,
         travelsItem: TravelsItem
     ): ArrayList<CategoryExpenceData> {
-        var transportAmount = 0
-        var homeAmount = 0
-        var cafeAmount = 0
-        var supermarketAmount = 0
-        var tourAmount = 0
-        var entertainmentAmount = 0
-        var giftsAmount = 0
-        var shoppingAmount = 0
-        var safetyAmount = 0
-        var visaAmount = 0
-        var othersAmount = 0
+        var transportAmount = EMPTY_AMOUNT
+        var homeAmount = EMPTY_AMOUNT
+        var cafeAmount = EMPTY_AMOUNT
+        var supermarketAmount = EMPTY_AMOUNT
+        var tourAmount = EMPTY_AMOUNT
+        var entertainmentAmount = EMPTY_AMOUNT
+        var giftsAmount = EMPTY_AMOUNT
+        var shoppingAmount = EMPTY_AMOUNT
+        var safetyAmount = EMPTY_AMOUNT
+        var visaAmount = EMPTY_AMOUNT
+        var othersAmount = EMPTY_AMOUNT
 
-        var transportAmountAdditional = 0
-        var homeAmountAdditional = 0
-        var cafeAmountAdditional = 0
-        var supermarketAmountAdditional = 0
-        var tourAmountAdditional = 0
-        var entertainmentAmountAdditional = 0
-        var giftsAmountAdditional = 0
-        var shoppingAmountAdditional = 0
-        var safetyAmountAdditional = 0
-        var visaAmountAdditional = 0
-        var othersAmountAdditional = 0
+        var transportAmountAdditional = EMPTY_AMOUNT
+        var homeAmountAdditional = EMPTY_AMOUNT
+        var cafeAmountAdditional = EMPTY_AMOUNT
+        var supermarketAmountAdditional = EMPTY_AMOUNT
+        var tourAmountAdditional = EMPTY_AMOUNT
+        var entertainmentAmountAdditional = EMPTY_AMOUNT
+        var giftsAmountAdditional = EMPTY_AMOUNT
+        var shoppingAmountAdditional = EMPTY_AMOUNT
+        var safetyAmountAdditional = EMPTY_AMOUNT
+        var visaAmountAdditional = EMPTY_AMOUNT
+        var othersAmountAdditional = EMPTY_AMOUNT
 
-        var transportHeight = 0
-        var homeHeight = 0
-        var cafeHeight = 0
-        var supermarketHeight = 0
-        var tourHeight = 0
-        var entertainmentHeight = 0
-        var giftsHeight = 0
-        var shoppingHeight = 0
-        var safetyHeight = 0
-        var visaHeight = 0
-        var othersHeight = 0
         for (expence in allExpenceList) {
             val mainCurrAmount =
                 if (expence.currencyIso.equals(travelsItem.mainCurrencyIso)) {
@@ -166,11 +158,11 @@ class ExpenceAllAllUseCase(val iExpenceAllRepositoriy: IExpenceAllRepositoriy) :
 
 
         val rezultList = ArrayList<CategoryExpenceData>()
-        if (transportAmount != 0) {
+        if (transportAmount != EMPTY_AMOUNT) {
             rezultList.add(
                 CategoryExpenceData(
                     ExpenceCategory.TRANSPORT.logoWhite,
-                    0F,
+                    EMPTY_AMOUNT,
                     ExpenceCategory.TRANSPORT.text,
                     transportAmount,
                     transportAmountAdditional,
@@ -179,11 +171,11 @@ class ExpenceAllAllUseCase(val iExpenceAllRepositoriy: IExpenceAllRepositoriy) :
                 )
             )
         }
-        if (homeAmount != 0) {
+        if (homeAmount != EMPTY_AMOUNT) {
             rezultList.add(
                 CategoryExpenceData(
                     ExpenceCategory.HOME.logoWhite,
-                    0F,
+                    EMPTY_AMOUNT,
                     ExpenceCategory.HOME.text,
                     homeAmount,
                     homeAmountAdditional,
@@ -192,11 +184,11 @@ class ExpenceAllAllUseCase(val iExpenceAllRepositoriy: IExpenceAllRepositoriy) :
                 )
             )
         }
-        if (cafeAmount != 0) {
+        if (cafeAmount != EMPTY_AMOUNT) {
             rezultList.add(
                 CategoryExpenceData(
                     ExpenceCategory.CAFE.logoWhite,
-                    0F,
+                    EMPTY_AMOUNT,
                     ExpenceCategory.CAFE.text,
                     cafeAmount,
                     cafeAmountAdditional,
@@ -205,11 +197,11 @@ class ExpenceAllAllUseCase(val iExpenceAllRepositoriy: IExpenceAllRepositoriy) :
                 )
             )
         }
-        if (supermarketAmount != 0) {
+        if (supermarketAmount != EMPTY_AMOUNT) {
             rezultList.add(
                 CategoryExpenceData(
                     ExpenceCategory.SUPERMARKET.logoWhite,
-                    0F,
+                    EMPTY_AMOUNT,
                     ExpenceCategory.SUPERMARKET.text,
                     supermarketAmount,
                     supermarketAmountAdditional,
@@ -218,11 +210,11 @@ class ExpenceAllAllUseCase(val iExpenceAllRepositoriy: IExpenceAllRepositoriy) :
                 )
             )
         }
-        if (tourAmount != 0) {
+        if (tourAmount != EMPTY_AMOUNT) {
             rezultList.add(
                 CategoryExpenceData(
                     ExpenceCategory.TOUR.logoWhite,
-                    0F,
+                    EMPTY_AMOUNT,
                     ExpenceCategory.TOUR.text,
                     tourAmount,
                     tourAmountAdditional,
@@ -231,11 +223,11 @@ class ExpenceAllAllUseCase(val iExpenceAllRepositoriy: IExpenceAllRepositoriy) :
                 )
             )
         }
-        if (entertainmentAmount != 0) {
+        if (entertainmentAmount != EMPTY_AMOUNT) {
             rezultList.add(
                 CategoryExpenceData(
                     ExpenceCategory.ENTETAIMENT.logoWhite,
-                    0F,
+                    EMPTY_AMOUNT,
                     ExpenceCategory.ENTETAIMENT.text,
                     entertainmentAmount,
                     entertainmentAmountAdditional,
@@ -244,11 +236,11 @@ class ExpenceAllAllUseCase(val iExpenceAllRepositoriy: IExpenceAllRepositoriy) :
                 )
             )
         }
-        if (giftsAmount != 0) {
+        if (giftsAmount != EMPTY_AMOUNT) {
             rezultList.add(
                 CategoryExpenceData(
                     ExpenceCategory.GIFT.logoWhite,
-                    0F,
+                    EMPTY_AMOUNT,
                     ExpenceCategory.GIFT.text,
                     giftsAmount,
                     giftsAmountAdditional,
@@ -257,11 +249,11 @@ class ExpenceAllAllUseCase(val iExpenceAllRepositoriy: IExpenceAllRepositoriy) :
                 )
             )
         }
-        if (shoppingAmount != 0) {
+        if (shoppingAmount != EMPTY_AMOUNT) {
             rezultList.add(
                 CategoryExpenceData(
                     ExpenceCategory.SHOPING.logoWhite,
-                    0F,
+                    EMPTY_AMOUNT,
                     ExpenceCategory.SHOPING.text,
                     shoppingAmount,
                     shoppingAmountAdditional,
@@ -270,11 +262,11 @@ class ExpenceAllAllUseCase(val iExpenceAllRepositoriy: IExpenceAllRepositoriy) :
                 )
             )
         }
-        if (safetyAmount != 0) {
+        if (safetyAmount != EMPTY_AMOUNT) {
             rezultList.add(
                 CategoryExpenceData(
                     ExpenceCategory.INSURANCE.logoWhite,
-                    0F,
+                    EMPTY_AMOUNT,
                     ExpenceCategory.INSURANCE.text,
                     safetyAmount,
                     safetyAmountAdditional,
@@ -283,11 +275,11 @@ class ExpenceAllAllUseCase(val iExpenceAllRepositoriy: IExpenceAllRepositoriy) :
                 )
             )
         }
-        if (visaAmount != 0) {
+        if (visaAmount != EMPTY_AMOUNT) {
             rezultList.add(
                 CategoryExpenceData(
                     ExpenceCategory.VISA.logoWhite,
-                    0F,
+                    EMPTY_AMOUNT,
                     ExpenceCategory.VISA.text,
                     visaAmount,
                     visaAmountAdditional,
@@ -297,10 +289,10 @@ class ExpenceAllAllUseCase(val iExpenceAllRepositoriy: IExpenceAllRepositoriy) :
             )
         }
         rezultList.sortByDescending { it.mainCurrAmount }
-        if (rezultList.get(0).mainCurrAmount != 0) {
-            rezultList.get(0).height = 1F
+        if (!rezultList.isEmpty() && rezultList.get(0).mainCurrAmount != EMPTY_AMOUNT) {
+            rezultList.get(0).height = MAX_HEIGHT
             for (category in rezultList) {
-                if (category.height == 0F && category.mainCurrAmount != 0) {
+                if (category.height == 0F && category.mainCurrAmount != EMPTY_AMOUNT) {
                     category.height =
                         (category.mainCurrAmount.toFloat() / rezultList.get(0).mainCurrAmount.toFloat())
                 }
@@ -314,79 +306,102 @@ class ExpenceAllAllUseCase(val iExpenceAllRepositoriy: IExpenceAllRepositoriy) :
         return arrayListOf(
             CategoryExpenceData(
                 R.drawable.ic_icon_transport,
-                1F, ,
-                DEF_LIST_AMOUNT,
-                DEF_LIST_CURENCY
+                MAX_HEIGHT,
+                R.string.transport,
+                EMPTY_AMOUNT,
+                EMPTY_AMOUNT,
+                DEF_EMPTY_STRING,
+                DEF_EMPTY_STRING
             ),
-            SheduleData(
+            CategoryExpenceData(
                 R.drawable.ic_icon_home,
-                DEF_HEIGHT,
+                MAX_HEIGHT,
                 R.string.booking,
-                DEF_LIST_AMOUNT,
-                DEF_LIST_CURENCY
+                EMPTY_AMOUNT,
+                EMPTY_AMOUNT,
+                DEF_EMPTY_STRING,
+                DEF_EMPTY_STRING
             ),
-            SheduleData(
+            CategoryExpenceData(
                 R.drawable.ic_icon_cafe,
-                DEF_HEIGHT,
+                MAX_HEIGHT,
                 R.string.cafe_and_restorans,
-                DEF_LIST_AMOUNT,
-                DEF_LIST_CURENCY
+                EMPTY_AMOUNT,
+                EMPTY_AMOUNT,
+                DEF_EMPTY_STRING,
+                DEF_EMPTY_STRING
             ),
-            SheduleData(
+            CategoryExpenceData(
                 R.drawable.ic_icon_supermarket,
-                DEF_HEIGHT,
+                MAX_HEIGHT,
                 R.string.supermarket,
-                DEF_LIST_AMOUNT,
-                DEF_LIST_CURENCY
+                EMPTY_AMOUNT,
+                EMPTY_AMOUNT,
+                DEF_EMPTY_STRING,
+                DEF_EMPTY_STRING
             ),
-            SheduleData(
+            CategoryExpenceData(
                 R.drawable.ic_icon_tour,
-                DEF_HEIGHT,
+                MAX_HEIGHT,
                 R.string.tour,
-                DEF_LIST_AMOUNT,
-                DEF_LIST_CURENCY
+                EMPTY_AMOUNT,
+                EMPTY_AMOUNT,
+                DEF_EMPTY_STRING,
+                DEF_EMPTY_STRING
             ),
-            SheduleData(
+            CategoryExpenceData(
                 R.drawable.ic_icon_entertainment,
-                DEF_HEIGHT,
+                MAX_HEIGHT,
                 R.string.entertainment,
-                DEF_LIST_AMOUNT,
-                DEF_LIST_CURENCY
+                EMPTY_AMOUNT,
+                EMPTY_AMOUNT,
+                DEF_EMPTY_STRING,
+                DEF_EMPTY_STRING
             ),
-            SheduleData(
+            CategoryExpenceData(
                 R.drawable.ic_icon_gifts,
-                DEF_HEIGHT,
+                MAX_HEIGHT,
                 R.string.gifts,
-                DEF_LIST_AMOUNT,
-                DEF_LIST_CURENCY
+                EMPTY_AMOUNT,
+                EMPTY_AMOUNT,
+                DEF_EMPTY_STRING,
+                DEF_EMPTY_STRING
             ),
-            SheduleData(
+            CategoryExpenceData(
                 R.drawable.ic_icon_shopping,
-                DEF_HEIGHT,
+                MAX_HEIGHT,
                 R.string.shopping,
-                DEF_LIST_AMOUNT,
-                DEF_LIST_CURENCY
+                EMPTY_AMOUNT,
+                EMPTY_AMOUNT,
+                DEF_EMPTY_STRING,
+                DEF_EMPTY_STRING
             ),
-            SheduleData(
+            CategoryExpenceData(
                 R.drawable.ic_icon_safety,
-                DEF_HEIGHT,
+                MAX_HEIGHT,
                 R.string.safety,
-                DEF_LIST_AMOUNT,
-                DEF_LIST_CURENCY
+                EMPTY_AMOUNT,
+                EMPTY_AMOUNT,
+                DEF_EMPTY_STRING,
+                DEF_EMPTY_STRING
             ),
-            SheduleData(
+            CategoryExpenceData(
                 R.drawable.ic_icon_visa,
-                DEF_HEIGHT,
+                MAX_HEIGHT,
                 R.string.visa,
-                DEF_LIST_AMOUNT,
-                DEF_LIST_CURENCY
+                EMPTY_AMOUNT,
+                EMPTY_AMOUNT,
+                DEF_EMPTY_STRING,
+                DEF_EMPTY_STRING
             ),
-            SheduleData(
+            CategoryExpenceData(
                 R.drawable.ic_icon_others,
-                DEF_HEIGHT,
+                MAX_HEIGHT,
                 R.string.others,
-                DEF_LIST_AMOUNT,
-                DEF_LIST_CURENCY
+                EMPTY_AMOUNT,
+                EMPTY_AMOUNT,
+                DEF_EMPTY_STRING,
+                DEF_EMPTY_STRING
             )
         )
     }

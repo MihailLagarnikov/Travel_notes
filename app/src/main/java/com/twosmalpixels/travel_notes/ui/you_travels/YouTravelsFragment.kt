@@ -32,6 +32,9 @@ class YouTravelsFragment: BaseFragment() {
             if (!it.contains(defTravelItem)) {
                 it.add(defTravelItem)
             }
+            if (it != null && viewModel.isFirstVisitYouTravelsFragment){
+                checkHasTravelNow(viewModel.hasTravelNow(it))
+            }
             yuTravelsAdapter.setNewList(it)
             progressViewModel.showProgress.value = false
         })
@@ -44,6 +47,13 @@ class YouTravelsFragment: BaseFragment() {
             expenseAllViewModel.toolbareName = travelsItem.title
             expenseAllViewModel.travelsItem = travelsItem
             findNavController().navigate(R.id.action_youTravelsFragment_to_expenceAllFragment)
+        }
+    }
+
+    private fun checkHasTravelNow(travelsItem: TravelsItem?){
+        travelsItem?.run {
+            clickItem(travelsItem)
+            viewModel.isFirstVisitYouTravelsFragment = false
         }
     }
 }

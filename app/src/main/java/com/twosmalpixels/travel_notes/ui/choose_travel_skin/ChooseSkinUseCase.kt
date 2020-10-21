@@ -12,10 +12,10 @@ class ChooseSkinUseCase : IChooseSkinUseCase {
     override fun getSkinList(): ArrayList<Int> {
         return arrayListOf(
             R.drawable.ic_img_new_travel_default,
-            R.drawable.ic_img_new_travel_default,
-            R.drawable.ic_img_new_travel_default,
-            R.drawable.ic_img_new_travel_default,
-            R.drawable.ic_img_new_travel_default
+            R.drawable.ic_img_new_travel_mounty,
+            R.drawable.ic_img_new_travel_mounty_and_vilage,
+            R.drawable.ic_img_new_travel_smal_city,
+            R.drawable.ic_img_new_travel_mounty_and_lake
         )
     }
 }

@@ -6,7 +6,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
 
-    <ScrollView
+    <androidx.core.widget.NestedScrollView
         android:id="@+id/content"
         android:layout_width="match_parent"
         android:layout_height="0dp"
@@ -44,9 +44,29 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"/>
         </LinearLayout>
-    </ScrollView>
+    </androidx.core.widget.NestedScrollView>
 
     <include layout="@layout/progress_view"/>
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/card_image_add_new_expence"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:layout_marginBottom="16dp"
+        app:cardCornerRadius="8dp"
+        app:cardElevation="0dp"
+        android:visibility="gone"
+        tools:visibility="visible"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent">
+
+        <ImageView
+            android:id="@+id/image_add_new_expence"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:src="@drawable/ic_add_travel" />
+    </androidx.cardview.widget.CardView>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

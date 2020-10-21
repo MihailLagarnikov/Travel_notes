@@ -5,6 +5,6 @@ import com.google.firebase.firestore.FirebaseFirestore
 import com.twosmalpixels.travel_notes.pojo.TravelsItem
 
 interface IYouTravelsUseCase {
-
     fun getYouTravelsList(db: FirebaseFirestore): MutableLiveData<ArrayList<TravelsItem>>
+    fun hasTravelNow(travelsItem: ArrayList<TravelsItem>): TravelsItem?
 }

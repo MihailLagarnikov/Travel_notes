@@ -88,6 +88,7 @@ class ExpenseAdapter(val listener: (ExpenceData) -> Unit) : RecyclerView.Adapter
                 //добавить новый расход
                 listener.invoke(listDate.get(adapterPosition))
             }
+            itemView.image_travel_item.setImageResource(R.drawable.ic_default_plus)
         }
     }
 

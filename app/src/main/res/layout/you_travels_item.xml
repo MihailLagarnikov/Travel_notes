@@ -86,7 +86,8 @@
                     android:id="@+id/image_travel_item"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:src="@drawable/ic_add_travel" />
+                    android:scaleType="fitXY"
+                    android:src="@drawable/ic_you_travels_load" />
             </androidx.cardview.widget.CardView>
 
         </androidx.constraintlayout.widget.ConstraintLayout>

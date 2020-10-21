@@ -100,10 +100,10 @@ class AddExpenceFragment : BaseFragment(), LocationListener, TextWatcher,
 
         addExpenceViewModel.changeStatus.observe(this, Observer {
             progressViewModel.showProgress.value = false
-            if (it) {
+            if ( it != null && it) {
                 //данные успешно записанны, переходим
-                requireActivity().onBackPressed()
-            } else {
+                findNavController().navigate(R.id.action_addExpenceFragment_to_expenceAllFragment)
+            } else if (it != null) {
                 //неуспех
                 Snackbar.make(requireView(), R.string.error_write, Snackbar.LENGTH_LONG).show()
             }

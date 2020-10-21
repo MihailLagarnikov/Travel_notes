@@ -44,6 +44,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="12dp"
+                android:layout_marginBottom="12dp"
+                app:layout_constraintBottom_toTopOf="@id/comment_expence"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/date_expence">
 
@@ -104,14 +106,13 @@
                 android:layout_width="match_parent"
                 android:layout_height="fill_parent"
                 android:layout_marginStart="16dp"
-                android:layout_marginTop="12dp"
                 android:layout_marginBottom="12dp"
                 android:singleLine="true"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/frame_img_expence"
-                tools:text="Очень вкусно, не дорого и нам понравило..." />
+                tools:text="Очень вкусно, не дорого и нам понравило..."
+                tools:visibility="visible" />
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>

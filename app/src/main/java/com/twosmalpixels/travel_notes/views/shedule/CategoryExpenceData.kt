@@ -4,8 +4,8 @@ class CategoryExpenceData(
     val image: Int,
     var height: Float,
     val name: Int,
-    val mainCurrAmount: Int,
-    val additionalCurrAmount: Int,
+    val mainCurrAmount: Float,
+    val additionalCurrAmount: Float,
     val mainCurrencyIso: String,
     val additionalCurrencyIso: String
 ) {
