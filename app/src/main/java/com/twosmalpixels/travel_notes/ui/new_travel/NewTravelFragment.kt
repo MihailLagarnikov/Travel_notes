@@ -24,6 +24,7 @@ import kotlinx.android.synthetic.main.new_travel_fragment.*
 class NewTravelFragment : BaseFragment(), TextWatcher {
     private var isDefaultSkin = true
     private lateinit var newTravelsViewModel: NewTravelsViewModel
+    private var blockDublNavigate = false
 
     override fun getToolbarParam(): ToolbarParam {
         return ToolbarParam(getString(R.string.new_travel))
@@ -34,6 +35,7 @@ class NewTravelFragment : BaseFragment(), TextWatcher {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        blockDublNavigate = true
         super.onViewCreated(view, savedInstanceState)
         val newPersonViewModel =
             ViewModelProviders.of(requireActivity()).get(NewPersonViewModel::class.java)
@@ -93,10 +95,11 @@ class NewTravelFragment : BaseFragment(), TextWatcher {
         }
         newTravelsViewModel.changeStatus.observe(this, Observer {
             progressViewModel.showProgress.value = false
-            if (it) {
+            if (it !=null && it && blockDublNavigate) {
                 //данные успешно записанны, переходим
+                blockDublNavigate = false
                 findNavController().navigate(R.id.action_newTravelFragment_to_youTravelsFragment)
-            } else {
+            } else if (it != null && blockDublNavigate) {
                 //неуспех
                 Snackbar.make(requireView(), R.string.error_write, Snackbar.LENGTH_LONG).show()
             }

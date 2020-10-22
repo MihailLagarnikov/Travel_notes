@@ -64,14 +64,18 @@ class CurrencyView: ConstraintLayout, AdapterView.OnItemSelectedListener, TextWa
     }
 
     fun getAdditionalCurrencuCode(): String?{
-        return additional_currency_spiner.getSelectedCurrencyData().currencyIso
+        return if (additional_currency_spiner.getSelectedCurrencyData().currencyIso.equals("")){
+             main_currency_spiner.getSelectedCurrencyData().currencyIso
+        }else{
+            additional_currency_spiner.getSelectedCurrencyData().currencyIso
+        }
     }
 
     fun getRates(): Int{
         try {
             return rates_edit_text.text.toString().toInt()
         } catch (e: Exception) {
-            return 0
+            return 1
         }
     }
 

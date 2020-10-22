@@ -22,7 +22,7 @@ enum class InnerImage(val img: String, val drawable: Int){
 
 fun isInnerImage(name: String): Boolean{
     for (inerimage in InnerImage.values()){
-        if (inerimage.img.equals(name)){
+        if (inerimage.img.equals(name) || inerimage.img.equals(name.toLowerCase())){
             return true
         }
     }
@@ -41,7 +41,7 @@ fun getInnerDrawable (name: String): Int{
 fun getInnerName (id: Int): String{
     for (inerimage in InnerImage.values()){
         if (inerimage.drawable == id){
-            return inerimage.name
+            return inerimage.img
         }
     }
     return InnerImage.LOAD_ERROR.name

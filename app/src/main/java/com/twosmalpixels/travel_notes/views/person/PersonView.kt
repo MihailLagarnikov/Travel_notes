@@ -11,10 +11,14 @@ import kotlinx.android.synthetic.main.person_view.view.*
 
 
 class PersonView: ConstraintLayout {
-    private var personType: String? = null
-    private val ONE = "1"
-    private val TWO = "2"
-    private val THRE = "3"
+    private var personType: Int? = null
+    set(value) {
+        field = value
+        setText()
+    }
+    private val ONE = 1
+    private val TWO = 2
+    private val THRE = 3
     private val PROBEL = " "
     private var viewListener: PersonViewListener? = null
 
@@ -41,14 +45,13 @@ class PersonView: ConstraintLayout {
         val a =
             context.obtainStyledAttributes(attrs, R.styleable.PersonView)
 
-        personType = a.getString(R.styleable.PersonView_personType)
+        personType = a.getInt(R.styleable.PersonView_personType, 1)
         a.recycle()
     }
 
     init {
         LayoutInflater.from(context).inflate(R.layout.person_view, this)
         button_minus_person.isEnabled = false
-        setText()
         button_minus_person.setOnClickListener { countPerson-- }
         button_plus_person.setOnClickListener { countPerson++ }
     }
@@ -59,7 +62,7 @@ class PersonView: ConstraintLayout {
         subtitle_person_view.setText(personType.subTitle)
     }
 
-    private fun getPersonType(type: String?): PersonType{
+    private fun getPersonType(type: Int?): PersonType{
        return when(type){
             ONE -> PersonType.ADULTS
            TWO -> PersonType.CHILDREN
@@ -68,8 +71,8 @@ class PersonView: ConstraintLayout {
         }
     }
 
-    private fun getOtputWord(count: Int, type: String?): String{
-        val personType = getPersonType(personType)
+    private fun getOtputWord(count: Int, personType: PersonType): String{
+
         return if (count == 1){
             context.getString(personType.textIsOne)
         }else{
@@ -81,7 +84,7 @@ class PersonView: ConstraintLayout {
         return if (countPerson == 0){
             ""
         }else{
-            return countPerson.toString() + PROBEL + getOtputWord(countPerson, personType)
+            return countPerson.toString() + PROBEL + getOtputWord(countPerson, getPersonType(personType))
         }
 
     }

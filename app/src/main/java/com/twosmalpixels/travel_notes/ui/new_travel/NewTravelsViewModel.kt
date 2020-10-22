@@ -15,7 +15,7 @@ import kotlin.collections.ArrayList
 class NewTravelsViewModel: ViewModel(), WriteCloudListener {
     var isRangeMode = true
     private val iNewTravelsUseCase: INewTravelsUseCase by KoinJavaComponent.inject(INewTravelsUseCase::class.java)
-    val changeStatus = MutableLiveData<Boolean>()
+    val changeStatus = MutableLiveData<Boolean?>()
     val chooseDates = MutableLiveData<ArrayList<Date>>()
     val chooseDate = MutableLiveData<Date>()
     val currencyText = MutableLiveData<String>()
@@ -36,6 +36,7 @@ class NewTravelsViewModel: ViewModel(), WriteCloudListener {
 
     override fun setSuccess(isSuccess: Boolean) {
         changeStatus.value = isSuccess
+        changeStatus.value = null
     }
 
     fun getRandomFileName(): String{

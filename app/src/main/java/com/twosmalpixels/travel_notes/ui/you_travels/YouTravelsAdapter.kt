@@ -56,7 +56,7 @@ class YouTravelsAdapter( val storage: FirebaseStorage,
                 data_travel_item.setNonEmptyText(travelsItem.data)
                 person_travel_item.setNonEmptyText(travelsItem.person)
                 if (isInnerImage(travelsItem.imageUrl)){
-                    loadUrl(context.getDrawable(getInnerDrawable(travelsItem.imageUrl))!!, image_travel_item, context)
+                    loadUrl(context.getDrawable(getInnerDrawable(travelsItem.imageUrl.toLowerCase()))!!, image_travel_item, context)
                 }else{
                    iFairbaseStorageBase.loadBitMap(travelsItem.imageUrl, storage, image_travel_item)
                 }
