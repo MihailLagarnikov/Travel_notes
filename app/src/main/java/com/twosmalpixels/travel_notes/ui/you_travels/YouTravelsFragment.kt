@@ -11,11 +11,12 @@ import com.twosmalpixels.travel_notes.R
 import com.twosmalpixels.travel_notes.pojo.ToolbarParam
 import com.twosmalpixels.travel_notes.pojo.TravelsItem
 import com.twosmalpixels.travel_notes.ui.MainActivity
+import com.twosmalpixels.travel_notes.ui.expense_all.ExpenseAllViewModel
 import kotlinx.android.synthetic.main.you_travels_fragment.*
 
-class YouTravelsFragment: BaseFragment() {
+class YouTravelsFragment : BaseFragment() {
     private lateinit var viewModel: YouTravelsViewModel
-    override fun getToolbarParam() = ToolbarParam(getString(R.string.you_travels),false)
+    override fun getToolbarParam() = ToolbarParam(getString(R.string.you_travels), false)
 
     override fun getLayout() = R.layout.you_travels_fragment
 
@@ -23,16 +24,16 @@ class YouTravelsFragment: BaseFragment() {
         super.onViewCreated(view, savedInstanceState)
         viewModel = ViewModelProviders.of(requireActivity()).get(YouTravelsViewModel::class.java)
         content.layoutManager = LinearLayoutManager(context)
-        val defTravelItem =  TravelsItem.createDefaultItem(resources)
+        val defTravelItem = TravelsItem.createDefaultItem(resources)
         val mainActivity = (requireActivity() as MainActivity)
-        val yuTravelsAdapter = YouTravelsAdapter(mainActivity.storage, {clickItem(it)});
+        val yuTravelsAdapter = YouTravelsAdapter(mainActivity.storage, { clickItem(it) });
         content.adapter = yuTravelsAdapter
         progressViewModel.showProgress.value = true
         viewModel.getYouTravelsList(mainActivity.db).observe(this, Observer {
             if (!it.contains(defTravelItem)) {
                 it.add(defTravelItem)
             }
-            if (it != null && viewModel.isFirstVisitYouTravelsFragment){
+            if (it != null && viewModel.isFirstVisitYouTravelsFragment) {
                 checkHasTravelNow(viewModel.hasTravelNow(it))
             }
             yuTravelsAdapter.setNewList(it)
@@ -40,17 +41,19 @@ class YouTravelsFragment: BaseFragment() {
         })
     }
 
-    private fun clickItem(travelsItem: TravelsItem){
-        if (travelsItem.equals(TravelsItem.createDefaultItem(resources))){
+    private fun clickItem(travelsItem: TravelsItem) {
+        if (travelsItem.equals(TravelsItem.createDefaultItem(resources))) {
             findNavController().navigate(R.id.action_youTravelsFragment_to_newTravelFragment)
-        }else{
+        } else {
+            expenseAllViewModel =
+                ViewModelProviders.of(requireActivity()).get("a", ExpenseAllViewModel::class.java)
             expenseAllViewModel.toolbareName = travelsItem.title
             expenseAllViewModel.travelsItem = travelsItem
             findNavController().navigate(R.id.action_youTravelsFragment_to_expenceAllFragment)
         }
     }
 
-    private fun checkHasTravelNow(travelsItem: TravelsItem?){
+    private fun checkHasTravelNow(travelsItem: TravelsItem?) {
         travelsItem?.run {
             clickItem(travelsItem)
             viewModel.isFirstVisitYouTravelsFragment = false

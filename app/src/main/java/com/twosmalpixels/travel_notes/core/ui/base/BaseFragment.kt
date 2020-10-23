@@ -13,7 +13,7 @@ import com.twosmalpixels.travel_notes.core.ui.base.ToolbarViewModel
 import com.twosmalpixels.travel_notes.pojo.ToolbarParam
 import com.twosmalpixels.travel_notes.ui.expense_all.ExpenseAllViewModel
 
-abstract class BaseFragment: Fragment() {
+abstract class BaseFragment : Fragment() {
     private lateinit var progressBar: ConstraintLayout
     private lateinit var content: View
     protected lateinit var progressViewModel: ProgressViewModel
@@ -25,16 +25,19 @@ abstract class BaseFragment: Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        expenseAllViewModel = ViewModelProviders. of(requireActivity()).get(ExpenseAllViewModel::class.java)
+        expenseAllViewModel =
+            ViewModelProviders.of(requireActivity()).get("a", ExpenseAllViewModel::class.java)
         progressBar = view.findViewById(R.id.progress)
         content = view.findViewById(R.id.content)
-        val toolbarViewModel = ViewModelProviders.of(requireActivity()).get(ToolbarViewModel::class.java)
+        val toolbarViewModel =
+            ViewModelProviders.of(requireActivity()).get(ToolbarViewModel::class.java)
         toolbarViewModel.toolbarParam.value = getToolbarParam()
         createProgressObserver()
     }
 
-    private fun createProgressObserver(){
-        progressViewModel = ViewModelProviders.of(requireActivity()).get(ProgressViewModel::class.java)
+    private fun createProgressObserver() {
+        progressViewModel =
+            ViewModelProviders.of(requireActivity()).get(ProgressViewModel::class.java)
         progressViewModel.showProgress.observe(this, Observer { isShow ->
             progressBar.setVisibility(isShow)
             content.setVisibility(!isShow)

@@ -10,25 +10,32 @@ import com.twosmalpixels.travel_notes.core.extension.setVisibility
 import kotlinx.android.synthetic.main.shedule_item.view.*
 import kotlin.math.roundToInt
 
-class SheduleAdapter(val maxHeight: Int,val listener: (CategoryExpenceData) -> Unit): RecyclerView.Adapter<SheduleAdapter.ViewHolder>() {
+class SheduleAdapter(val maxHeight: Int, val listener: (CategoryExpenceData) -> Unit) :
+    RecyclerView.Adapter<SheduleAdapter.ViewHolder>() {
     private val listData = ArrayList<CategoryExpenceData>()
     private var isStartState = true
     private var selectedPosition = 500
 
-    fun setListData(newList: ArrayList<CategoryExpenceData>, isStartState: Boolean){
+    fun setListData(newList: ArrayList<CategoryExpenceData>, isStartState: Boolean) {
         listData.clear()
         listData.addAll(newList)
         this.isStartState = isStartState
         notifyDataSetChanged()
     }
 
-    fun setStartSte(isStartState: Boolean){
+    fun setStartSte(isStartState: Boolean) {
         this.isStartState = isStartState
         notifyDataSetChanged()
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        return ViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.shedule_item, parent, false))
+        return ViewHolder(
+            LayoutInflater.from(parent.context).inflate(
+                R.layout.shedule_item,
+                parent,
+                false
+            )
+        )
     }
 
     override fun getItemCount() = listData.size
@@ -39,7 +46,7 @@ class SheduleAdapter(val maxHeight: Int,val listener: (CategoryExpenceData) -> U
             if (listData.get(position).height != 0F) {
                 val params: ViewGroup.LayoutParams? = card_shedule.layoutParams
                 var cardHeight = (listData.get(position).height * maxHeight).roundToInt()
-                if (cardHeight < resources.getDimension(R.dimen.min_card_height).toInt()){
+                if (cardHeight < resources.getDimension(R.dimen.min_card_height).toInt()) {
                     cardHeight = resources.getDimension(R.dimen.min_card_height).toInt()
                 }
                 params!!.height = cardHeight
@@ -61,12 +68,12 @@ class SheduleAdapter(val maxHeight: Int,val listener: (CategoryExpenceData) -> U
         }
     }
 
-    private fun getBacgroundCardColor(resources: Resources, position: Int): Int{
-        return if (isStartState){
+    private fun getBacgroundCardColor(resources: Resources, position: Int): Int {
+        return if (isStartState) {
             resources.getColor(android.R.color.white)
-        }else if(selectedPosition == position){
+        } else if (selectedPosition == position) {
             resources.getColor(R.color.text_979)
-        }else{
+        } else {
             resources.getColor(R.color.text_black)
         }
     }

@@ -12,22 +12,25 @@ import com.twosmalpixels.travel_notes.views.shedule.CategoryExpenceData
 import com.twosmalpixels.travel_notes.views.shedule.SheduleSpinerData
 import org.koin.java.standalone.KoinJavaComponent
 
-class ExpenseAllViewModel: ViewModel() {
+class ExpenseAllViewModel : ViewModel() {
 
-    private val iAddExpenceUseCase by KoinJavaComponent.inject(
-        IExpenceAllUseCase::class.java)
+    private val expenceUseCase by KoinJavaComponent.inject(
+        IExpenceAllUseCase::class.java
+    )
 
     private val iAllCurrencyUseCase by KoinJavaComponent.inject(
-        IAllCurrencyUseCase::class.java)
+        IAllCurrencyUseCase::class.java
+    )
 
     private val iCurUseCase by KoinJavaComponent.inject(
-        ICurrencyUseCase::class.java)
+        ICurrencyUseCase::class.java
+    )
 
     var travelsItem: TravelsItem = TravelsItem.createEmptyItem()
-    set(value) {
-        curencyDataList.value = iAddExpenceUseCase.getDefaultShdulelistSpiner(travelsItem)
-        field = value
-    }
+        set(value) {
+            curencyDataList.value = expenceUseCase.getDefaultShdulelistSpiner(travelsItem)
+            field = value
+        }
 
     val categoryExpenceList = MutableLiveData<ArrayList<CategoryExpenceData>>()
     val curencyDataList = MutableLiveData<ArrayList<SheduleSpinerData>>()
@@ -35,23 +38,32 @@ class ExpenseAllViewModel: ViewModel() {
     var toolbareName: String = ""
 
     init {
-        curencyDataList.value = iAddExpenceUseCase.getDefaultShdulelistSpiner(travelsItem)
-        expenceDataList.value = iAddExpenceUseCase.getDefaultExpenseList()
+        curencyDataList.value = expenceUseCase.getDefaultShdulelistSpiner(travelsItem)
+        expenceDataList.value = expenceUseCase.getDefaultExpenseList()
     }
 
-    fun getCurrencyList(): ArrayList<CurrencyData>{
-        return iCurUseCase.createCurrensyListFromItem(travelsItem, iAllCurrencyUseCase.getAllCurrency(0))
+    fun getCurrencyList(): ArrayList<CurrencyData> {
+        return iCurUseCase.createCurrensyListFromItem(
+            travelsItem,
+            iAllCurrencyUseCase.getAllCurrency(0)
+        )
     }
 
-    fun getExpenceList(db: FirebaseFirestore): MutableLiveData<ArrayList<ExpenceData>>{
-        return iAddExpenceUseCase.getExpenceList(db, travelsItem.docName)
+    fun getExpenceList(db: FirebaseFirestore): MutableLiveData<ArrayList<ExpenceData>> {
+        return expenceUseCase.getExpenceList(db, travelsItem.docName)
     }
 
-    fun setTotalExpenceWithCurrency (allExpenceList: ArrayList<ExpenceData>){
-        curencyDataList.value = iAddExpenceUseCase.getTotalExpenceWithCurrency(allExpenceList, travelsItem)
-    }
-    fun setCategoryExpenceList (allExpenceList: ArrayList<ExpenceData>){
-        categoryExpenceList.value = iAddExpenceUseCase.getCategoryExpenceList(allExpenceList, travelsItem)
+    fun setTotalExpenceWithCurrency(allExpenceList: ArrayList<ExpenceData>) {
+        curencyDataList.value =
+            expenceUseCase.getTotalExpenceWithCurrency(allExpenceList, travelsItem)
     }
 
+    fun setCategoryExpenceList(allExpenceList: ArrayList<ExpenceData>) {
+        categoryExpenceList.value =
+            expenceUseCase.getCategoryExpenceList(allExpenceList, travelsItem)
+    }
+
+    fun getDefaultExpenseList(): ArrayList<ExpenceData> {
+        return expenceUseCase.getDefaultExpenseList()
+    }
 }
