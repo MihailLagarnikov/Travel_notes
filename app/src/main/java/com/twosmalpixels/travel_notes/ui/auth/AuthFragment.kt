@@ -22,7 +22,7 @@ import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
 
-class AuthFragment: BaseFragment() {
+class AuthFragment : BaseFragment() {
     private val RC_SIGN_IN = 6969
 
     private lateinit var authViewModel: AuthViewModel
@@ -39,9 +39,10 @@ class AuthFragment: BaseFragment() {
         auth_google.setOnClickListener {
             startActivityForResult(getGoogleSiginIntent(), RC_SIGN_IN)
         }
+        auth_email.setOnClickListener { findNavController().navigate(R.id.action_authFragment_to_emailAuthFragment) }
     }
 
-    private fun getGoogleSiginIntent(): Intent{
+    private fun getGoogleSiginIntent(): Intent {
         val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
             .requestIdToken(getString(R.string.default_web_client_id))
             .requestEmail()
@@ -68,10 +69,16 @@ class AuthFragment: BaseFragment() {
 
     private suspend fun firebaseAuthWithGoogle(idToken: String) {
         val credential = GoogleAuthProvider.getCredential(idToken, null)
-        val job = GlobalScope.async { authViewModel.isAuthSuccessful((activity!! as MainActivity).auth,credential, requireActivity()) }
+        val job = GlobalScope.async {
+            authViewModel.isAuthSuccessful(
+                (activity!! as MainActivity).auth,
+                credential,
+                requireActivity()
+            )
+        }
         if (job.await()) {
             // Sign in success, update UI with the signed-in user's information
-           findNavController().navigate(R.id.action_authFragment_to_youTravelsFragment)
+            findNavController().navigate(R.id.action_authFragment_to_youTravelsFragment)
         } else {
             Snackbar.make(requireView(), "Authentication Failed.", Snackbar.LENGTH_LONG).show()
         }

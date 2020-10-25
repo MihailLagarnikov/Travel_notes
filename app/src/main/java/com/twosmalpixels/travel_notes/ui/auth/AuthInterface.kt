@@ -8,8 +8,24 @@ import com.google.firebase.auth.FirebaseAuth
 import kotlinx.coroutines.CoroutineScope
 
 interface AuthInterface {
-    fun isNeedAuth(auth: FirebaseAuth):Boolean
+    fun isNeedAuth(auth: FirebaseAuth): Boolean
     fun getUserId(): String?
-    suspend fun getAuthRezult(auth: FirebaseAuth, authCredential: AuthCredential, fragmentActivity: FragmentActivity):   () -> Boolean
+    suspend fun getAuthRezult(
+        auth: FirebaseAuth,
+        authCredential: AuthCredential,
+        fragmentActivity: FragmentActivity
+    ): () -> Boolean
+
+    suspend fun createUserWithEmailAndPassword(
+        auth: FirebaseAuth,
+        email: String,
+        password: String
+    ): () -> Boolean
+
+    suspend fun signInWithEmailAndPassword(
+        auth: FirebaseAuth,
+        email: String,
+        password: String
+    ): () -> Boolean
 
 }

@@ -11,6 +11,9 @@
         <action
             android:id="@+id/action_authFragment_to_youTravelsFragment"
             app:destination="@id/youTravelsFragment" />
+        <action
+            android:id="@+id/action_authFragment_to_emailAuthFragment"
+            app:destination="@id/emailAuthFragment" />
     </fragment>
     <fragment
         android:id="@+id/youTravelsFragment"
@@ -95,4 +98,12 @@
         android:id="@+id/allCurrencyFragment"
         android:name="com.twosmalpixels.travel_notes.ui.all_currency.AllCurrencyFragment"
         android:label="AllCurrencyFragment" />
+    <fragment
+        android:id="@+id/emailAuthFragment"
+        android:name="com.twosmalpixels.travel_notes.ui.auth.EmailAuthFragment"
+        android:label="EmailAuthFragment" >
+        <action
+            android:id="@+id/action_emailAuthFragment_to_youTravelsFragment"
+            app:destination="@id/youTravelsFragment" />
+    </fragment>
 </navigation>

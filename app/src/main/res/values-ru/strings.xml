@@ -2,6 +2,12 @@
 <resources>
     <string name="app_name">Записки путешественника</string>
     <string name="auth_google">Войти с помощью \nаккаунта Google</string>
+    <string name="auth_email">Войти с помощью почты</string>
+    <string name="auth_email_enter_email">Введите адрес электронной почты</string>
+    <string name="auth_email_enter_password">Введите пароль</string>
+    <string name="auth_email_enter_password_double">Подтвердите пароль</string>
+    <string name="auth_email_password_lenght">Длинна пароля должна быть не мениее 8 символов</string>
+    <string name="auth_success">Аутентификация прошла успешно</string>
     <string name="you_travels">Ваши путешествия</string>
     <string name="add_new_travel">Запланировать  \nновое путешествие</string>
     <string name="new_travel">Новое путешествие</string>

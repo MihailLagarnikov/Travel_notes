@@ -15,4 +15,16 @@ interface IAuthUseCase {
         authCredential: AuthCredential,
         fragmentActivity: FragmentActivity
     ): Boolean
+
+    suspend fun createUserWithEmailAndPassword(
+        auth: FirebaseAuth,
+        email: String,
+        password: String
+    ): Boolean
+
+    suspend fun signInWithEmailAndPassword(
+        auth: FirebaseAuth,
+        email: String,
+        password: String
+    ): Boolean
 }

@@ -7,7 +7,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.async
 
-class AuthUseCase(val authInterface: AuthInterface): IAuthUseCase {
+class AuthUseCase(val authInterface: AuthInterface) : IAuthUseCase {
 
     override fun isNeedAuth(auth: FirebaseAuth): Boolean {
         return authInterface.isNeedAuth(auth)
@@ -22,7 +22,51 @@ class AuthUseCase(val authInterface: AuthInterface): IAuthUseCase {
         authCredential: AuthCredential,
         fragmentActivity: FragmentActivity
     ): Boolean {
-        val job = GlobalScope.async(Dispatchers.IO) { run(authInterface.getAuthRezult(auth, authCredential, fragmentActivity)) }
+        val job = GlobalScope.async(Dispatchers.IO) {
+            run(
+                authInterface.getAuthRezult(
+                    auth,
+                    authCredential,
+                    fragmentActivity
+                )
+            )
+        }
+        val rez = job.await()
+        return rez
+    }
+
+    override suspend fun createUserWithEmailAndPassword(
+        auth: FirebaseAuth,
+        email: String,
+        password: String
+    ): Boolean {
+        val job = GlobalScope.async(Dispatchers.IO) {
+            run(
+                authInterface.createUserWithEmailAndPassword(
+                    auth,
+                    email,
+                    password
+                )
+            )
+        }
+        val rez = job.await()
+        return rez
+    }
+
+    override suspend fun signInWithEmailAndPassword(
+        auth: FirebaseAuth,
+        email: String,
+        password: String
+    ): Boolean {
+        val job = GlobalScope.async(Dispatchers.IO) {
+            run(
+                authInterface.signInWithEmailAndPassword(
+                    auth,
+                    email,
+                    password
+                )
+            )
+        }
         val rez = job.await()
         return rez
     }

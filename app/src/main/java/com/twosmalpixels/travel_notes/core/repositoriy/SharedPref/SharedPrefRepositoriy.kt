@@ -20,4 +20,14 @@ class SharedPrefRepositoriy: ISharedPrefRepositoriy {
     override fun loadText(key: String, defValue: String): String{
         return pref.getString(key, defValue) ?: defValue
     }
+
+    override fun loadBoolean(key: String, defValue: Boolean): Boolean {
+        return pref.getBoolean(key, defValue) ?: defValue
+    }
+
+    override fun saveBoolean(key: String, value: Boolean) {
+        val ed: SharedPreferences.Editor = pref.edit()
+        ed.putBoolean(key, value)
+        ed.apply()
+    }
 }

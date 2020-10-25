@@ -4,9 +4,7 @@ import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.widget.ImageView
 import com.google.firebase.storage.FirebaseStorage
-import com.twosmalpixels.travel_notes.R
 import com.twosmalpixels.travel_notes.ui.auth.IAuthUseCase
-import io.opencensus.common.Scope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch

@@ -10,7 +10,7 @@ import com.twosmalpixels.travel_notes.ui.auth.AuthInterface
 import kotlinx.coroutines.*
 import kotlinx.coroutines.tasks.await
 
-class AuthProvider: AuthInterface {
+class AuthProvider : AuthInterface {
     private var auth: FirebaseAuth? = null
 
     override fun isNeedAuth(auth: FirebaseAuth): Boolean {
@@ -19,9 +19,9 @@ class AuthProvider: AuthInterface {
     }
 
     override fun getUserId(): String? {
-        return if (auth != null){
+        return if (auth != null) {
             auth?.currentUser?.uid
-        }else{
+        } else {
             null
         }
     }
@@ -31,9 +31,28 @@ class AuthProvider: AuthInterface {
         authCredential: AuthCredential,
         fragmentActivity: FragmentActivity
     ): () -> Boolean {
-       val job =  auth.signInWithCredential(authCredential)
+        val job = auth.signInWithCredential(authCredential)
         val rez = job.await()
-        return {rez.user != null}
+        return { rez.user != null }
     }
 
+    override suspend fun createUserWithEmailAndPassword(
+        auth: FirebaseAuth,
+        email: String,
+        password: String
+    ): () -> Boolean {
+        val job = auth.createUserWithEmailAndPassword(email, password)
+        val rez = job.await()
+        return { rez.user != null }
+    }
+
+    override suspend fun signInWithEmailAndPassword(
+        auth: FirebaseAuth,
+        email: String,
+        password: String
+    ): () -> Boolean {
+        val job = auth.signInWithEmailAndPassword(email, password)
+        val rez = job.await()
+        return { rez.user != null }
+    }
 }
