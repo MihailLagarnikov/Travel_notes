@@ -6,5 +6,9 @@ import com.twosmalpixels.travel_notes.ui.add_expence.ExpenceData
 
 interface IExpenceAllRepositoriy {
 
-    fun getExpenceList(db: FirebaseFirestore, docName: String): MutableLiveData<ArrayList<ExpenceData>>
+    fun getExpenceList(
+        db: FirebaseFirestore,
+        docName: String,
+        isOffline: Boolean
+    ): MutableLiveData<ArrayList<ExpenceData>>
 }

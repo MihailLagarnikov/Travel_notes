@@ -48,6 +48,8 @@
     <string name="currency_expence">Валюта расходов</string>
     <string name="choose_anoter_cur">Выбрать другую валюту</string>
     <string name="currency_search_hint">Введите название валюты</string>
+    <string name="offline_title">Отсутствует соединение с интернетом</string>
+    <string name="offline_text">В оффлайн режиме вы можете  добавлять новые расходы. Полные данные о расходах и график станут доступны при появлении стабильного интеренет соединения. </string>
 
     <string name="def_curensy">RUB</string>
 

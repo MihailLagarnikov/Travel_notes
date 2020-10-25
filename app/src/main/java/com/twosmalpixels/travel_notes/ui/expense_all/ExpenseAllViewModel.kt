@@ -49,8 +49,11 @@ class ExpenseAllViewModel : ViewModel() {
         )
     }
 
-    fun getExpenceList(db: FirebaseFirestore): MutableLiveData<ArrayList<ExpenceData>> {
-        return expenceUseCase.getExpenceList(db, travelsItem.docName)
+    fun getExpenceList(
+        db: FirebaseFirestore,
+        isOffline: Boolean
+    ): MutableLiveData<ArrayList<ExpenceData>> {
+        return expenceUseCase.getExpenceList(db, travelsItem.docName, isOffline)
     }
 
     fun setTotalExpenceWithCurrency(allExpenceList: ArrayList<ExpenceData>) {

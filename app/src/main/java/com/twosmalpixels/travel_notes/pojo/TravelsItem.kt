@@ -42,7 +42,6 @@ data class TravelsItem(
             val rezult = HashMap<String, Any>()
             rezult.set(TravelsCollection.TITLE.name, travelsItem.title)
             rezult.set(TravelsCollection.DATA_STRING.name, travelsItem.data)
-            rezult.set(TravelsCollection.DATA_STRING.name, travelsItem.data)
             rezult.set(TravelsCollection.DATA_START.name, travelsItem.dataStart)
             rezult.set(TravelsCollection.DATA_END.name, travelsItem.dataEnd)
             rezult.set(TravelsCollection.PERSON.name, travelsItem.person)

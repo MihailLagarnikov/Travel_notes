@@ -11,30 +11,35 @@ import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
 
-class YouTravelsRepositoriy(val cloudFirestoreBase: ICloudFirestoreBase): IYouTravelsRepositoriy {
+class YouTravelsRepositoriy(val cloudFirestoreBase: ICloudFirestoreBase) : IYouTravelsRepositoriy {
     private val youTravelDataList = MutableLiveData<ArrayList<TravelsItem>>()
-    
+
     override fun getYouTravelsList(db: FirebaseFirestore): MutableLiveData<ArrayList<TravelsItem>> {
-         when (getSourceData()){
+        when (getSourceData()) {
             DataSourse.FAIRBASE -> getFairbaseYouTravelsList(db)
             DataSourse.SHARE_PREF -> getSharedPrefYuoTravelsList()
         }
         return youTravelDataList
     }
 
-    private fun getSourceData(): DataSourse{
+    private fun getSourceData(): DataSourse {
         return DataSourse.FAIRBASE
     }
 
-    private fun getFairbaseYouTravelsList(db: FirebaseFirestore){
+    private fun getFairbaseYouTravelsList(db: FirebaseFirestore) {
         val rezult = ArrayList<TravelsItem>()
         GlobalScope.launch(Dispatchers.Main) {
-            val services = async(Dispatchers.IO) {cloudFirestoreBase.getAllDocumentInCollections(db, TRAVELS_COLLECTION)}
+            val services = async(Dispatchers.IO) {
+                cloudFirestoreBase.getAllDocumentInCollections(
+                    db,
+                    TRAVELS_COLLECTION
+                )
+            }
             services.await()
             val listDoc = services.getCompleted()
-            if (listDoc.size != 0){
-                for (doc in listDoc){
-                    if (doc != null && doc.data != null){
+            if (listDoc.size != 0) {
+                for (doc in listDoc) {
+                    if (doc != null && doc.data != null) {
                         rezult.add(TravelsItem.createFromMap(doc.data!!, doc.reference.id))
                     }
                 }
@@ -44,7 +49,7 @@ class YouTravelsRepositoriy(val cloudFirestoreBase: ICloudFirestoreBase): IYouTr
 
     }
 
-    private fun getSharedPrefYuoTravelsList():ArrayList<TravelsItem>{
+    private fun getSharedPrefYuoTravelsList(): ArrayList<TravelsItem> {
         return ArrayList<TravelsItem>()
     }
 }

@@ -10,7 +10,7 @@ import com.twosmalpixels.travel_notes.views.shedule.CategoryExpenceData
 import com.twosmalpixels.travel_notes.views.shedule.SheduleSpinerData
 import kotlin.collections.ArrayList
 
-class ExpenceAllAllUseCase(val iExpenceAllRepositoriy: IExpenceAllRepositoriy) :
+class ExpenceAllUseCase(val iExpenceAllRepositoriy: IExpenceAllRepositoriy) :
     IExpenceAllUseCase {
     private val SUM_NUL = 0
     private val MAX_HEIGHT = 1F
@@ -30,9 +30,10 @@ class ExpenceAllAllUseCase(val iExpenceAllRepositoriy: IExpenceAllRepositoriy) :
 
     override fun getExpenceList(
         db: FirebaseFirestore,
-        docName: String
+        docName: String,
+        isOffline: Boolean
     ): MutableLiveData<ArrayList<ExpenceData>> {
-        return iExpenceAllRepositoriy.getExpenceList(db, docName)
+        return iExpenceAllRepositoriy.getExpenceList(db, docName, isOffline)
     }
 
     override fun getTotalExpenceWithCurrency(

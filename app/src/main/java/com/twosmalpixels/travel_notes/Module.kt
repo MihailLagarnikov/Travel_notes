@@ -1,18 +1,22 @@
 package com.twosmalpixels.travel_notes
 
+import com.twosmalpixels.travel_notes.core.offline_mode.IOflineModeUseCase
+import com.twosmalpixels.travel_notes.core.offline_mode.OflineModeUseCase
 import com.twosmalpixels.travel_notes.core.repositoriy.CloudFirestoreBase
 import com.twosmalpixels.travel_notes.core.repositoriy.FairbaseStorageBase
 import com.twosmalpixels.travel_notes.core.repositoriy.ICloudFirestoreBase
 import com.twosmalpixels.travel_notes.core.repositoriy.IFairbaseStorageBase
-import com.twosmalpixels.travel_notes.core.repositoriy.SharedPref.ISharedPrefRepositoriy
-import com.twosmalpixels.travel_notes.core.repositoriy.SharedPref.SharedPrefRepositoriy
+import com.twosmalpixels.travel_notes.core.repositoriy.LocalRepositoriy.ILocalRepositoriy
+import com.twosmalpixels.travel_notes.core.repositoriy.LocalRepositoriy.LocalRepositoriy
+import com.twosmalpixels.travel_notes.core.repositoriy.SharedPref.ISharedPrefHelper
+import com.twosmalpixels.travel_notes.core.repositoriy.SharedPref.SharedPrefHelper
 import com.twosmalpixels.travel_notes.ui.add_expence.ExpenceRepository
 import com.twosmalpixels.travel_notes.ui.add_expence.ExpenceUseCase
 import com.twosmalpixels.travel_notes.ui.add_expence.IExpenceRepository
 import com.twosmalpixels.travel_notes.ui.add_expence.IExpenceUseCase
 import com.twosmalpixels.travel_notes.ui.all_currency.AllCurrencyUseCase
 import com.twosmalpixels.travel_notes.ui.all_currency.IAllCurrencyUseCase
-import com.twosmalpixels.travel_notes.ui.expense_all.ExpenceAllAllUseCase
+import com.twosmalpixels.travel_notes.ui.expense_all.ExpenceAllUseCase
 import com.twosmalpixels.travel_notes.ui.expense_all.IExpenceAllUseCase
 import com.twosmalpixels.travel_notes.ui.auth.AuthInterface
 import com.twosmalpixels.travel_notes.ui.auth.AuthProvider
@@ -39,21 +43,22 @@ val appModule = module {
 
     single { AuthProvider() as AuthInterface }
     single { AuthUseCase(get()) as IAuthUseCase }
-    single { CloudFirestoreBase(get()) as ICloudFirestoreBase }
+    single { CloudFirestoreBase(get(), get()) as ICloudFirestoreBase }
     single { YouTravelsRepositoriy(get()) as IYouTravelsRepositoriy }
     single { YouTravelsUseCase(get()) as IYouTravelsUseCase }
-    single { NewTravelsUseCase (get()) as INewTravelsUseCase }
-    single { NewTravelsRepositoiy (get()) as INewTravelsRepositoriy }
-    single { SharedPrefRepositoriy() as ISharedPrefRepositoriy}
+    single { NewTravelsUseCase(get()) as INewTravelsUseCase }
+    single { NewTravelsRepositoiy(get()) as INewTravelsRepositoriy }
+    single { SharedPrefHelper() as ISharedPrefHelper }
     single { ChooseSkinUseCase() as IChooseSkinUseCase }
     single { FairbaseStorageBase(get()) as IFairbaseStorageBase }
-    single { ExpenceAllAllUseCase(get()) as IExpenceAllUseCase }
+    single { ExpenceAllUseCase(get()) as IExpenceAllUseCase }
     single { CurrencyUseCase() as ICurrencyUseCase }
     single { AllCurrencyUseCase() as IAllCurrencyUseCase }
     single { ExpenceRepository(get()) as IExpenceRepository }
     single { ExpenceUseCase() as IExpenceUseCase }
-    single { ExpenceAllRepositoriy(get()) as IExpenceAllRepositoriy }
-
+    single { ExpenceAllRepositoriy(get(), get()) as IExpenceAllRepositoriy }
+    single { LocalRepositoriy(get()) as ILocalRepositoriy }
+    single { OflineModeUseCase() as IOflineModeUseCase }
 
 
 }

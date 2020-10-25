@@ -4,13 +4,13 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.twosmalpixels.travel_notes.core.repositoriy.SharedPref.DEF_EMPTY_STRING
-import com.twosmalpixels.travel_notes.core.repositoriy.SharedPref.ISharedPrefRepositoriy
+import com.twosmalpixels.travel_notes.core.repositoriy.SharedPref.ISharedPrefHelper
 import com.twosmalpixels.travel_notes.core.repositoriy.SharedPref.LAST_PERSON
 import org.koin.java.standalone.KoinJavaComponent
 
-class NewPersonViewModel: ViewModel() {
-    private val sharedPref: ISharedPrefRepositoriy by KoinJavaComponent.inject(
-        ISharedPrefRepositoriy::class.java
+class NewPersonViewModel : ViewModel() {
+    private val sharedPref: ISharedPrefHelper by KoinJavaComponent.inject(
+        ISharedPrefHelper::class.java
     )
 
     private val person = MutableLiveData<String>()
@@ -19,15 +19,14 @@ class NewPersonViewModel: ViewModel() {
         person.value = sharedPref.loadText(LAST_PERSON, DEF_EMPTY_STRING)
     }
 
-    fun getPerson():LiveData<String>{
+    fun getPerson(): LiveData<String> {
         return person
     }
-    fun setPerson(newPerson: String){
-        if (!newPerson.equals(DEF_EMPTY_STRING)){
+
+    fun setPerson(newPerson: String) {
+        if (!newPerson.equals(DEF_EMPTY_STRING)) {
             sharedPref.saveText(LAST_PERSON, newPerson)
         }
         person.value = newPerson
     }
-
-
 }

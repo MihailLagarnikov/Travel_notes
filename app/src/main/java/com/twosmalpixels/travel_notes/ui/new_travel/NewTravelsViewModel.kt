@@ -6,15 +6,17 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.storage.FirebaseStorage
+import com.twosmalpixels.travel_notes.core.repositoriy.LocalRepositoriy.ILocalRepositoriy
 import com.twosmalpixels.travel_notes.core.repositoriy.WriteCloudListener
 import com.twosmalpixels.travel_notes.pojo.TravelsItem
 import org.koin.java.standalone.KoinJavaComponent
 import java.util.*
 import kotlin.collections.ArrayList
 
-class NewTravelsViewModel: ViewModel(), WriteCloudListener {
+class NewTravelsViewModel : ViewModel(), WriteCloudListener {
     var isRangeMode = true
-    private val iNewTravelsUseCase: INewTravelsUseCase by KoinJavaComponent.inject(INewTravelsUseCase::class.java)
+    private val newTravelsUseCase: INewTravelsUseCase by KoinJavaComponent.inject(INewTravelsUseCase::class.java)
+    private val localRepositoriy: ILocalRepositoriy by KoinJavaComponent.inject(ILocalRepositoriy::class.java)
     val changeStatus = MutableLiveData<Boolean?>()
     val chooseDates = MutableLiveData<ArrayList<Date>>()
     val chooseDate = MutableLiveData<Date>()
@@ -23,15 +25,15 @@ class NewTravelsViewModel: ViewModel(), WriteCloudListener {
     var additionalCurrencyCode: String = ""
     var rates: Int = 0
 
-    fun saveNewTravelData(db: FirebaseFirestore, travelsItem: TravelsItem){
-        iNewTravelsUseCase.saneNewTravelData(db, travelsItem, this)
+    fun saveNewTravelData(db: FirebaseFirestore, travelsItem: TravelsItem) {
+        newTravelsUseCase.saneNewTravelData(db, travelsItem, this)
     }
 
-    fun saveBitmap(imageView: ImageView, name: String, storage: FirebaseStorage){
+    fun saveBitmap(imageView: ImageView, name: String, storage: FirebaseStorage) {
         imageView.isDrawingCacheEnabled = true
         imageView.buildDrawingCache()
         val bitmap = (imageView.drawable as BitmapDrawable).bitmap
-        iNewTravelsUseCase.saveSkin(bitmap, name, storage)
+        newTravelsUseCase.saveSkin(bitmap, name, storage)
     }
 
     override fun setSuccess(isSuccess: Boolean) {
@@ -39,7 +41,13 @@ class NewTravelsViewModel: ViewModel(), WriteCloudListener {
         changeStatus.value = null
     }
 
-    fun getRandomFileName(): String{
-        return iNewTravelsUseCase.getRandomFileName()
+    fun getRandomFileName(): String {
+        return newTravelsUseCase.getRandomFileName()
+    }
+
+    fun saveLocalTravelItem(travelsItem: TravelsItem?) {
+        if (travelsItem != null) {
+            localRepositoriy.saveNewTravel(travelsItem)
+        }
     }
 }

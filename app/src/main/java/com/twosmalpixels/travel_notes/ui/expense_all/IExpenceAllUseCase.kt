@@ -10,7 +10,19 @@ import com.twosmalpixels.travel_notes.views.shedule.SheduleSpinerData
 interface IExpenceAllUseCase {
     fun getDefaultShdulelistSpiner(travelsItem: TravelsItem): ArrayList<SheduleSpinerData>
     fun getDefaultExpenseList(): ArrayList<ExpenceData>
-    fun getExpenceList(db: FirebaseFirestore, docName: String): MutableLiveData<ArrayList<ExpenceData>>
-    fun getTotalExpenceWithCurrency (allExpenceList: ArrayList<ExpenceData>, travelsItem: TravelsItem): ArrayList<SheduleSpinerData>
-    fun getCategoryExpenceList(allExpenceList: ArrayList<ExpenceData>, travelsItem: TravelsItem): ArrayList<CategoryExpenceData>
+    fun getExpenceList(
+        db: FirebaseFirestore,
+        docName: String,
+        isOffline: Boolean
+    ): MutableLiveData<ArrayList<ExpenceData>>
+
+    fun getTotalExpenceWithCurrency(
+        allExpenceList: ArrayList<ExpenceData>,
+        travelsItem: TravelsItem
+    ): ArrayList<SheduleSpinerData>
+
+    fun getCategoryExpenceList(
+        allExpenceList: ArrayList<ExpenceData>,
+        travelsItem: TravelsItem
+    ): ArrayList<CategoryExpenceData>
 }

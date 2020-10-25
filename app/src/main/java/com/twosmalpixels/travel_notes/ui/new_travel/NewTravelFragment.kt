@@ -25,6 +25,7 @@ class NewTravelFragment : BaseFragment(), TextWatcher {
     private var isDefaultSkin = true
     private lateinit var newTravelsViewModel: NewTravelsViewModel
     private var blockDublNavigate = false
+    private var saveTravelItem: TravelsItem? = null
 
     override fun getToolbarParam(): ToolbarParam {
         return ToolbarParam(getString(R.string.new_travel))
@@ -44,7 +45,8 @@ class NewTravelFragment : BaseFragment(), TextWatcher {
         newPersonViewModel.getPerson().observe(this, Observer { who_travel_edit_text.setText(it) })
         chooseSkinViewModel.shoosenSkin.observe(
             this,
-            Observer { choose_image_travel_main_img.setImageResource(it)
+            Observer {
+                choose_image_travel_main_img.setImageResource(it)
                 isDefaultSkin = true
             })
         chooseSkinViewModel.shoosenSkinBitmap.observe(this, Observer {
@@ -52,8 +54,8 @@ class NewTravelFragment : BaseFragment(), TextWatcher {
             isDefaultSkin = false
         })
         where_travel_edit_text.addTextChangedListener(this)
-        when_travel_edit_text.setOnFocusChangeListener{ view, b ->
-            if(b){
+        when_travel_edit_text.setOnFocusChangeListener { view, b ->
+            if (b) {
                 findNavController().navigate(R.id.action_newTravelFragment_to_calenarikDialog)
             }
         }
@@ -69,34 +71,40 @@ class NewTravelFragment : BaseFragment(), TextWatcher {
 
             var imageName = newTravelsViewModel.getRandomFileName()
 
-            if (isDefaultSkin){
+            if (isDefaultSkin) {
                 imageName = getInnerName(chooseSkinViewModel.shoosenSkin?.value ?: 0)
-            }else{
-                newTravelsViewModel.saveBitmap(choose_image_travel_main_img, imageName, (requireActivity() as MainActivity).storage)
+            } else {
+                newTravelsViewModel.saveBitmap(
+                    choose_image_travel_main_img,
+                    imageName,
+                    (requireActivity() as MainActivity).storage
+                )
             }
 
+            saveTravelItem = TravelsItem(
+                where_travel_edit_text.text.toString(),
+                when_travel_edit_text.text.toString(),
+                newTravelsViewModel.chooseDates.value?.get(0)?.time ?: 0L,
+                newTravelsViewModel.chooseDates.value?.get(1)?.time ?: 0L,
+                who_travel_edit_text.text.toString(),
+                imageName,
+                newTravelsViewModel.mainCurrencyCode,
+                newTravelsViewModel.additionalCurrencyCode,
+                newTravelsViewModel.rates
+            )
             val mainActivity = (requireActivity() as MainActivity)
             newTravelsViewModel.saveNewTravelData(
                 mainActivity.db,
-                TravelsItem(
-                    where_travel_edit_text.text.toString(),
-                    when_travel_edit_text.text.toString(),
-                    newTravelsViewModel.chooseDates.value?.get(0)?.time ?: 0L,
-                    newTravelsViewModel.chooseDates.value?.get(1)?.time ?: 0L,
-                    who_travel_edit_text.text.toString(),
-                    imageName,
-                    newTravelsViewModel.mainCurrencyCode,
-                    newTravelsViewModel.additionalCurrencyCode,
-                    newTravelsViewModel.rates
-                )
+                saveTravelItem!!
             )
             progressViewModel.showProgress.value = true
 
         }
         newTravelsViewModel.changeStatus.observe(this, Observer {
             progressViewModel.showProgress.value = false
-            if (it !=null && it && blockDublNavigate) {
+            if (it != null && it && blockDublNavigate) {
                 //данные успешно записанны, переходим
+                newTravelsViewModel.saveLocalTravelItem(saveTravelItem)
                 blockDublNavigate = false
                 findNavController().navigate(R.id.action_newTravelFragment_to_youTravelsFragment)
             } else if (it != null && blockDublNavigate) {
@@ -107,20 +115,17 @@ class NewTravelFragment : BaseFragment(), TextWatcher {
         choose_image_travel_constraint.setOnClickListener {
             findNavController().navigate(R.id.action_newTravelFragment_to_chooseTravelSkinFragment)
         }
-
         newTravelsViewModel.chooseDates.observe(this, Observer {
-            if (it != null){
+            if (it != null) {
                 when_travel_edit_text.setText(createStringFromRangeDates(it))
             }
         })
-
         newTravelsViewModel.currencyText.observe(this, Observer {
-            if (it != null){
+            if (it != null) {
                 currency_travel_edit_text.setText(it)
                 validate()
             }
         })
-
         currency_travel_edit_text.setOnFocusChangeListener { view, b ->
             if (b) {//переход на фрагмент выбора валюты
                 findNavController().navigate(R.id.action_newTravelFragment_to_currencyFragment)
@@ -138,11 +143,12 @@ class NewTravelFragment : BaseFragment(), TextWatcher {
     override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
     }
 
-    private fun validate(){
+    private fun validate() {
         val isWheeEmpty = where_travel_edit_text.text?.isEmpty() ?: true
         val isWhenEmpty = when_travel_edit_text.text?.isEmpty() ?: true
         val isWhoEmpty = who_travel_edit_text.text?.isEmpty() ?: true
         val isCurrencyEmpty = currency_travel_edit_text.text?.isEmpty() ?: true
-        button_new_travel_save.isEnabled = !isWheeEmpty && !isWhenEmpty && !isWhoEmpty && !isCurrencyEmpty
+        button_new_travel_save.isEnabled =
+            !isWheeEmpty && !isWhenEmpty && !isWhoEmpty && !isCurrencyEmpty
     }
 }

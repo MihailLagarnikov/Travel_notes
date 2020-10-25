@@ -4,12 +4,11 @@ import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.ViewModel
 import com.google.firebase.auth.AuthCredential
 import com.google.firebase.auth.FirebaseAuth
-import com.twosmalpixels.travel_notes.core.repositoriy.SharedPref.ISharedPrefRepositoriy
+import com.twosmalpixels.travel_notes.core.repositoriy.SharedPref.ISharedPrefHelper
 import org.koin.java.standalone.KoinJavaComponent.inject
 
 class AuthViewModel() : ViewModel() {
     private val authUseCase: IAuthUseCase by inject(IAuthUseCase::class.java)
-    private val sharedPrefRepositoriy: ISharedPrefRepositoriy by inject(ISharedPrefRepositoriy::class.java)
     fun isNeedAuth(auth: FirebaseAuth) = authUseCase.isNeedAuth(auth)
 
     suspend fun isAuthSuccessful(

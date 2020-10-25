@@ -47,6 +47,8 @@
     <string name="currency_expence">Cost currency</string>
     <string name="choose_anoter_cur">Choose another currency</string>
     <string name="currency_search_hint">Enter currency name</string>
+    <string name="offline_title">No internet connection</string>
+    <string name="offline_text">In offline mode, you can add new expenses. Full cost data and schedule will be available when a stable internet connection is available.</string>
 
 
     <string name="def_curensy">EUR</string>
