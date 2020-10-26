@@ -5,25 +5,29 @@ import com.google.firebase.firestore.FirebaseFirestore
 import com.twosmalpixels.travel_notes.core.repositoriy.ICloudFirestoreBase
 import com.twosmalpixels.travel_notes.core.repositoriy.TRAVELS_COLLECTION
 import com.twosmalpixels.travel_notes.core.repositoriy.DataSourse
+import com.twosmalpixels.travel_notes.core.repositoriy.LocalRepositoriy.ILocalRepositoriy
 import com.twosmalpixels.travel_notes.pojo.TravelsItem
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
 
-class YouTravelsRepositoriy(val cloudFirestoreBase: ICloudFirestoreBase) : IYouTravelsRepositoriy {
+class YouTravelsRepositoriy(
+    val cloudFirestoreBase: ICloudFirestoreBase,
+    val localRepositoriy: ILocalRepositoriy
+) : IYouTravelsRepositoriy {
     private val youTravelDataList = MutableLiveData<ArrayList<TravelsItem>>()
 
-    override fun getYouTravelsList(db: FirebaseFirestore): MutableLiveData<ArrayList<TravelsItem>> {
-        when (getSourceData()) {
-            DataSourse.FAIRBASE -> getFairbaseYouTravelsList(db)
-            DataSourse.SHARE_PREF -> getSharedPrefYuoTravelsList()
+    override fun getYouTravelsList(
+        db: FirebaseFirestore,
+        isOffline: Boolean
+    ): MutableLiveData<ArrayList<TravelsItem>> {
+        if (isOffline) {
+            getSharedPrefYuoTravelsList()
+        } else {
+            getFairbaseYouTravelsList(db)
         }
         return youTravelDataList
-    }
-
-    private fun getSourceData(): DataSourse {
-        return DataSourse.FAIRBASE
     }
 
     private fun getFairbaseYouTravelsList(db: FirebaseFirestore) {
@@ -49,7 +53,11 @@ class YouTravelsRepositoriy(val cloudFirestoreBase: ICloudFirestoreBase) : IYouT
 
     }
 
-    private fun getSharedPrefYuoTravelsList(): ArrayList<TravelsItem> {
-        return ArrayList<TravelsItem>()
+    private fun getSharedPrefYuoTravelsList() {
+        youTravelDataList.value = localRepositoriy.getAllTravels()
+    }
+
+    override fun getLocalyTravelsList(): ArrayList<TravelsItem> {
+        return localRepositoriy.getAllTravels()
     }
 }

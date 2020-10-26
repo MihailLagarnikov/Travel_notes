@@ -1,11 +1,11 @@
 package com.twosmalpixels.travel_notes.ui.auth
 
 import BaseFragment
-import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.fragment.findNavController
 import com.google.android.gms.auth.api.signin.GoogleSignIn
@@ -17,6 +17,7 @@ import com.google.firebase.auth.GoogleAuthProvider
 import com.twosmalpixels.travel_notes.R
 import com.twosmalpixels.travel_notes.pojo.ToolbarParam
 import com.twosmalpixels.travel_notes.ui.MainActivity
+import com.twosmalpixels.travel_notes.ui.you_travels.YouTravelsViewModel
 import kotlinx.android.synthetic.main.auth_fragment.*
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.async
@@ -27,6 +28,7 @@ class AuthFragment : BaseFragment() {
 
     private lateinit var authViewModel: AuthViewModel
     private lateinit var googleSignInClient: GoogleSignInClient
+    private lateinit var travelViewModel: YouTravelsViewModel
 
 
     override fun getLayout() = R.layout.auth_fragment
@@ -35,11 +37,24 @@ class AuthFragment : BaseFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        travelViewModel = ViewModelProviders.of(requireActivity()).get(YouTravelsViewModel::class.java)
         authViewModel = ViewModelProviders.of(this).get(AuthViewModel::class.java)
         auth_google.setOnClickListener {
             startActivityForResult(getGoogleSiginIntent(), RC_SIGN_IN)
         }
         auth_email.setOnClickListener { findNavController().navigate(R.id.action_authFragment_to_emailAuthFragment) }
+
+        oflineModeUseCase.getModeLiveData().observe(this, Observer {
+            if (it) {
+                val curentTravel  = travelViewModel.hasTravelNow(travelViewModel.getLocalyTravelsList())
+                Log.d("asqs", curentTravel.toString())
+                if (curentTravel != null) {
+                    expenseAllViewModel.toolbareName = curentTravel.title
+                    expenseAllViewModel.travelsItem = curentTravel
+                    findNavController().navigate(R.id.action_authFragment_to_expenceAllOfflineFragment)
+                }
+            }
+        })
     }
 
     private fun getGoogleSiginIntent(): Intent {

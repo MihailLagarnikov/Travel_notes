@@ -18,7 +18,7 @@ import kotlinx.android.synthetic.main.expence_all_offline_fragment.*
 class ExpenceAllOfflineFragment : BaseFragment() {
 
     override fun getToolbarParam(): ToolbarParam {
-        return ToolbarParam(expenseAllViewModel.toolbareName)
+        return ToolbarParam(expenseAllViewModel.toolbareName, backButtonVisiblity = false)
     }
 
     override fun getLayout(): Int {
@@ -50,12 +50,12 @@ class ExpenceAllOfflineFragment : BaseFragment() {
                 card_image_add_new_expence.setVisibility(it.size > 0)
             })
 
-        image_add_new_expence.setOnClickListener { findNavController().navigate(R.id.action_expenceAllFragment_to_addExpenceFragment) }
+        image_add_new_expence.setOnClickListener { findNavController().navigate(R.id.action_expenceAllOfflineFragment_to_addExpenceFragment) }
     }
 
     private fun clickExpenceItem(expenceData: ExpenceData): Boolean {
         if (expenceData.equals(ExpenceData.getEmptyData())) {
-            findNavController().navigate(R.id.action_expenceAllFragment_to_addExpenceFragment)
+            findNavController().navigate(R.id.action_expenceAllOfflineFragment_to_addExpenceFragment)
         }
         return true
     }

@@ -3,6 +3,7 @@ package com.twosmalpixels.travel_notes.ui.expense_all
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.google.firebase.firestore.FirebaseFirestore
+import com.twosmalpixels.travel_notes.core.offline_mode.IOflineModeUseCase
 import com.twosmalpixels.travel_notes.pojo.TravelsItem
 import com.twosmalpixels.travel_notes.ui.add_expence.ExpenceData
 import com.twosmalpixels.travel_notes.ui.all_currency.IAllCurrencyUseCase
@@ -13,6 +14,10 @@ import com.twosmalpixels.travel_notes.views.shedule.SheduleSpinerData
 import org.koin.java.standalone.KoinJavaComponent
 
 class ExpenseAllViewModel : ViewModel() {
+
+    private val oflineModeUseCase by KoinJavaComponent.inject(
+        IOflineModeUseCase::class.java
+    )
 
     private val expenceUseCase by KoinJavaComponent.inject(
         IExpenceAllUseCase::class.java
@@ -50,10 +55,9 @@ class ExpenseAllViewModel : ViewModel() {
     }
 
     fun getExpenceList(
-        db: FirebaseFirestore,
-        isOffline: Boolean
+        db: FirebaseFirestore
     ): MutableLiveData<ArrayList<ExpenceData>> {
-        return expenceUseCase.getExpenceList(db, travelsItem.docName, isOffline)
+        return expenceUseCase.getExpenceList(db, travelsItem.docName, oflineModeUseCase.getModeLiveData().value ?: false)
     }
 
     fun setTotalExpenceWithCurrency(allExpenceList: ArrayList<ExpenceData>) {

@@ -2,8 +2,9 @@ package com.twosmalpixels.travel_notes.ui
 
 import android.content.Context
 import android.content.pm.PackageManager
-import androidx.appcompat.app.AppCompatActivity
+import android.net.ConnectivityManager
 import android.os.Bundle
+import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.fragment.NavHostFragment
@@ -15,21 +16,27 @@ import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.FirebaseStorage
 import com.twosmalpixels.travel_notes.R
+import com.twosmalpixels.travel_notes.core.offline_mode.IOflineModeUseCase
 import com.twosmalpixels.travel_notes.core.repositoriy.SharedPref.ISharedPrefHelper
 import com.twosmalpixels.travel_notes.core.ui.base.ToolbarViewModel
 import com.twosmalpixels.travel_notes.ui.add_expence.AddExpenceFragment
 import com.twosmalpixels.travel_notes.ui.add_expence.AddExpenceViewModel
 import com.twosmalpixels.travel_notes.ui.auth.AuthViewModel
 import kotlinx.android.synthetic.main.activity_main.*
+import org.koin.java.standalone.KoinJavaComponent
 import org.koin.java.standalone.KoinJavaComponent.inject
 
-class MainActivity : AppCompatActivity() {
+
+class MainActivity : AppCompatActivity(){
+
     private lateinit var authViewModel: AuthViewModel
     lateinit var auth: FirebaseAuth
     lateinit var db: FirebaseFirestore
     lateinit var storage: FirebaseStorage
     private val sharedPref: ISharedPrefHelper by inject(ISharedPrefHelper::class.java)
-
+    private val oflineModeUseCase by KoinJavaComponent.inject(
+        IOflineModeUseCase::class.java
+    )
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -43,6 +50,14 @@ class MainActivity : AppCompatActivity() {
         setStartFragment(getStartFragment())
         setSupportActionBar(toolbar)
         createToolbarObserver()
+        createInterneteStateObserver()
+    }
+
+    private fun createInterneteStateObserver(){
+        val conMgr =
+            getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+        val netInfo = conMgr.activeNetworkInfo
+        oflineModeUseCase.setOflineMode(netInfo == null)
     }
 
     private fun initViewModel() {

@@ -3,11 +3,12 @@ package com.twosmalpixels.travel_notes.ui.auth
 import androidx.fragment.app.FragmentActivity
 import com.google.firebase.auth.AuthCredential
 import com.google.firebase.auth.FirebaseAuth
+import com.twosmalpixels.travel_notes.core.repositoriy.SharedPref.ISharedPrefHelper
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.async
 
-class AuthUseCase(val authInterface: AuthInterface) : IAuthUseCase {
+class AuthUseCase(val authInterface: AuthInterface, val sharedPrefHelper: ISharedPrefHelper) : IAuthUseCase {
 
     override fun isNeedAuth(auth: FirebaseAuth): Boolean {
         return authInterface.isNeedAuth(auth)

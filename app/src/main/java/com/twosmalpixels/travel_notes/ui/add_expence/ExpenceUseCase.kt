@@ -14,8 +14,9 @@ class ExpenceUseCase: IExpenceUseCase {
         db: FirebaseFirestore,
         expenceData: ExpenceData,
         travelsDocName: String,
-        writeCloudListener: WriteCloudListener
+        writeCloudListener: WriteCloudListener,
+        isOffline: Boolean
     ) {
-        iExpenceRepository.saveExpenceData(db, expenceData, travelsDocName, writeCloudListener)
+        iExpenceRepository.saveExpenceData(db, expenceData, travelsDocName, writeCloudListener, isOffline)
     }
 }

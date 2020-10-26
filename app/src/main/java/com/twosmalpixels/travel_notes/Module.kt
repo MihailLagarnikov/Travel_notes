@@ -42,9 +42,9 @@ val appModule = module {
     single { this }
 
     single { AuthProvider() as AuthInterface }
-    single { AuthUseCase(get()) as IAuthUseCase }
+    single { AuthUseCase(get(), get()) as IAuthUseCase }
     single { CloudFirestoreBase(get(), get()) as ICloudFirestoreBase }
-    single { YouTravelsRepositoriy(get()) as IYouTravelsRepositoriy }
+    single { YouTravelsRepositoriy(get(), get()) as IYouTravelsRepositoriy }
     single { YouTravelsUseCase(get()) as IYouTravelsUseCase }
     single { NewTravelsUseCase(get()) as INewTravelsUseCase }
     single { NewTravelsRepositoiy(get()) as INewTravelsRepositoriy }
@@ -54,7 +54,7 @@ val appModule = module {
     single { ExpenceAllUseCase(get()) as IExpenceAllUseCase }
     single { CurrencyUseCase() as ICurrencyUseCase }
     single { AllCurrencyUseCase() as IAllCurrencyUseCase }
-    single { ExpenceRepository(get()) as IExpenceRepository }
+    single { ExpenceRepository(get(), get()) as IExpenceRepository }
     single { ExpenceUseCase() as IExpenceUseCase }
     single { ExpenceAllRepositoriy(get(), get()) as IExpenceAllRepositoriy }
     single { LocalRepositoriy(get()) as ILocalRepositoriy }

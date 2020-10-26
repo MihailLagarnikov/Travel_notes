@@ -57,6 +57,12 @@ class ExpenceAllFragment : BaseFragment() {
             })
 
         image_add_new_expence.setOnClickListener { findNavController().navigate(R.id.action_expenceAllFragment_to_addExpenceFragment) }
+
+        oflineModeUseCase.getModeLiveData().observe(this, Observer {
+            if (it) {
+                    findNavController().navigate(R.id.action_expenceAllFragment_to_expenceAllOfflineFragment)
+            }
+        })
     }
 
     private fun clickExpenceItem(expenceData: ExpenceData): Boolean {

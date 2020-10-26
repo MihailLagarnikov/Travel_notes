@@ -5,5 +5,11 @@ import com.twosmalpixels.travel_notes.core.repositoriy.WriteCloudListener
 
 interface IExpenceRepository {
 
-    fun saveExpenceData(db: FirebaseFirestore, expenceData: ExpenceData, travelsDocName: String, writeCloudListener: WriteCloudListener)
+    fun saveExpenceData(
+        db: FirebaseFirestore,
+        expenceData: ExpenceData,
+        travelsDocName: String,
+        writeCloudListener: WriteCloudListener,
+        isOffline: Boolean
+    )
 }
