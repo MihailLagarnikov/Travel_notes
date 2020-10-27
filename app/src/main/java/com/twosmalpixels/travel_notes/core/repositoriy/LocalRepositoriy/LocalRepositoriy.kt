@@ -1,9 +1,7 @@
 package com.twosmalpixels.travel_notes.core.repositoriy.LocalRepositoriy
 
 import com.twosmalpixels.travel_notes.core.repositoriy.ExpenceDataCollection
-import com.twosmalpixels.travel_notes.core.repositoriy.SharedPref.EXPENCE_NUMBER
-import com.twosmalpixels.travel_notes.core.repositoriy.SharedPref.ISharedPrefHelper
-import com.twosmalpixels.travel_notes.core.repositoriy.SharedPref.TRAVELS_NUMBER
+import com.twosmalpixels.travel_notes.core.repositoriy.SharedPref.*
 import com.twosmalpixels.travel_notes.core.repositoriy.TravelsCollection
 import com.twosmalpixels.travel_notes.pojo.TravelsItem
 import com.twosmalpixels.travel_notes.ui.add_expence.ExpenceData
@@ -62,6 +60,15 @@ class LocalRepositoriy(val sharedPrefHelper: ISharedPrefHelper) : ILocalReposito
         val listTravels = ArrayList<TravelsItem>()
         if (nameTravel > 0) {
             for (i in 1..nameTravel) {
+
+                val localyDocName =  sharedPrefHelper.loadText(
+                    "${TravelsCollection.TITLE.name} $i",
+                    DEF_STRING
+                ) + sharedPrefHelper.loadText(
+                    "${TravelsCollection.DATA_STRING.name} $i",
+                    DEF_STRING
+                )
+
                 listTravels.add(
                     TravelsItem(
                         sharedPrefHelper.loadText(
@@ -99,7 +106,8 @@ class LocalRepositoriy(val sharedPrefHelper: ISharedPrefHelper) : ILocalReposito
                         sharedPrefHelper.loadInt(
                             "${TravelsCollection.RATES_CURRENCY.name} $i",
                             DEF_INT
-                        )
+                        ),
+                       localyDocName
                     )
                 )
             }
@@ -147,51 +155,51 @@ class LocalRepositoriy(val sharedPrefHelper: ISharedPrefHelper) : ILocalReposito
             "${ExpenceDataCollection.LON.name} $travelsName $nameExpence",
             expenceData.lon
         )
-
-
+        sharedPrefHelper.saveBoolean(HASE_SAVE_EXPENCE_DATA, true)
+        sharedPrefHelper.saveText(TRAVEL_NAME_WHAT_WE_SAVED_EXPENCE, travelsName)
     }
 
     override fun loadExpenceDataList(travelName: String): ArrayList<ExpenceData> {
-        val nameExpence = sharedPrefHelper.loadInt(EXPENCE_NUMBER, DEF_INT)
+        val nameExpence = sharedPrefHelper.loadInt(EXPENCE_NUMBER + travelName, DEF_INT)
         val listExpence = ArrayList<ExpenceData>()
         if (nameExpence > 0) {
             for (i in 1..nameExpence) {
                 listExpence.add(
                     ExpenceData(
                         sharedPrefHelper.loadLong(
-                            "${ExpenceDataCollection.AMOUNT.name} $travelName $nameExpence",
+                            "${ExpenceDataCollection.AMOUNT.name} $travelName $i",
                             DEF_LONG
                         ),
                         sharedPrefHelper.loadText(
-                            "${ExpenceDataCollection.CURRENCY.name} $travelName $nameExpence",
+                            "${ExpenceDataCollection.CURRENCY.name} $travelName $i",
                             DEF_STRING
                         ),
                         sharedPrefHelper.loadLong(
-                            "${ExpenceDataCollection.CATEGORY.name} $travelName $nameExpence",
+                            "${ExpenceDataCollection.CATEGORY.name} $travelName $i",
                             DEF_LONG
                         ),
                         sharedPrefHelper.loadText(
-                            "${ExpenceDataCollection.COMMENT.name} $travelName $nameExpence",
+                            "${ExpenceDataCollection.COMMENT.name} $travelName $i",
                             DEF_STRING
                         ),
                         sharedPrefHelper.loadText(
-                            "${ExpenceDataCollection.DATA.name} $travelName $nameExpence",
+                            "${ExpenceDataCollection.DATA.name} $travelName $i",
                             DEF_STRING
                         ),
                         sharedPrefHelper.loadLong(
-                            "${ExpenceDataCollection.DATA_LONG.name} $travelName $nameExpence",
+                            "${ExpenceDataCollection.DATA_LONG.name} $travelName $i",
                             DEF_LONG
                         ),
                         sharedPrefHelper.loadText(
-                            "${ExpenceDataCollection.IMAGEURL.name} $travelName $nameExpence",
+                            "${ExpenceDataCollection.IMAGEURL.name} $travelName $i",
                             DEF_STRING
                         ),
                         sharedPrefHelper.loadDouble(
-                            "${ExpenceDataCollection.LAT.name} $travelName $nameExpence",
+                            "${ExpenceDataCollection.LAT.name} $travelName $i",
                             DEF_DOUBLE
                         ),
                         sharedPrefHelper.loadDouble(
-                            "${ExpenceDataCollection.LON.name} $travelName $nameExpence",
+                            "${ExpenceDataCollection.LON.name} $travelName $i",
                             DEF_DOUBLE
                         )
                     )

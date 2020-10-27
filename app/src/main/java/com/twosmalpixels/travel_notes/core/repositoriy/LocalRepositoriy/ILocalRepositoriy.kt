@@ -8,5 +8,5 @@ interface ILocalRepositoriy {
     fun saveNewTravel(travelsItem: TravelsItem)
     fun getAllTravels(): ArrayList<TravelsItem>
     fun saveExpenceData(expenceData: ExpenceData, travelsName: String)
-    fun loadExpenceDataList(travelsName: String): ArrayList<ExpenceData>
+    fun loadExpenceDataList(travelName: String): ArrayList<ExpenceData>
 }

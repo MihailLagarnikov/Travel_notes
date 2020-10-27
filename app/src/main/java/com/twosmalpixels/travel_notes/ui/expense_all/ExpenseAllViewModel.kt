@@ -19,7 +19,7 @@ class ExpenseAllViewModel : ViewModel() {
         IOflineModeUseCase::class.java
     )
 
-    private val expenceUseCase by KoinJavaComponent.inject(
+    private val expenceAllUseCase by KoinJavaComponent.inject(
         IExpenceAllUseCase::class.java
     )
 
@@ -33,7 +33,7 @@ class ExpenseAllViewModel : ViewModel() {
 
     var travelsItem: TravelsItem = TravelsItem.createEmptyItem()
         set(value) {
-            curencyDataList.value = expenceUseCase.getDefaultShdulelistSpiner(travelsItem)
+            curencyDataList.value = expenceAllUseCase.getDefaultShdulelistSpiner(travelsItem)
             field = value
         }
 
@@ -43,8 +43,8 @@ class ExpenseAllViewModel : ViewModel() {
     var toolbareName: String = ""
 
     init {
-        curencyDataList.value = expenceUseCase.getDefaultShdulelistSpiner(travelsItem)
-        expenceDataList.value = expenceUseCase.getDefaultExpenseList()
+        curencyDataList.value = expenceAllUseCase.getDefaultShdulelistSpiner(travelsItem)
+        expenceDataList.value = expenceAllUseCase.getDefaultExpenseList()
     }
 
     fun getCurrencyList(): ArrayList<CurrencyData> {
@@ -57,20 +57,20 @@ class ExpenseAllViewModel : ViewModel() {
     fun getExpenceList(
         db: FirebaseFirestore
     ): MutableLiveData<ArrayList<ExpenceData>> {
-        return expenceUseCase.getExpenceList(db, travelsItem.docName, oflineModeUseCase.getModeLiveData().value ?: false)
+        return expenceAllUseCase.getExpenceList(db, travelsItem.docName, oflineModeUseCase.getModeLiveData().value ?: false)
     }
 
     fun setTotalExpenceWithCurrency(allExpenceList: ArrayList<ExpenceData>) {
         curencyDataList.value =
-            expenceUseCase.getTotalExpenceWithCurrency(allExpenceList, travelsItem)
+            expenceAllUseCase.getTotalExpenceWithCurrency(allExpenceList, travelsItem)
     }
 
     fun setCategoryExpenceList(allExpenceList: ArrayList<ExpenceData>) {
         categoryExpenceList.value =
-            expenceUseCase.getCategoryExpenceList(allExpenceList, travelsItem)
+            expenceAllUseCase.getCategoryExpenceList(allExpenceList, travelsItem)
     }
 
     fun getDefaultExpenseList(): ArrayList<ExpenceData> {
-        return expenceUseCase.getDefaultExpenseList()
+        return expenceAllUseCase.getDefaultExpenseList()
     }
 }

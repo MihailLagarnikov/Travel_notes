@@ -13,6 +13,8 @@ import com.twosmalpixels.travel_notes.ui.MainActivity
 import com.twosmalpixels.travel_notes.ui.add_expence.ExpenceData
 import com.twosmalpixels.travel_notes.ui.expense_all.ExpenseAdapter
 import kotlinx.android.synthetic.main.expence_all_offline_fragment.*
+import kotlinx.android.synthetic.main.expence_all_offline_fragment.card_image_add_new_expence
+import kotlinx.android.synthetic.main.expence_all_offline_fragment.image_add_new_expence
 
 
 class ExpenceAllOfflineFragment : BaseFragment() {
@@ -43,8 +45,6 @@ class ExpenceAllOfflineFragment : BaseFragment() {
                 expenseAllViewModel.setCategoryExpenceList(it)
                 if (it != null && !it.isEmpty()) {
                     expAdapter.setNewList(it)
-                } else {
-                    expAdapter.setNewList(expenseAllViewModel.getDefaultExpenseList())
                 }
                 progressViewModel.showProgress.value = false
                 card_image_add_new_expence.setVisibility(it.size > 0)

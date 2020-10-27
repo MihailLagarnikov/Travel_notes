@@ -35,7 +35,7 @@ enum class TravelsCollection(key: String){
     IMAGE(IMAGE_),
     MAIN_CURRENCY(MAIN_CURRENCY_),
     ADDITIONAL_CURRENCY(ADDITIONAL_CURRENCY_),
-    RATES_CURRENCY(RATES_CURRENCY_),
+    RATES_CURRENCY(RATES_CURRENCY_)
 }
 
 enum class ExpenceDataCollection(key: String){
