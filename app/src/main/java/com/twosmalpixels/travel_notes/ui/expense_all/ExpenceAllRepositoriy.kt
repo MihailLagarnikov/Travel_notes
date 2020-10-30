@@ -48,6 +48,7 @@ class ExpenceAllRepositoriy(
                     }
                 }
             }
+            rezult.sortByDescending { it.dataLong }
             expenceDataList.value = rezult
         }
     }

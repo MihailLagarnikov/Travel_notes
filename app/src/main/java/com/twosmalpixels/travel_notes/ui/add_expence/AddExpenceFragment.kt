@@ -35,6 +35,7 @@ import com.twosmalpixels.travel_notes.ui.calendar_dialog.getCurentDate
 import com.twosmalpixels.travel_notes.ui.expense_all.ExpenceCategory
 import com.twosmalpixels.travel_notes.ui.new_travel.NewTravelsViewModel
 import kotlinx.android.synthetic.main.add_expence_fragment.*
+import java.util.*
 
 class AddExpenceFragment : BaseFragment(), LocationListener, TextWatcher,
     AdapterView.OnItemSelectedListener {
@@ -86,7 +87,7 @@ class AddExpenceFragment : BaseFragment(), LocationListener, TextWatcher,
                 selectedExpenceCategory?.number?.toLong() ?: 0L,
                 comment_edit_text_add_expence.text.toString(),
                 date_edit_text_add_expence.text.toString(),
-                newTravelsViewModel.chooseDate.value?.time ?: 0L,
+                Date().time ?: 0L,
                 getImageName(),
                 addExpenceViewModel.lat,
                 addExpenceViewModel.lon
@@ -100,7 +101,7 @@ class AddExpenceFragment : BaseFragment(), LocationListener, TextWatcher,
 
         addExpenceViewModel.changeStatus.observe(this, Observer {
             progressViewModel.showProgress.value = false
-            if ( it != null && it) {
+            if (it != null && it) {
                 //данные успешно записанны, переходим
                 requireActivity().onBackPressed()
             } else if (it != null) {
@@ -263,7 +264,7 @@ class AddExpenceFragment : BaseFragment(), LocationListener, TextWatcher,
         addExpenceViewModel.currentCurrency = spiner_add_expence.getSelectedCurrencyData()
     }
 
-    private fun btnValid(){
+    private fun btnValid() {
         val isAmountEmpty = edit_text_add_expence.text?.isEmpty() ?: true
         button_exprnce_save.isEnabled = !isAmountEmpty && selectedExpenceCategory != null
     }

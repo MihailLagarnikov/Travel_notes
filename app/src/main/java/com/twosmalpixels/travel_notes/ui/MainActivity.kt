@@ -18,6 +18,7 @@ import com.google.firebase.storage.FirebaseStorage
 import com.twosmalpixels.travel_notes.R
 import com.twosmalpixels.travel_notes.core.offline_mode.IOflineModeUseCase
 import com.twosmalpixels.travel_notes.core.repositoriy.SharedPref.ISharedPrefHelper
+import com.twosmalpixels.travel_notes.core.repositoriy.WriteCloudListener
 import com.twosmalpixels.travel_notes.core.ui.base.ToolbarViewModel
 import com.twosmalpixels.travel_notes.ui.add_expence.AddExpenceFragment
 import com.twosmalpixels.travel_notes.ui.add_expence.AddExpenceViewModel
@@ -27,7 +28,7 @@ import org.koin.java.standalone.KoinJavaComponent
 import org.koin.java.standalone.KoinJavaComponent.inject
 
 
-class MainActivity : AppCompatActivity(){
+class MainActivity : AppCompatActivity(), WriteCloudListener{
 
     private lateinit var authViewModel: AuthViewModel
     lateinit var auth: FirebaseAuth
@@ -58,6 +59,9 @@ class MainActivity : AppCompatActivity(){
             getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
         val netInfo = conMgr.activeNetworkInfo
         oflineModeUseCase.setOflineMode(netInfo == null)
+        if (oflineModeUseCase.hasOfflineMode()){
+            oflineModeUseCase.saveToRemoteLocalyData(db, this, this)
+        }
     }
 
     private fun initViewModel() {
@@ -116,5 +120,9 @@ class MainActivity : AppCompatActivity(){
                     && grantResults[0] == PackageManager.PERMISSION_GRANTED
         }
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+    }
+
+    override fun setSuccess(isSuccess: Boolean) {
+
     }
 }

@@ -26,7 +26,7 @@ private val IMAGEURL_ = "imageUrl"
 private val LAT_ = "lat"
 private val LON_ = "lon"
 
-enum class TravelsCollection(key: String){
+enum class TravelsCollection(val key: String) {
     TITLE(TITLE_),
     DATA_STRING(DATA_STRING_),
     DATA_START(DATA_START_),
@@ -38,7 +38,7 @@ enum class TravelsCollection(key: String){
     RATES_CURRENCY(RATES_CURRENCY_)
 }
 
-enum class ExpenceDataCollection(key: String){
+enum class ExpenceDataCollection(val key: String) {
     AMOUNT(AMOUNT_),
     CURRENCY(CURRENCY_),
     CATEGORY(CATEGORY_),

@@ -58,7 +58,6 @@ val appModule = module {
     single { ExpenceUseCase() as IExpenceUseCase }
     single { ExpenceAllRepositoriy(get(), get()) as IExpenceAllRepositoriy }
     single { LocalRepositoriy(get()) as ILocalRepositoriy }
-    single { OflineModeUseCase() as IOflineModeUseCase }
-
+    single { OflineModeUseCase(get(),get(),get()) as IOflineModeUseCase }
 
 }
