@@ -71,7 +71,7 @@ class ExpenseAdapter(val listener: (ExpenceData) -> Unit) : RecyclerView.Adapter
                 comment_expence.text = expenceData.comment
                 comment_expence.setVisibility(expenceData.comment.isNotEmpty())
                 itemView.setOnClickListener {
-                    //редактируем запись
+                    listener.invoke(listDate.get(adapterPosition))
                 }
 
             }

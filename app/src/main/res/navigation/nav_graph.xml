@@ -79,6 +79,9 @@
         <action
             android:id="@+id/action_expenceAllFragment_to_expenceAllOfflineFragment"
             app:destination="@id/expenceAllOfflineFragment" />
+        <action
+            android:id="@+id/action_expenceAllFragment_to_reviewExpenceFragment"
+            app:destination="@id/reviewExpenceFragment" />
     </fragment>
     <fragment
         android:id="@+id/addExpenceFragment"
@@ -120,4 +123,8 @@
             android:id="@+id/action_expenceAllOfflineFragment_to_addExpenceFragment"
             app:destination="@id/addExpenceFragment" />
     </fragment>
+    <fragment
+        android:id="@+id/reviewExpenceFragment"
+        android:name="com.twosmalpixels.travel_notes.ui.review_expence.ReviewExpenceFragment"
+        android:label="ReviewExpenceFragment" />
 </navigation>

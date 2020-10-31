@@ -4,6 +4,7 @@ import BaseFragment
 import android.os.Bundle
 import android.view.View
 import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.twosmalpixels.travel_notes.R
@@ -11,9 +12,12 @@ import com.twosmalpixels.travel_notes.core.extension.setVisibility
 import com.twosmalpixels.travel_notes.pojo.ToolbarParam
 import com.twosmalpixels.travel_notes.ui.MainActivity
 import com.twosmalpixels.travel_notes.ui.add_expence.ExpenceData
+import com.twosmalpixels.travel_notes.ui.review_expence.ReviewExpenceViewModel
 import kotlinx.android.synthetic.main.expence_all_fragment.*
 
 class ExpenceAllFragment : BaseFragment() {
+
+    private lateinit var reviewViewModel: ReviewExpenceViewModel
 
     override fun getToolbarParam(): ToolbarParam {
         return ToolbarParam(expenseAllViewModel.toolbareName)
@@ -25,6 +29,7 @@ class ExpenceAllFragment : BaseFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        reviewViewModel = ViewModelProviders.of(requireActivity()).get(ReviewExpenceViewModel::class.java)
         expense_recycler_all_fragment.layoutManager = LinearLayoutManager(context)
         val expAdapter = ExpenseAdapter { clickExpenceItem(it) }
         expense_recycler_all_fragment.adapter = expAdapter
@@ -68,6 +73,9 @@ class ExpenceAllFragment : BaseFragment() {
     private fun clickExpenceItem(expenceData: ExpenceData): Boolean {
         if (expenceData.equals(ExpenceData.getEmptyData())) {
             findNavController().navigate(R.id.action_expenceAllFragment_to_addExpenceFragment)
+        }else{
+            reviewViewModel.expenceData = expenceData
+            findNavController().navigate(R.id.action_expenceAllFragment_to_reviewExpenceFragment)
         }
         return true
     }
