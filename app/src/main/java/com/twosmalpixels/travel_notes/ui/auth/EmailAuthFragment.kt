@@ -28,6 +28,7 @@ class EmailAuthFragment : BaseFragment(), TextWatcher, OnTouchListener {
 
     private lateinit var authViewModel: AuthViewModel
     private var isRegistration = true
+    private var isRestPassword = false
 
     override fun getToolbarParam() = ToolbarParam(getString(R.string.registration))
 
@@ -54,7 +55,9 @@ class EmailAuthFragment : BaseFragment(), TextWatcher, OnTouchListener {
         }
         button_email_auth_save.setOnClickListener {
             GlobalScope.launch {
-                if (isRegistration) {
+                if (isRestPassword) {
+                    resetPassword(enter_email_edit_text.text.toString().trim())
+                } else if (isRegistration) {
                     createUserWithEmailAndPassword(
                         enter_email_edit_text.text.toString().trim(),
                         double_password_edit_text.text.toString().trim()
@@ -73,10 +76,17 @@ class EmailAuthFragment : BaseFragment(), TextWatcher, OnTouchListener {
         enter_bottom.setOnClickListener {
             isRegistration = !isRegistration
             setMode(isRegistration)
+            validateBtn()
         }
         enter_top.setOnClickListener {
             isRegistration = !isRegistration
             setMode(isRegistration)
+            validateBtn()
+        }
+        text_fogot_password.setOnClickListener {
+            isRestPassword = true
+            setMode(isRegistration)
+            validateBtn()
         }
         setMode(isRegistration)
     }
@@ -85,28 +95,35 @@ class EmailAuthFragment : BaseFragment(), TextWatcher, OnTouchListener {
         double_password_card.setVisibility(isRegistration)
         enter_top.setText(if (isRegistration) R.string.has_account else R.string.need_registration)
         enter_bottom.setText(if (isRegistration) R.string.has_account_entry else R.string.registration_now)
-        text_fogot_password.setVisibility(!isRegistration)
+        text_fogot_password.setVisibility(!isRestPassword)
         button_email_auth_save.setText(if (isRegistration) R.string.registration_now else R.string.has_account_entry)
+        if (isRestPassword) {
+            enter_password_card.setVisibility(false)
+            double_password_card.setVisibility(false)
+            text_fogot_password.setVisibility(false)
+            enter_top.setVisibility(false)
+            enter_bottom.setVisibility(false)
+            button_email_auth_save.setText(R.string.recreate_password)
+        }
     }
 
-    override fun afterTextChanged(p0: Editable?) {
+    override fun afterTextChanged(p0: Editable?) = validateBtn()
+
+    override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) = Unit
+
+    override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) = Unit
+
+    private fun validateBtn(){
         val emailLenght = enter_email_edit_text.text?.length ?: 0
         val passwordLenght = enter_password_edit_text?.text?.length ?: 0
         val validBtn = (emailLenght > MIN_LENGHT_EMAIL)
-                && (enter_password_edit_text.text != null
-                && passwordLenght > MIN_LENGHT_PASSWORD
-                && (!isRegistration || double_password_edit_text.text != null)
-                && (!isRegistration || enter_password_edit_text.text.toString().equals(
+                && (enter_password_edit_text.text != null || isRestPassword)
+                && (passwordLenght > MIN_LENGHT_PASSWORD || isRestPassword)
+                && (isRestPassword || !isRegistration || double_password_edit_text.text != null)
+                && (isRestPassword || !isRegistration || enter_password_edit_text.text.toString().equals(
             double_password_edit_text.text.toString()
-        )))
+        ))
         button_email_auth_save.isEnabled = validBtn
-    }
-
-    override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
-
-    }
-
-    override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
     }
 
     private suspend fun createUserWithEmailAndPassword(email: String, password: String) {
@@ -135,6 +152,22 @@ class EmailAuthFragment : BaseFragment(), TextWatcher, OnTouchListener {
         }
         if (job.await()) {
             findNavController().navigate(R.id.action_emailAuthFragment_to_youTravelsFragment)
+        } else {
+            Snackbar.make(requireView(), "Authentication Failed.", Snackbar.LENGTH_LONG).show()
+        }
+    }
+
+    private suspend fun resetPassword(email: String) {
+        val job = GlobalScope.async {
+            authViewModel.resetWithEmail(
+                (activity!! as MainActivity).auth,
+                email
+            )
+        }
+        if (job.await()) {
+            Snackbar.make(requireView(), R.string.recreate_password_text, Snackbar.LENGTH_LONG)
+                .show()
+            requireActivity().onBackPressed()
         } else {
             Snackbar.make(requireView(), "Authentication Failed.", Snackbar.LENGTH_LONG).show()
         }
@@ -174,7 +207,6 @@ class EmailAuthFragment : BaseFragment(), TextWatcher, OnTouchListener {
                     }
                 }
             }
-
         }
         return true
     }

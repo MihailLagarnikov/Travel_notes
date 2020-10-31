@@ -55,4 +55,10 @@ class AuthProvider : AuthInterface {
         val rez = job.await()
         return { rez.user != null }
     }
+
+    override suspend fun resetWithEmail(auth: FirebaseAuth, email: String): () -> Boolean {
+        val job = auth.sendPasswordResetEmail(email)
+        val rez = job.await()
+        return { true }
+    }
 }

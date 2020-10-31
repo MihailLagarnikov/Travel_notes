@@ -28,4 +28,9 @@ interface AuthInterface {
         password: String
     ): () -> Boolean
 
+    suspend fun resetWithEmail(
+        auth: FirebaseAuth,
+        email: String
+    ): () -> Boolean
+
 }

@@ -13,6 +13,8 @@
     <string name="auth_email_enter_you_password">Введите пароль*</string>
     <string name="auth_email_enter_password_double">Повторите пароль*</string>
     <string name="forgot_password">Не помню пароль</string>
+    <string name="recreate_password">Восстановить пароль</string>
+    <string name="recreate_password_text">Мы отправили письмо для сброса пароля на вашу почту.</string>
     <string name="auth_email_password_lenght">Длинна пароля должна быть не мениее 8 символов</string>
     <string name="auth_success">Аутентификация прошла успешно</string>
     <string name="you_travels">Ваши путешествия</string>

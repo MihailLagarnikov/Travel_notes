@@ -27,4 +27,6 @@ interface IAuthUseCase {
         email: String,
         password: String
     ): Boolean
+
+    suspend fun resetWithEmail(auth: FirebaseAuth, email: String): Boolean
 }

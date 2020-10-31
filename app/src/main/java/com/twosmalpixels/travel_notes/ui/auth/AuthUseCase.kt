@@ -71,6 +71,19 @@ class AuthUseCase(val authInterface: AuthInterface, val sharedPrefHelper: IShare
         val rez = job.await()
         return rez
     }
+
+    override suspend fun resetWithEmail(auth: FirebaseAuth, email: String): Boolean {
+        val job = GlobalScope.async(Dispatchers.IO) {
+            run(
+                authInterface.resetWithEmail(
+                    auth,
+                    email
+                )
+            )
+        }
+        val rez = job.await()
+        return rez
+    }
 }
 
 

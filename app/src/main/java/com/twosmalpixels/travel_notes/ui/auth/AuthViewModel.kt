@@ -35,4 +35,7 @@ class AuthViewModel() : ViewModel() {
         return authUseCase.signInWithEmailAndPassword(auth, email, password)
     }
 
+    suspend fun resetWithEmail(auth: FirebaseAuth, email: String): Boolean {
+        return authUseCase.resetWithEmail(auth, email)
+    }
 }
