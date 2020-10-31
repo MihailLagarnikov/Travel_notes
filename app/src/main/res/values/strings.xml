@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Travel notes</string>
+    <string name="app_name" translatable="false">Galochka</string>
     <string name="auth_google">Login with \nGoogle Account</string>
     <string name="auth_email">Login with email</string>
     <string name="registration">Registration</string>

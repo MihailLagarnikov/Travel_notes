@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Записки путешественника</string>
     <string name="auth_google">Войти с помощью \nаккаунта Google</string>
     <string name="auth_email">Войти с помощью почты</string>
     <string name="registration">Регистрация</string>
