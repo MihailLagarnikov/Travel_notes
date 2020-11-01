@@ -60,7 +60,7 @@ class MainActivity : AppCompatActivity(), WriteCloudListener{
         val netInfo = conMgr.activeNetworkInfo
         oflineModeUseCase.setOflineMode(netInfo == null)
         if (oflineModeUseCase.hasOfflineMode()){
-            oflineModeUseCase.saveToRemoteLocalyData(db, this, this)
+            oflineModeUseCase.saveToRemoteLocalyData(db, storage, this, this, filesDir)
         }
     }
 

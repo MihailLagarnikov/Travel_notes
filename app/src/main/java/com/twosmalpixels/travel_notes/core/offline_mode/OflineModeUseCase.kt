@@ -4,18 +4,23 @@ import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.storage.FirebaseStorage
+import com.twosmalpixels.travel_notes.core.repositoriy.IFairbaseStorageBase
 import com.twosmalpixels.travel_notes.core.repositoriy.LocalRepositoriy.ILocalRepositoriy
 import com.twosmalpixels.travel_notes.core.repositoriy.SharedPref.*
 import com.twosmalpixels.travel_notes.core.repositoriy.WriteCloudListener
 import com.twosmalpixels.travel_notes.pojo.TravelsItem
+import com.twosmalpixels.travel_notes.ui.add_expence.ExpenceData
 import com.twosmalpixels.travel_notes.ui.add_expence.IExpenceRepository
 import com.twosmalpixels.travel_notes.ui.you_travels.IYouTravelsRepositoriy
 import org.koin.java.standalone.KoinJavaComponent
+import java.io.File
 
 class OflineModeUseCase(
     val sharedPrefHelper: ISharedPrefHelper,
     val expenceRepository: IExpenceRepository,
-    val localRepositoriy: ILocalRepositoriy
+    val localRepositoriy: ILocalRepositoriy,
+    val fairbaseStorageBase: IFairbaseStorageBase
 ) : IOflineModeUseCase {
 
     private val isOfline = MutableLiveData<Boolean>()
@@ -40,8 +45,10 @@ class OflineModeUseCase(
 
     override fun saveToRemoteLocalyData(
         db: FirebaseFirestore,
+        storage: FirebaseStorage,
         lifecycleOwner: LifecycleOwner,
-        writeCloudListener: WriteCloudListener
+        writeCloudListener: WriteCloudListener,
+        file: File
     ) {
         val hasSavedExpenceData = sharedPrefHelper.loadBoolean(HASE_SAVE_EXPENCE_DATA, false)
         val travelName = sharedPrefHelper.loadText(TRAVEL_NAME_WHAT_WE_SAVED_EXPENCE, "")
@@ -62,6 +69,9 @@ class OflineModeUseCase(
                                     writeCloudListener,
                                     false
                                 )
+                                if (!exData.imageUrl.equals(ExpenceData.NON_IMAGE)){
+                                    fairbaseStorageBase.saveBitmap(localRepositoriy.loadBitmap(exData.imageUrl, file), exData.imageUrl, storage)
+                                }
                             }
                             sharedPrefHelper.saveBoolean(HASE_SAVE_EXPENCE_DATA, false)
                             sharedPrefHelper.saveBoolean(HASE_SAVE_EXPENCE_DATA, false)

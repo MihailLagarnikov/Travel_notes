@@ -1,10 +1,16 @@
 package com.twosmalpixels.travel_notes.core.repositoriy.LocalRepositoriy
 
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import com.twosmalpixels.travel_notes.core.repositoriy.ExpenceDataCollection
 import com.twosmalpixels.travel_notes.core.repositoriy.SharedPref.*
 import com.twosmalpixels.travel_notes.core.repositoriy.TravelsCollection
 import com.twosmalpixels.travel_notes.pojo.TravelsItem
 import com.twosmalpixels.travel_notes.ui.add_expence.ExpenceData
+import java.io.File
+import java.io.FileOutputStream
+import java.io.OutputStream
+
 
 class LocalRepositoriy(val sharedPrefHelper: ISharedPrefHelper) : ILocalRepositoriy {
 
@@ -207,5 +213,23 @@ class LocalRepositoriy(val sharedPrefHelper: ISharedPrefHelper) : ILocalReposito
             }
         }
         return listExpence
+    }
+
+    override fun saveBitmap(bitmap: Bitmap, name: String, file: File) {
+
+        var outStream: OutputStream? = null
+        val filePng = File(file, name + ".png")
+        try {
+            outStream = FileOutputStream(filePng)
+            bitmap.compress(Bitmap.CompressFormat.PNG, 100, outStream)
+            outStream.flush()
+            outStream.close()
+        } catch (e: Exception) {
+        }
+    }
+
+    override fun loadBitmap(name: String, file: File): Bitmap {
+        val filePng = File(file, name + ".png")
+        return BitmapFactory.decodeFile(filePng.absolutePath)
     }
 }

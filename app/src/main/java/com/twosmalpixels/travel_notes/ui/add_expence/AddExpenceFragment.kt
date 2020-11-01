@@ -121,7 +121,8 @@ class AddExpenceFragment : BaseFragment(), LocationListener, TextWatcher,
             newTravelsViewModel.saveBitmap(
                 image_add_expence,
                 name,
-                (requireActivity() as MainActivity).storage
+                (requireActivity() as MainActivity).storage,
+                requireActivity().filesDir
             )
             name
         }

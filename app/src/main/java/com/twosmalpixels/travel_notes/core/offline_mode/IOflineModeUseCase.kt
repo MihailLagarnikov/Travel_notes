@@ -3,7 +3,9 @@ package com.twosmalpixels.travel_notes.core.offline_mode
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.MutableLiveData
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.storage.FirebaseStorage
 import com.twosmalpixels.travel_notes.core.repositoriy.WriteCloudListener
+import java.io.File
 
 interface IOflineModeUseCase {
     fun getModeLiveData(): MutableLiveData<Boolean>
@@ -11,7 +13,9 @@ interface IOflineModeUseCase {
     fun hasOfflineMode(): Boolean
     fun saveToRemoteLocalyData(
         db: FirebaseFirestore,
+        storage: FirebaseStorage,
         lifecycleOwner: LifecycleOwner,
-        writeCloudListener: WriteCloudListener
+        writeCloudListener: WriteCloudListener,
+        file: File
     )
 }

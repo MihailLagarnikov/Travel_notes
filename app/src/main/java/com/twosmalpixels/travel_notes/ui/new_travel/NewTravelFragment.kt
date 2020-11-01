@@ -77,7 +77,8 @@ class NewTravelFragment : BaseFragment(), TextWatcher {
                 newTravelsViewModel.saveBitmap(
                     choose_image_travel_main_img,
                     imageName,
-                    (requireActivity() as MainActivity).storage
+                    (requireActivity() as MainActivity).storage,
+                    requireActivity().filesDir
                 )
             }
 

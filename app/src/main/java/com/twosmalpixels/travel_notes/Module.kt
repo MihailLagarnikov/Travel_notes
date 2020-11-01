@@ -46,7 +46,7 @@ val appModule = module {
     single { CloudFirestoreBase(get(), get()) as ICloudFirestoreBase }
     single { YouTravelsRepositoriy(get(), get()) as IYouTravelsRepositoriy }
     single { YouTravelsUseCase(get()) as IYouTravelsUseCase }
-    single { NewTravelsUseCase(get()) as INewTravelsUseCase }
+    single { NewTravelsUseCase(get(), get()) as INewTravelsUseCase }
     single { NewTravelsRepositoiy(get()) as INewTravelsRepositoriy }
     single { SharedPrefHelper() as ISharedPrefHelper }
     single { ChooseSkinUseCase() as IChooseSkinUseCase }
@@ -58,6 +58,6 @@ val appModule = module {
     single { ExpenceUseCase() as IExpenceUseCase }
     single { ExpenceAllRepositoriy(get(), get()) as IExpenceAllRepositoriy }
     single { LocalRepositoriy(get()) as ILocalRepositoriy }
-    single { OflineModeUseCase(get(),get(),get()) as IOflineModeUseCase }
+    single { OflineModeUseCase(get(),get(),get(), get()) as IOflineModeUseCase }
 
 }
