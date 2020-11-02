@@ -25,7 +25,6 @@ class CloudFirestoreBase(
                     .await()
                 rez.documents
             } catch (e: Exception) {
-                oflineModeUseCase.setOflineMode(true)
                 arrayListOf<DocumentSnapshot?>()
             }
         } else {
@@ -48,7 +47,6 @@ class CloudFirestoreBase(
                     .await()
                 rez.documents
             } catch (e: Exception) {
-                oflineModeUseCase.setOflineMode(true)
                 arrayListOf<DocumentSnapshot?>()
             }
         } else {
