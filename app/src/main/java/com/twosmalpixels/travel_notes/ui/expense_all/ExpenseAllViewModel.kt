@@ -41,6 +41,7 @@ class ExpenseAllViewModel : ViewModel() {
     val curencyDataList = MutableLiveData<ArrayList<SheduleSpinerData>>()
     val expenceDataList = MutableLiveData<ArrayList<ExpenceData>>()
     var toolbareName: String = ""
+    var currencyToShare: String = ""
 
     init {
         curencyDataList.value = expenceAllUseCase.getDefaultShdulelistSpiner(travelsItem)
@@ -68,6 +69,10 @@ class ExpenseAllViewModel : ViewModel() {
     fun setCategoryExpenceList(allExpenceList: ArrayList<ExpenceData>) {
         categoryExpenceList.value =
             expenceAllUseCase.getCategoryExpenceList(allExpenceList, travelsItem)
+    }
+
+    fun getCategoryExpenceList(allExpenceList: ArrayList<ExpenceData>): ArrayList<CategoryExpenceData> {
+        return expenceAllUseCase.getCategoryExpenceList(allExpenceList, travelsItem)
     }
 
     fun getDefaultExpenseList(): ArrayList<ExpenceData> {

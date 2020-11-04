@@ -1,5 +1,8 @@
 package com.twosmalpixels.travel_notes.core.extension
 
+import android.graphics.Bitmap
+import android.graphics.Canvas
+import android.graphics.Color
 import android.net.Uri
 import android.provider.MediaStore
 import android.view.View
@@ -75,3 +78,13 @@ fun Spinner.equalsCurrency(anotherSpiner: Spinner, position: Int = 500): Boolean
         this.getSelectedCurrencyData().currencyIso.equals(anotherSpiner.getCurrencyData(position).currencyIso)
     }
 }
+
+fun View.convertToBitmap(): Bitmap {
+    val measureSpec = View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED)
+    measure(measureSpec, measureSpec)
+    layout(0, 0, measuredWidth, measuredHeight)
+    val r = Bitmap.createBitmap(measuredWidth, measuredHeight, Bitmap.Config.ARGB_8888)
+    r.eraseColor(Color.TRANSPARENT)
+    val canvas = Canvas(r)
+    draw(canvas)
+    return r }

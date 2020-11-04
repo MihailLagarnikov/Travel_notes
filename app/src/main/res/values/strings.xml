@@ -61,6 +61,10 @@
 
 
     <string name="def_curensy">EUR</string>
+    <string name="share">Share this</string>
+    <string name="share_expence">Share expenses</string>
+    <string name="travel_dates">Travel dates</string>
+    <string name="total">Total spent:</string>
 
 
     //categories

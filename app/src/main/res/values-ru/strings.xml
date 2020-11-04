@@ -60,6 +60,10 @@
     <string name="offline_text">В оффлайн режиме вы можете  добавлять новые расходы. Полные данные о расходах и график станут доступны при появлении стабильного интеренет соединения. </string>
 
     <string name="def_curensy">RUB</string>
+    <string name="share">Поделиться</string>
+    <string name="share_expence">Поделиться расходами</string>
+    <string name="travel_dates">Даты поездки</string>
+    <string name="total">Итого потрачено:</string>
 
     //categories
     <string name="transport">Транспорт</string>

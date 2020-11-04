@@ -82,6 +82,9 @@
         <action
             android:id="@+id/action_expenceAllFragment_to_reviewExpenceFragment"
             app:destination="@id/reviewExpenceFragment" />
+        <action
+            android:id="@+id/action_expenceAllFragment_to_shareExpenceFragment"
+            app:destination="@id/shareExpenceFragment" />
     </fragment>
     <fragment
         android:id="@+id/addExpenceFragment"
@@ -127,4 +130,8 @@
         android:id="@+id/reviewExpenceFragment"
         android:name="com.twosmalpixels.travel_notes.ui.review_expence.ReviewExpenceFragment"
         android:label="ReviewExpenceFragment" />
+    <fragment
+        android:id="@+id/shareExpenceFragment"
+        android:name="com.twosmalpixels.travel_notes.ui.share_expence.ShareExpenceFragment"
+        android:label="ShareExpenceFragment" />
 </navigation>

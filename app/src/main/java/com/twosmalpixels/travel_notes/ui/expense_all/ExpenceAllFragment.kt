@@ -2,6 +2,9 @@ package com.twosmalpixels.travel_notes.ui.expense_all
 
 import BaseFragment
 import android.os.Bundle
+import android.view.Menu
+import android.view.MenuInflater
+import android.view.MenuItem
 import android.view.View
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
@@ -25,6 +28,11 @@ class ExpenceAllFragment : BaseFragment() {
 
     override fun getLayout(): Int {
         return R.layout.expence_all_fragment
+    }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setHasOptionsMenu(true)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -68,6 +76,21 @@ class ExpenceAllFragment : BaseFragment() {
                     findNavController().navigate(R.id.action_expenceAllFragment_to_expenceAllOfflineFragment)
             }
         })
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        inflater.inflate(R.menu.menu, menu)
+        super.onCreateOptionsMenu(menu, inflater)
+    }
+
+
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        if (item.itemId == R.id.shara_expence){
+            expenseAllViewModel.currencyToShare = shedule_view.getChoosenCurrency()
+            findNavController().navigate(R.id.action_expenceAllFragment_to_shareExpenceFragment)
+        }
+        return super.onOptionsItemSelected(item)
     }
 
     private fun clickExpenceItem(expenceData: ExpenceData): Boolean {

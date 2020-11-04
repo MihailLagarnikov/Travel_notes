@@ -39,6 +39,7 @@ class SheduleView: ConstraintLayout, AdapterView.OnItemSelectedListener {
     }
 
     fun setListSheduleData(newList: ArrayList<CategoryExpenceData>, isStartState: Boolean){
+        categoryExpenceData = newList.get(0)
         sheduleAdapter.setListData(newList, isStartState)
     }
 
@@ -84,13 +85,20 @@ class SheduleView: ConstraintLayout, AdapterView.OnItemSelectedListener {
 
     }
 
+    fun getChoosenCurrency(): String{
+        return  if (curency_spiner.selectedItemPosition == 0){
+            categoryExpenceData?.mainCurrencyIso ?: categoryExpenceData?.additionalCurrencyIso ?: ""
+        }else{
+            categoryExpenceData?.additionalCurrencyIso ?: categoryExpenceData?.mainCurrencyIso ?: ""
+        }
+    }
+
     private fun getMaxShrduleHeight():Int{
         val wm = context.getSystemService(Context.WINDOW_SERVICE) as WindowManager
         val display = wm.defaultDisplay
         val size = Point()
         display.getSize(size)
         return (size.y * HEIGHT_PERSENT).toInt()
-
     }
 
 }
