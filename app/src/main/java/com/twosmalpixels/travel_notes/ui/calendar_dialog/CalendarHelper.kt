@@ -6,6 +6,7 @@ import java.util.*
 import kotlin.collections.ArrayList
 
 private val DATE_FORMAT = "dd-MM-yy"
+private val DATE_FORMAT_LONG = "dd-MM-yy__HH-mm-ss"
 private val DEFIS = " - "
 private val EMPTY = ""
 
@@ -22,6 +23,12 @@ fun createStringFromRangeDates(listDates: ArrayList<Date>?): String{
 fun createStringFromDate(long: Long): String{
     val date = Date(long)
     val dateFormat: DateFormat = SimpleDateFormat(DATE_FORMAT)
+    return dateFormat.format(date)
+}
+
+fun createStringFromDateAndTime(long: Long): String{
+    val date = Date(long)
+    val dateFormat: DateFormat = SimpleDateFormat(DATE_FORMAT_LONG)
     return dateFormat.format(date)
 }
 

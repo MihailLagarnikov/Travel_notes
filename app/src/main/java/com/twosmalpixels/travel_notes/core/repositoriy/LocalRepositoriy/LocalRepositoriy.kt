@@ -215,7 +215,7 @@ class LocalRepositoriy(val sharedPrefHelper: ISharedPrefHelper) : ILocalReposito
         return listExpence
     }
 
-    override fun saveBitmap(bitmap: Bitmap, name: String, file: File) {
+    override fun saveBitmap(bitmap: Bitmap, name: String, file: File): File {
 
         var outStream: OutputStream? = null
         val filePng = File(file, name + ".png")
@@ -226,6 +226,7 @@ class LocalRepositoriy(val sharedPrefHelper: ISharedPrefHelper) : ILocalReposito
             outStream.close()
         } catch (e: Exception) {
         }
+        return filePng
     }
 
     override fun loadBitmap(name: String, file: File): Bitmap {

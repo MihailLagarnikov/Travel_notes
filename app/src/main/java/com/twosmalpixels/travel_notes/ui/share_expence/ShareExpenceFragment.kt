@@ -1,35 +1,48 @@
 package com.twosmalpixels.travel_notes.ui.share_expence
 
 import BaseFragment
+import android.Manifest
 import android.content.Context
+import android.content.Intent
+import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.graphics.Canvas
+import android.graphics.Color
 import android.graphics.Point
+import android.net.Uri
+import android.os.Build
 import android.os.Bundle
+import android.os.Environment
 import android.view.View
-import android.view.View.MeasureSpec
 import android.view.WindowManager
+import androidx.core.content.PermissionChecker.checkCallingOrSelfPermission
 import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.twosmalpixels.travel_notes.R
-import com.twosmalpixels.travel_notes.core.extension.convertToBitmap
 import com.twosmalpixels.travel_notes.pojo.ToolbarParam
 import com.twosmalpixels.travel_notes.pojo.TravelsItem
 import com.twosmalpixels.travel_notes.ui.MainActivity
 import kotlinx.android.synthetic.main.share_expence_fragment.*
-import kotlinx.android.synthetic.main.share_expence_fragment.share_card_view
+import java.io.File
 
 
 class ShareExpenceFragment : BaseFragment() {
 
+    private val DELAY_OPEN = 500L
     private val NUUL_AMOUNT = "0"
     private val WEIGHT_PERSENT = 0.3
+    private val PERMISSION_REQUEST_CODE = 443
 
     override fun getToolbarParam() = ToolbarParam(getString(R.string.share_expence))
 
     override fun getLayout() = R.layout.share_expence_fragment
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        if (!hasPermissions()) {
+            requestPerms()
+        }
+
         super.onViewCreated(view, savedInstanceState)
         recycler_share.layoutManager = LinearLayoutManager(context)
         val adapter = RecyclerShareAdapter(getMaxShareWeight(), expenseAllViewModel.currencyToShare)
@@ -61,10 +74,26 @@ class ShareExpenceFragment : BaseFragment() {
         total_currency_share.text = expenseAllViewModel.currencyToShare
 
         button_share.setOnClickListener {
-            test_shet.setImageBitmap(share_card_view.convertToBitmap())
+            val viewModel = ViewModelProviders.of(requireActivity()).get(ShareViewModel::class.java)
+            val fileImage =
+                viewModel.saveBitmapShareAndOpen(
+                    getBitmapFromView(
+                        share_card_view
+                    )!!,
+                    Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES),
+                    resources,
+                    expenseAllViewModel.travelsItem.title
+                )
+
+            val uri = Uri.fromFile(fileImage)
+            val intent = Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE, uri)
+            requireActivity().sendBroadcast(intent)
+
+            val intentOpen = Intent(Intent.ACTION_VIEW)
+            intentOpen.setDataAndType(uri, "image/*")
+            startActivity(intentOpen)
         }
     }
-
 
     private fun setTitleText(travelItem: TravelsItem) {
         val titleText = "${travelItem.title} /"
@@ -81,15 +110,59 @@ class ShareExpenceFragment : BaseFragment() {
         return (size.x * WEIGHT_PERSENT).toInt()
     }
 
-    fun getBitmapFromView(view: View): Bitmap? {
-        view.measure(MeasureSpec.UNSPECIFIED, MeasureSpec.UNSPECIFIED)
-        val bitmap = Bitmap.createBitmap(
-            view.measuredWidth, view.measuredHeight,
-            Bitmap.Config.ARGB_8888
-        )
-        val canvas = Canvas(bitmap)
-        view.layout(0, 0, view.measuredWidth, view.measuredHeight)
+    fun getBitmapFromView(view: View): Bitmap? { //Define a bitmap with the same size as the view
+        val returnedBitmap =
+            Bitmap.createBitmap(view.width, view.height, Bitmap.Config.ARGB_8888)
+        val canvas = Canvas(returnedBitmap)
+        val bgDrawable = view.background
+        if (bgDrawable != null)
+            bgDrawable.draw(canvas) else
+            canvas.drawColor(Color.WHITE)
         view.draw(canvas)
-        return bitmap
+        return returnedBitmap
+    }
+
+    private fun hasPermissions(): Boolean {
+        var res = 0
+        //string array of permissions,
+        val permissions =
+            arrayOf<String>(
+                Manifest.permission.WRITE_EXTERNAL_STORAGE,
+                Manifest.permission.READ_EXTERNAL_STORAGE
+            )
+        for (perms in permissions) {
+            res = checkCallingOrSelfPermission(requireContext(), perms)
+            if (res != PackageManager.PERMISSION_GRANTED) {
+                return false
+            }
+        }
+        return true
+    }
+
+    private fun requestPerms() {
+        val permissions =
+            arrayOf<String>(
+                Manifest.permission.WRITE_EXTERNAL_STORAGE,
+                Manifest.permission.READ_EXTERNAL_STORAGE
+            )
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            requestPermissions(permissions, PERMISSION_REQUEST_CODE)
+        }
+    }
+
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<String?>,
+        grantResults: IntArray
+    ) {
+        var allowed = true
+        when (requestCode) {
+            PERMISSION_REQUEST_CODE -> for (res in grantResults) {
+                allowed = allowed && res == PackageManager.PERMISSION_GRANTED
+            }
+            else -> allowed = false
+        }
+        if (!allowed) {
+        }
     }
 }

@@ -11,6 +11,6 @@ interface ILocalRepositoriy {
     fun getAllTravels(): ArrayList<TravelsItem>
     fun saveExpenceData(expenceData: ExpenceData, travelsName: String)
     fun loadExpenceDataList(travelName: String): ArrayList<ExpenceData>
-    fun saveBitmap(bitmap: Bitmap, name: String, file: File)
+    fun saveBitmap(bitmap: Bitmap, name: String, file: File): File
     fun loadBitmap(name: String, file: File): Bitmap
 }

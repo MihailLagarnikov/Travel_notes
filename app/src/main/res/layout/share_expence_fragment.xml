@@ -171,10 +171,6 @@
                android:layout_gravity="center"
                 android:layout_marginBottom="32dp"/>
 
-            <ImageView
-                android:id="@+id/test_shet"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"/>
         </LinearLayout>
     </ScrollView>
 

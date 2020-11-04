@@ -32,6 +32,8 @@ import com.twosmalpixels.travel_notes.ui.new_travel.INewTravelsRepositoriy
 import com.twosmalpixels.travel_notes.ui.new_travel.INewTravelsUseCase
 import com.twosmalpixels.travel_notes.ui.new_travel.NewTravelsRepositoiy
 import com.twosmalpixels.travel_notes.ui.new_travel.NewTravelsUseCase
+import com.twosmalpixels.travel_notes.ui.share_expence.IShareUseCase
+import com.twosmalpixels.travel_notes.ui.share_expence.ShareUseCase
 import com.twosmalpixels.travel_notes.ui.you_travels.IYouTravelsRepositoriy
 import com.twosmalpixels.travel_notes.ui.you_travels.IYouTravelsUseCase
 import com.twosmalpixels.travel_notes.ui.you_travels.YouTravelsRepositoriy
@@ -59,5 +61,6 @@ val appModule = module {
     single { ExpenceAllRepositoriy(get(), get()) as IExpenceAllRepositoriy }
     single { LocalRepositoriy(get()) as ILocalRepositoriy }
     single { OflineModeUseCase(get(),get(),get(), get()) as IOflineModeUseCase }
+    single { ShareUseCase() as IShareUseCase }
 
 }
